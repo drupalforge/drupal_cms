@@ -30,7 +30,7 @@ if [ ! -f composer.json ]; then
   time patch -Np1 -r /dev/null < patches/drupal/drupal_cms/373.patch || :
 fi
 echo
-time composer -n install --no-dev --no-progress
+time composer -n update --no-dev --no-progress
 
 #== Create the private files directory.
 if [ ! -d private ]; then
