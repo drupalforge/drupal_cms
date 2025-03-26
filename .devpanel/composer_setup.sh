@@ -6,7 +6,7 @@ cd $APP_ROOT
 # Create composer.json.
 composer create-project -n --no-install drupal/cms
 cp -r cms/* ./
-rm -rf cms
+rm -rf cms patches.lock.json
 
 # Programmatically fix Composer 2.2 allow-plugins to avoid errors
 composer config --no-plugins allow-plugins.composer/installers true
