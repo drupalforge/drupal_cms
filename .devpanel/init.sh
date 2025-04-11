@@ -88,6 +88,22 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
     drush sset --input-format=yaml installer.applied_recipes "[$RECIPES_APPLIED]"
   fi
 
+  #== Apply the AI recipe.
+  if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then
+    drush -q recipe ../recipes/drupal_cms_ai \
+      --input=drupal_cms_ai.provider=openai \
+      --input=drupal_cms_ai.openai_api_key=$DP_AI_VIRTUAL_KEY
+    drush cset -n ai_provider_openai.settings host "https://ai.drupalforge.org"
+    drush cset -n ai_provider_openai.settings moderation false --input-format yaml
+    drush cset -n ai.settings default_providers.chat.provider_id openai
+    drush cset -n ai.settings default_providers.chat.model_id gpt-4
+    drush -n key-save openai_api_key --key-provider=env --key-provider-settings='{
+      "env_variable": "DP_AI_VIRTUAL_KEY",
+      "base64_encoded": false,
+      "strip_line_breaks": true
+    }'
+  fi
+
   echo
   echo 'Tell Automatic Updates about patches.'
   time drush -n cset --input-format=yaml package_manager.settings additional_known_files_in_project_root '["patches.json", "patches.lock.json"]'

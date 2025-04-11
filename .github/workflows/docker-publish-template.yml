@@ -27,6 +27,7 @@ jobs:
           DB_USER: user
           DB_PASSWORD: password
           DB_DRIVER: mysql
+          DP_AI_VIRTUAL_KEY: ${{ secrets.DP_AI_VIRTUAL_KEY }}
         ports:
           - 80:80
         volumes:
