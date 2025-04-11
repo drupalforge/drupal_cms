@@ -211,7 +211,7 @@ composer config repositories.codemirror '{
         "license": "MIT"
     }
 }'
-composer require -n --no-update \
+composer require -n --no-plugins --no-update \
     codemirror/codemirror \
     cweagans/composer-patches:^2@beta \
     jquery/inputmask \
