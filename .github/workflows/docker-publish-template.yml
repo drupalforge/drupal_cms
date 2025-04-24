@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
     services:
       webserver:
-        image: devpanel/php:8.3-base
+        image: devpanel/php:8.3-base-ai
         env:
           DP_APP_ID: 'drupal_cms'
           APP_ROOT: '/var/www/html'        
