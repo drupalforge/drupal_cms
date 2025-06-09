@@ -24,10 +24,6 @@ if [ ! -f composer.json ]; then
   echo
   echo 'Generate composer.json.'
   time source .devpanel/composer_setup.sh
-
-  echo
-  echo 'Apply patch for issue #3497485.'
-  time patch -Np1 -r /dev/null < patches/drupal/drupal_cms/373.patch || :
 fi
 echo
 time composer -n update --no-dev --no-progress
@@ -82,11 +78,7 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
     fi
   done
   drush sdel recipe_installer_kit.required_recipes
-  # Early versions of Drupal CMS subscribe to the recipe applied event. For
-  # later versions we have to set the applied recipes manually.
-  if [ -z "$(drush sget installer.applied_recipes 2> /dev/null)" ]; then
-    drush sset --input-format=yaml installer.applied_recipes "[$RECIPES_APPLIED]"
-  fi
+  drush sset --input-format=yaml installer.applied_recipes "[$RECIPES_APPLIED]"
 
   #== Apply the AI recipe.
   if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then

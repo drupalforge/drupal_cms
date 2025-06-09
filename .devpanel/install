@@ -20,10 +20,7 @@ function _install_drupal_cms_profile_modules() {
       call_user_func_array($step[0], array_merge($step[1], [&$context]));
     }
     \Drupal::state()->set('recipe_installer_kit.profile_modules_installed', TRUE);
-    // Early versions of the Drupal CMS profile do not have the recipes key.
-    \Drupal::state()->set('recipe_installer_kit.required_recipes', $install_state['profile_info']['recipes']['required'] ?? [
-      'drupal/drupal_cms_starter',
-    ]);
+    \Drupal::state()->set('recipe_installer_kit.required_recipes', $install_state['profile_info']['recipes']['required']);
   }
 }
 
