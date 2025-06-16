@@ -1,4 +1,8 @@
 #!/usr/bin/env bash
+: "${DEBUG_SCRIPT:=}"
+if [ -n "$DEBUG_SCRIPT" ]; then
+  set -x
+fi
 set -eu -o pipefail
 
 cd $APP_ROOT
@@ -114,7 +118,8 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
   echo
   time drush cr
 else
-  drush -n updb
+  echo
+  time drush -n updb
 fi
 
 echo
