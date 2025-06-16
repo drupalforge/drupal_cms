@@ -117,6 +117,10 @@ else
   drush -n updb
 fi
 
+echo
+echo 'Run cron.'
+time drush cron
+
 INIT_DURATION=$SECONDS
 INIT_HOURS=$(($INIT_DURATION / 3600))
 INIT_MINUTES=$(($INIT_DURATION % 3600 / 60))
