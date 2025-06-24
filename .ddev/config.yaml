@@ -16,7 +16,7 @@ ddev_version_constraint: '>=1.24.0'
 hooks:
     post-start:
         # Set up debugging.
-        - exec: 'test -f .vscode/launch.json || (mkdir -p .vscode && cp .ddev/launch.json .vscode/)'
+        - exec: 'test -f .vscode/launch.json || mkdir -p .vscode && cp .ddev/launch.json .vscode/'
         # Run initial setup tasks.
         - exec: '.devpanel/init.sh'
 web_environment:
@@ -29,4 +29,4 @@ web_environment:
     - DB_PASSWORD=db
     - DB_NAME=db
     - DP_APP_ID=drupal_cms
-    - DB_DRIVER=mysql
+    - DP_AI_VIRTUAL_KEY=
