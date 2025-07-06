@@ -30,12 +30,16 @@ time sudo rm -rf lost+found
 #== Composer install.
 echo
 if [ -f composer.json ]; then
-  time composer prl
+  if composer show --locked cweagans/composer-patches ^2 &> /dev/null; then
+    echo 'Update patches.lock.json.'
+    time composer prl
+    echo
+  fi
 else
   echo 'Generate composer.json.'
   time source .devpanel/composer_setup.sh
+  echo
 fi
-echo
 time composer -n update --no-dev --no-progress
 
 #== Create the private files directory.
@@ -61,7 +65,7 @@ fi
 
 #== Pre-install starter recipe.
 echo
-if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 'show tables')" ]; then
+if [ -z "$(drush status --field=db-status)" ]; then
   echo 'Install Drupal base system.'
   while [ -z "$(drush sget recipe_installer_kit.profile_modules_installed 2> /dev/null)" ]; do
     time .devpanel/install
@@ -129,6 +133,7 @@ if [ -z "$(mysql -h $DB_HOST -P $DB_PORT -u $DB_USER -p$DB_PASSWORD $DB_NAME -e 
   echo
   time drush cr
 else
+  echo 'Update database.'
   time drush -n updb
 fi
 

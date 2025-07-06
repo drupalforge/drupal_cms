@@ -29,4 +29,5 @@ web_environment:
     - DB_PASSWORD=db
     - DB_NAME=db
     - DP_APP_ID=drupal_cms
+    - DB_DRIVER=mysql
     - DP_AI_VIRTUAL_KEY=
