@@ -6,6 +6,19 @@
             "#3510966: Fix extra slash in redirect for install profiles that define finish_url": "https://git.drupalcode.org/project/drupal/-/merge_requests/11373.patch",
             "#3531174: Add configuration for additional known files in project root": "https://git.drupalcode.org/project/drupal/-/merge_requests/12432.patch"
         },
+        "drupal/drupal_cms_starter": [
+            {
+                "description": "#3540087: Our default configuration for Project Browser is no longer valid",
+                "url": "https://git.drupalcode.org/project/drupal_cms/-/commit/818ca01911f70c2cf452bd4a283cd95f4b03af79.diff",
+                "depth": 3,
+                "extra": {
+                    "freeform": {
+                        "executable": "patch",
+                        "args": "--verbose --no-backup-if-mismatch --strip %s --directory %s --input %s"
+                    }
+                }
+            }
+        ],
         "drupal/recipe_installer_kit": {
             "#3497485: Fix remaining duplication of batch jobs": "https://git.drupalcode.org/project/recipe_installer_kit/-/merge_requests/4.patch"
         }
