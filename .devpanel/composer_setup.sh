@@ -3,7 +3,7 @@ set -eu -o pipefail
 cd $APP_ROOT
 
 # Create required composer.json and composer.lock files
-composer create-project -n --no-install ${PROJECT:=drupal/cms}
+composer create-project --no-install ${PROJECT:=drupal/cms}
 cp -r "${PROJECT#*/}"/* ./
 rm -rf "${PROJECT#*/}" patches.lock.json
 
@@ -213,6 +213,7 @@ composer config repositories.codemirror '{
         "license": "MIT"
     }
 }'
+# Add Webform libraries and Composer Patches.
 composer require -n --no-update \
     codemirror/codemirror \
     cweagans/composer-patches:^2@beta \
