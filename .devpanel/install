@@ -1,9 +1,12 @@
 #!/usr/bin/env php
 <?php
 
-// Runs the installer steps prior to recipe application.
+/**
+ * @file
+ * Script to run installer steps prior to recipe application.
+ */
 
-$_SERVER['HTTP_USER_AGENT'] = 'Drupal Forge';
+$_GET['rewrite'] = 'ok';
 $_GET['profile'] = 'drupal_cms_installer';
 $_GET['langcode'] = 'en';
 $_GET['add_ons'] = '1';

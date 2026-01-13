@@ -74,6 +74,7 @@ if [ -z "$(drush status --field=db-status)" ]; then
 
   echo
   echo 'Apply required recipes.'
+  time drush -n en filter
   RECIPES=$(drush sget --format=yaml recipe_installer_kit.required_recipes | grep '^  - .\+/.\+' | cut -f 4 -d ' ')
   RECIPES_PATH=$(drush --include=.devpanel/drush crp)
   RECIPES_APPLIED=''
