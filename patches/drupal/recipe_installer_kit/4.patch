@@ -1,0 +1,67 @@
+diff --git a/src/Hooks.php b/src/Hooks.php
+index e8d3654..417ef3e 100644
+--- a/src/Hooks.php
++++ b/src/Hooks.php
+@@ -318,7 +318,7 @@ final class Hooks {
+     // has chosen (i.e., via our forms). If no recipes were chosen by the user
+     // (e.g., the recipe selection form was skipped), fall back to the default
+     // recipes defined in the profile.
+-    $recipes_to_apply = array_merge(
++    $recipes = array_merge(
+       $install_state['profile_info']['recipes']['required'] ?? [],
+       $install_state['parameters']['recipes'] ?? $install_state['profile_info']['recipes']['default'] ?? [],
+     );
+@@ -326,11 +326,10 @@ final class Hooks {
+     // If the installer ran before but failed mid-stream, don't reapply any
+     // recipes that were successfully applied.
+     $recipes_to_apply = array_diff(
+-      $recipes_to_apply,
++      array_unique($recipes),
+       \Drupal::state()->get(static::APPLIED_RECIPES_STATE_KEY, []),
+     );
+ 
+-    $recipes_to_apply = array_unique($recipes_to_apply);
+     // If we've already applied all the chosen recipes, there's nothing to do.
+     // Since we only start applying recipes once `install_profile_modules()` has
+     // finished, we can be safely certain that we already did that step.
+@@ -340,21 +339,33 @@ final class Hooks {
+ 
+     $batch = install_profile_modules($install_state);
+ 
+-    $recipe_operations = [];
+-    foreach ($recipes_to_apply as $name) {
++    // If we started applying recipes, profile modules are already installed.
++    if (!empty($recipes_applied)) {
++      $batch['operations'] = [];
++    }
++
++    $recipe_operations = $applied_operations = [];
++    foreach ($recipes as $name) {
+       $recipe = static::getRecipePath($name);
+       $recipe = Recipe::createFromDirectory($recipe);
+-      $recipe_operations = array_merge($recipe_operations, RecipeRunner::toBatchOperations($recipe));
+-      $recipe_operations[] = [[static::class, 'markRecipeAsApplied'], [$name]];
++      if (in_array($name, $recipes_to_apply)) {
++        array_push($recipe_operations, ...RecipeRunner::toBatchOperations($recipe));
++        $recipe_operations[] = [[static::class, 'markRecipeAsApplied'], [$name]];
++      }
++      else {
++        array_push($applied_operations, ...RecipeRunner::toBatchOperations($recipe));
++      }
+     }
+ 
+     // Only do each recipe's batch operations once.
+-    foreach ($recipe_operations as $operation) {
+-      if (!in_array($operation, $batch['operations'], TRUE)) {
++    foreach (array_unique($recipe_operations, SORT_REGULAR) as $operation) {
++      if (!in_array($operation, $applied_operations, TRUE)) {
+         $batch['operations'][] = $operation;
+       }
+     }
+-    return $batch;
++
++    // Skip the batch job if there are no operations to run.
++    return empty($batch['operations']) ? [] : $batch;
+   }
+ 
+   /**
