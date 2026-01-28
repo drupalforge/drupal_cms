@@ -9,8 +9,10 @@
 $_GET['rewrite'] = 'ok';
 $_GET['profile'] = 'drupal_cms_installer';
 $_GET['langcode'] = 'en';
-$_GET['add_ons'] = '1';
 $_GET['site_name'] = 'Drupal CMS';
+$_GET['recipes'][] = 'drupal/drupal_cms_starter';
+$_GET['finish_url'] = '/admin/dashboard/welcome';
+$_GET['template'] = '1';
 
 register_shutdown_function('_install_drupal_cms_profile_modules');
 
