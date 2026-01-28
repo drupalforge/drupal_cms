@@ -3,27 +3,28 @@
 
 /**
  * @file
- * Script to run installer steps prior to recipe application.
+ * Script to apply required recipes without completing installation.
+ *
+ * This allows users to experience an interactive installation with less
+ * waiting.
  */
 
+use Drupal\RecipeKit\Installer\Hooks;
+
 $_GET['rewrite'] = 'ok';
-$_GET['profile'] = 'drupal_cms_installer';
-$_GET['langcode'] = 'en';
-$_GET['add_ons'] = '1';
 $_GET['site_name'] = 'Drupal CMS';
+$_GET['template'] = '1';
 
 register_shutdown_function('_install_drupal_cms_profile_modules');
 
 function _install_drupal_cms_profile_modules() {
   global $install_state;
   if ($install_state['base_system_verified']) {
-    $batch = install_profile_modules($install_state);
-    $context = ['results' => []];
-    foreach ($batch['operations'] as $step) {
-      call_user_func_array($step[0], array_merge($step[1], [&$context]));
-    }
+    batch_set(Hooks::applyRecipes($install_state));
+    $batch = &batch_get();
+    $batch['progressive'] = FALSE;
+    batch_process();
     \Drupal::state()->set('recipe_installer_kit.profile_modules_installed', TRUE);
-    \Drupal::state()->set('recipe_installer_kit.required_recipes', $install_state['profile_info']['recipes']['required']);
   }
 }
 

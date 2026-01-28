@@ -11,8 +11,6 @@ exec > >(tee $LOG_FILE) 2>&1
 TIMEFORMAT=%lR
 # For faster performance, don't audit dependencies automatically.
 export COMPOSER_NO_AUDIT=1
-# For faster performance, don't install dev dependencies.
-export COMPOSER_NO_DEV=1
 
 # Install VSCode Extensions
 if [ -n "${DP_VSCODE_EXTENSIONS:-}" ]; then
@@ -72,29 +70,6 @@ if [ -z "$(drush status --field=db-status)" ]; then
   done
   drush sdel recipe_installer_kit.profile_modules_installed
 
-  echo
-  echo 'Apply required recipes.'
-  time drush -n en filter
-  RECIPES=$(drush sget --format=yaml recipe_installer_kit.required_recipes | grep '^  - .\+/.\+' | cut -f 4 -d ' ')
-  RECIPES_PATH=$(drush --include=.devpanel/drush crp)
-  RECIPES_APPLIED=''
-  for RECIPE in $RECIPES; do
-    RECIPE_PATH=$RECIPES_PATH/${RECIPE##*/}
-    if [ -d $RECIPE_PATH ]; then
-      until time drush --include=.devpanel/drush -q recipe $RECIPE_PATH; do
-        time drush cr
-      done
-
-      if [ -n "$RECIPES_APPLIED" ]; then
-        RECIPES_APPLIED="$RECIPES_APPLIED,\"$RECIPE\""
-      else
-        RECIPES_APPLIED="\"$RECIPE\""
-      fi
-    fi
-  done
-  drush sdel recipe_installer_kit.required_recipes
-  drush sset --input-format=yaml installer.applied_recipes "[$RECIPES_APPLIED]"
-
   #== Apply the AI recipe.
   if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then
     echo
@@ -107,7 +82,9 @@ if [ -z "$(drush status --field=db-status)" ]; then
     drush -n cset ai_provider_litellm.settings api_key litellm_api_key
     drush -n cset ai_provider_litellm.settings moderation false --input-format yaml
     drush -n cset ai_provider_litellm.settings host "${DP_AI_HOST:="https://ai.drupalforge.org"}"
+    drush -n key-save amazeeio_ai 'Placeholder to prevent amazee.ai key provisioning.'
     drush -q recipe ../recipes/drupal_cms_ai --input=drupal_cms_ai.provider=litellm
+    drush -n key-delete amazeeio_ai ''
     drush -n cset ai.settings default_providers.chat.provider_id litellm
     drush -n cset ai.settings default_providers.chat.model_id openai/gpt-4o-mini
     drush -n cset ai.settings default_providers.chat_with_complex_json.provider_id litellm

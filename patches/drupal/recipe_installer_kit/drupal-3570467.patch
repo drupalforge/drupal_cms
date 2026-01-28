@@ -1,0 +1,13 @@
+diff --git a/src/Form/SiteTemplateForm.php b/src/Form/SiteTemplateForm.php
+index 8031581..7c43e66 100644
+--- a/src/Form/SiteTemplateForm.php
++++ b/src/Form/SiteTemplateForm.php
+@@ -48,7 +48,7 @@ final class SiteTemplateForm extends RecipeSelectionFormBase {
+ 
+     foreach ($finder as $file) {
+       try {
+-        $recipe = Recipe::createFromDirectory($file->getPath());
++        $recipe = Recipe::createFromDirectory($file->getPath(), FALSE);
+         if ($recipe->type === 'Site') {
+           $name = basename($recipe->path);
+           $choices[$name] = [
