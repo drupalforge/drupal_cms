@@ -13,8 +13,11 @@ composer config --no-plugins minimum-stability alpha
 # Programmatically fix Composer 2.2 allow-plugins to avoid errors
 composer config --no-plugins allow-plugins.cweagans/composer-patches true
 
-# Scaffold settings.php.
+# Scaffold patches and settings.php.
 composer config -jm extra.drupal-scaffold.file-mapping '{
+    "patches.json": false,
+    "patches.lock.json": false,
+    "patches/drupal/drupal_cms/373.patch": false,
     "[web-root]/sites/default/settings.php": {
         "path": "web/core/assets/scaffold/files/default.settings.php",
         "overwrite": false
