@@ -1,10 +1,10 @@
 {
     "patches": {
         "drupal/core": {
-            "#3495988: Add redirect for incomplete install": "https://git.drupalcode.org/project/drupal/-/merge_requests/10680.patch",
-            "#3499225: Fix recipe command ignoring dependencies": "https://git.drupalcode.org/project/drupal/-/merge_requests/10886.patch",
-            "#3510966: Fix extra slash in redirect for install profiles that define finish_url": "https://git.drupalcode.org/project/drupal/-/merge_requests/11373.patch",
-            "#3531174: Add configuration for additional known files in project root": "https://git.drupalcode.org/project/drupal/-/merge_requests/12432.patch",
+            "#3495988: Add redirect for incomplete install": "https://git.drupalcode.org/project/drupal/-/merge_requests/10680.diff",
+            "#3499225: Fix recipe command ignoring dependencies": "https://git.drupalcode.org/project/drupal/-/commit/12031d11461bd2fddcb9052659af947be0a9defe.patch",
+            "#3510966: Fix extra slash in redirect for install profiles that define finish_url": "https://git.drupalcode.org/project/drupal/-/commit/28168adfe415de9f7bc349a9d1aa67f0610cb2fb.patch",
+            "#3531174: Add configuration for additional known files in project root": "https://git.drupalcode.org/project/drupal/-/merge_requests/12432.diff",
             "#3570467: Listing strict recipe that differs from active config throws exception": "https://git.drupalcode.org/issue/drupal-3570467/-/commit/eb16536187389ffa1ddb3d5871b52fba17a29bbd.patch"
         },
         "drupal/recipe_installer_kit": {
