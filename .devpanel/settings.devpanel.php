@@ -23,8 +23,14 @@ if (in_array($driver, ['mysql', 'mariadb'], TRUE)) {
 }
 
 $databases['default']['default']['isolation_level'] = 'READ COMMITTED';
-$settings['hash_salt'] = file_get_contents(__DIR__ . '/salt.txt');
-$settings['config_sync_directory'] = '../config/sync';
-$settings['file_private_path'] = '../private';
-$settings['trusted_host_patterns'] = [getenv('DP_HOSTNAME') ?: '.*'];
+if (empty($settings['hash_salt'])) {
+  $settings['hash_salt'] = hash('sha256', serialize($databases));
+}
+$settings['config_sync_directory'] ??= '../config/sync';
+$settings['file_private_path'] ??= $app_root . '/../private';
+$realpath = realpath($settings['file_private_path']);
+if (!empty($realpath)) {
+  $settings['file_private_path'] = $realpath;
+}
+$settings['trusted_host_patterns'][] = getenv('DP_HOSTNAME') ?: '.*';
 $settings['testing_package_manager'] = TRUE;
