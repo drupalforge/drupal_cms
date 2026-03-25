@@ -38,7 +38,7 @@ else
   time source .devpanel/composer_setup.sh
   echo
 fi
-time composer -n update --no-dev --no-progress
+time composer -n update --no-progress
 
 #== Create the private files directory.
 if [ ! -d private ]; then
@@ -69,38 +69,7 @@ if [ -z "$(drush status --field=db-status)" ]; then
     time .devpanel/install
   done
   drush sdel recipe_installer_kit.profile_modules_installed
-
-  #== Apply the AI recipe.
-  if [ -n "${DP_AI_VIRTUAL_KEY:-}" ]; then
-    echo
-    time drush -n en ai_provider_litellm
-    drush -n key-save litellm_api_key --label="LiteLLM API key" --key-provider=env --key-provider-settings='{
-      "env_variable": "DP_AI_VIRTUAL_KEY",
-      "base64_encoded": false,
-      "strip_line_breaks": true
-    }'
-    drush -n cset ai_provider_litellm.settings api_key litellm_api_key
-    drush -n cset ai_provider_litellm.settings moderation false --input-format yaml
-    drush -n cset ai_provider_litellm.settings host "${DP_AI_HOST:="https://ai.drupalforge.org"}"
-    drush -n key-save amazeeio_ai 'Placeholder to prevent amazee.ai key provisioning.'
-    drush -q recipe ../recipes/drupal_cms_ai --input=drupal_cms_ai.provider=litellm
-    drush -n key-delete amazeeio_ai ''
-    drush -n cset ai.settings default_providers.chat.provider_id litellm
-    drush -n cset ai.settings default_providers.chat.model_id openai/gpt-4o-mini
-    drush -n cset ai.settings default_providers.chat_with_complex_json.provider_id litellm
-    drush -n cset ai.settings default_providers.chat_with_complex_json.model_id openai/gpt-4o-mini
-    drush -n cset ai.settings default_providers.chat_with_image_vision.provider_id litellm
-    drush -n cset ai.settings default_providers.chat_with_image_vision.model_id openai/gpt-4o-mini
-    drush -n cset ai.settings default_providers.chat_with_structured_response.provider_id litellm
-    drush -n cset ai.settings default_providers.chat_with_structured_response.model_id openai/gpt-4o-mini
-    drush -n cset ai.settings default_providers.chat_with_tools.provider_id litellm
-    drush -n cset ai.settings default_providers.chat_with_tools.model_id openai/gpt-4o-mini
-    drush -n cset ai.settings default_providers.embeddings.provider_id litellm
-    drush -n cset ai.settings default_providers.embeddings.model_id openai/text-embedding-3-small
-    drush -n cset ai.settings default_providers.text_to_speech.provider_id litellm
-    drush -n cset ai.settings default_providers.text_to_speech.model_id openai/gpt-4o-mini-realtime-preview
-    drush -n cset ai_assistant_api.ai_assistant.drupal_cms_assistant llm_provider __default__
-  fi
+  drush -n cset system.site name 'Drupal CMS'
 
   echo
   echo 'Tell Automatic Updates about patches.'
