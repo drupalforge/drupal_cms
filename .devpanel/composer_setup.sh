@@ -5,7 +5,7 @@ cd $APP_ROOT
 # Create required composer.json and composer.lock files
 composer create-project --no-install ${PROJECT:=drupal/cms}
 cp -r "${PROJECT#*/}"/* ./
-rm -rf "${PROJECT#*/}" patches.lock.json
+rm -rf "${PROJECT#*/}" AGENTS.md patches.lock.json
 
 # Set minimum stability to alpha.
 composer config --no-plugins minimum-stability alpha
