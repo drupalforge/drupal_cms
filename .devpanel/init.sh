@@ -53,7 +53,7 @@ if [ ! -f .devpanel/salt.txt ]; then
   time openssl rand -hex 32 > .devpanel/salt.txt
 fi
 
-#== Pre-install starter recipe.
+#== Install Drupal.
 echo
 if [ -z "$(drush status --field=db-status)" ]; then
   echo 'Install Drupal base system.'
@@ -81,7 +81,7 @@ echo 'Run cron.'
 time drush cron
 echo
 echo 'Populate caches.'
-time drush cache:warm
+time drush cache:warm &> /dev/null || :
 
 #== Finish measuring script time.
 INIT_DURATION=$SECONDS
