@@ -3,6 +3,7 @@
 /.editorconfig
 /.gitattributes
 /.vscode/
+/assets/
 /composer.json
 /composer.lock
 /config/

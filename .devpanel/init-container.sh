@@ -15,19 +15,20 @@
 # For GNU Affero General Public License see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+cd $APP_ROOT
+
 #== Import database
 if [ -z "$(drush status --field=db-status)" ]; then
-  if [[ -f "$APP_ROOT/.devpanel/dumps/db.sql.gz" ]]; then
-    echo  'Import mysql file ...'
-    drush sqlq --file="$APP_ROOT/.devpanel/dumps/db.sql.gz" --file-delete
+  if [[ -f .devpanel/dumps/db.sql.gz ]]; then
+    echo 'Import mysql file ...'
+    drush sqlq --file=../.devpanel/dumps/db.sql.gz
   fi
 fi
 
 if [[ -n "$DB_SYNC_VOL" ]]; then
-  if [[ ! -f "/var/www/build/.devpanel/init-container.sh" ]]; then
-    echo  'Sync volume...'
-    sudo chown -R 1000:1000 /var/www/build 
-    rsync -av --delete --delete-excluded $APP_ROOT/ /var/www/build
+  if [[ ! -f "../build/.devpanel/init-container.sh" ]]; then
+    echo 'Sync volume...'
+    sudo rsync -a --ignore-existing --exclude .git ./* ../build/
   fi
 fi
 
