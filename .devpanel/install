@@ -9,17 +9,32 @@
  * waiting.
  */
 
+use Drupal\Core\Installer\Form\SiteConfigureForm;
 use Drupal\RecipeKit\Installer\Hooks;
 
 $_GET['rewrite'] = 'ok';
-$_GET['site_name'] = '1';
+$_GET['name'] = '1';
 $_GET['template'] = '1';
 
 register_shutdown_function('_install_drupal_cms_profile_modules');
 
 function _install_drupal_cms_profile_modules() {
   global $install_state;
-  if ($install_state['base_system_verified']) {
+  if (!empty($install_state['base_system_verified'])) {
+    // Submit install_configure_form programmatically during the pre-run phase.
+    $install_state['forms']['install_configure_form'] = [
+      'account' => [
+        'mail' => 'admin@example.com',
+        // Programmatic installs expect password_confirm-style input.
+        'pass' => [
+          'pass1' => 'admin',
+          'pass2' => 'admin',
+        ],
+      ],
+    ];
+    $install_state['interactive'] = FALSE;
+    install_get_form(SiteConfigureForm::class, $install_state);
+    \Drupal::state()->set('install_task', 'install_configure_form');
 /*    batch_set(Hooks::applyRecipes($install_state));
     $batch = &batch_get();
     $batch['progressive'] = FALSE;
