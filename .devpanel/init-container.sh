@@ -28,9 +28,13 @@ fi
 if [[ -n "$DB_SYNC_VOL" ]]; then
   if [[ ! -f "../build/.devpanel/init-container.sh" ]]; then
     echo 'Sync volume...'
-    # Preserve source permissions, but ensure rsync-created directories remain
-    # user-writable so it can continue copying nested files on fresh volumes.
-    sudo rsync -a --chmod=Du+w --ignore-existing --exclude .git ./ ../build
+    if [[ -n "$REMOTE_CONTAINERS" ]]; then
+      # Preserve source permissions, but ensure rsync-created directories remain
+      # user-writable so it can continue copying nested files on fresh volumes.
+      sudo rsync -a --chmod=Du+w --ignore-existing --exclude .git ./ ../build
+    else
+      sudo rsync -av --delete --delete-excluded ./ ../build
+    fi
   fi
 fi
 
