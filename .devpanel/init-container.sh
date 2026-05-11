@@ -30,7 +30,7 @@ if [[ -n "$DB_SYNC_VOL" ]]; then
     echo 'Sync volume...'
     # Preserve source permissions, but ensure rsync-created directories remain
     # user-writable so it can continue copying nested files on fresh volumes.
-    sudo rsync -a --chmod=Du+w --ignore-existing --exclude .git ./* ../build/
+    sudo rsync -a --chmod=Du+w --ignore-existing --exclude .git ./ ../build
   fi
 fi
 
