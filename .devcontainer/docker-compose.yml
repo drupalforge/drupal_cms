@@ -3,7 +3,7 @@ include:
 
 services:
   app:
-    image: drupalforge/drupal_cms:develop
+    image: drupalforge/drupal_cms:main
     environment:
       DP_APP_ID: 'drupal_cms'
       APP_ROOT: '/var/www/html'        
@@ -37,7 +37,7 @@ services:
     # /.devpanel/init-container.sh marker so the image's init script will
     # perform the sync, then restores the git working tree before exit. This
     # service is intended to run only at container creation.
-    image: drupalforge/drupal_cms:develop
+    image: drupalforge/drupal_cms:main
     environment:
       APP_ROOT: /var/www/html
       DB_HOST: db
