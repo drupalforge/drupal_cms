@@ -48,6 +48,7 @@ services:
       DB_PASSWORD: password
       DB_DRIVER: mysql
       DB_SYNC_VOL: yes
+      DRUPALFORGE_DEVCONTAINER: true
     entrypoint:
       - sh
       - -c
