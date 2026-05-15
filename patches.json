@@ -3,6 +3,34 @@
         "drupal/core": {
             "#3495988: Add redirect for incomplete install": "https://git.drupalcode.org/project/drupal/-/merge_requests/10680.diff",
             "#3499225: Fix recipe command ignoring dependencies": "https://git.drupalcode.org/project/drupal/-/commit/12031d11461bd2fddcb9052659af947be0a9defe.patch"
-        }
+        },
+        "drupal/drupal_cms_installer": [
+            {
+                "description": "#3590051: Avoid repeating installer batch operations",
+                "url": "https://git.drupalcode.org/issue/drupal_cms-3590051/-/commit/d3e868802dab04fb87e348b50305dee59729c996.patch",
+                "depth": 2,
+                "extra": {
+                    "freeform": {
+                        "executable": "sh",
+                        "dry_run_args": "-c \"git -C %3$s init >/dev/null 2>&1 && git -C %3$s apply --check --verbose -p%2$s --exclude=tests/* %4$s; rc=$?; rm -rf %3$s/.git; exit $rc\"",
+                        "args": "-c \"git -C %3$s init >/dev/null 2>&1 && git -C %3$s apply --verbose -p%2$s --exclude=tests/* %4$s; rc=$?; rm -rf %3$s/.git; exit $rc\""
+                    }
+                }
+            }
+        ],
+        "drupal/drupal_cms_seo_basic": [
+            {
+                "description": "#3589783: drupal_cms_seo_basic recipe cannot be reapplied",
+                "url": "https://git.drupalcode.org/issue/drupal_cms-3589783/-/commit/0e1b5a1cd0e85ae4f118fb83698525ffd15ccb18.patch",
+                "depth": 3
+            }
+        ],
+        "drupal/drupal_cms_starter": [
+            {
+                "description": "#3589996: Canvas components no longer save category",
+                "url": "https://git.drupalcode.org/issue/drupal_cms-3589996/-/commit/cbeefbaad46751eba131b19e5808913f414b5e7e.patch",
+                "depth": 3
+            }
+        ]
     }
 }

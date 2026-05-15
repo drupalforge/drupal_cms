@@ -31,9 +31,9 @@ if [[ -n "$DB_SYNC_VOL" ]]; then
     if [[ -n "$DRUPALFORGE_DEVCONTAINER" ]]; then
       # Preserve source permissions, but ensure rsync-created directories remain
       # user-writable so it can continue copying nested files on fresh volumes.
-      sudo rsync -a --chmod=Du+w --ignore-existing --exclude .git ./ ../build
+      sudo rsync -a --chmod=Du+w --ignore-existing --exclude .git --exclude .devpanel/dumps ./ ../build
     else
-      sudo rsync -av --delete --delete-excluded ./ ../build
+      sudo rsync -av --delete --delete-excluded --exclude .devpanel/dumps ./ ../build
     fi
   fi
 fi

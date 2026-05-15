@@ -15,7 +15,7 @@ fi
 # Install APT packages.
 if ! command -v npm >/dev/null 2>&1; then
   apt-get update
-  apt-get install -y jq nano npm
+  apt-get install -y jq nano npm ripgrep
 fi
 
 # Enable AVIF support in GD extension if not already enabled.

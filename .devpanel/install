@@ -34,12 +34,13 @@ function _install_drupal_cms_profile_modules() {
     ];
     $install_state['interactive'] = FALSE;
     install_get_form(SiteConfigureForm::class, $install_state);
-    \Drupal::state()->set('install_task', 'install_configure_form');
-/*    batch_set(Hooks::applyRecipes($install_state));
+    $batch = install_profile_modules($install_state);
+    $batch['operations'] = _drupal_cms_installer_prepare_tracked_operations($batch['operations']);
+    batch_set($batch);
     $batch = &batch_get();
     $batch['progressive'] = FALSE;
-    batch_process();*/
-    \Drupal::state()->set('recipe_installer_kit.profile_modules_installed', TRUE);
+    batch_process();
+    \Drupal::state()->set('install_task', 'install_configure_form');
   }
 }
 

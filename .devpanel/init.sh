@@ -46,26 +46,37 @@ if [ ! -d config/sync ]; then
   time mkdir -p config/sync
 fi
 
-#== Generate hash salt.
-if [ ! -f .devpanel/salt.txt ]; then
-  echo
-  echo 'Generate hash salt.'
-  time openssl rand -hex 32 > .devpanel/salt.txt
-fi
-
 #== Install Drupal.
 echo
 if [ -z "$(drush status --field=db-status)" ]; then
   echo 'Install Drupal base system.'
-  while [ -z "$(drush sget recipe_installer_kit.profile_modules_installed 2> /dev/null)" ]; do
+  until [ "$(drush sget install_task 2> /dev/null)" = 'install_configure_form' ]; do
     time .devpanel/install
   done
-  drush sdel recipe_installer_kit.profile_modules_installed
   drush -n cset system.site name 'Drupal CMS'
 
   echo
-  echo 'Tell Automatic Updates about patches.'
-  drush -n cset --input-format=yaml package_manager.settings additional_trusted_composer_plugins '["cweagans/composer-patches"]'
+  echo 'Apply base recipes.'
+  RECIPES_PATH=$(drush --include=.devpanel/drush crp)
+  i=0
+  while RECIPE=$(drush y:get:value recipes/drupal_cms_site_template_base/recipe.yml "recipes.$i"); do
+    ((++i))
+    echo "$RECIPE"
+    if [[ ! $RECIPE =~ ^core/ ]]; then
+      RECIPE="$RECIPES_PATH/$RECIPE"
+    fi
+    until time drush --include=.devpanel/drush -q recipe "$RECIPE"; do
+      time drush cr
+    done
+  done
+
+  echo
+  echo 'Pre-seed completed operation hashes for applied recipes.'
+  time drush --include=.devpanel/drush rrh
+
+  echo
+  echo 'Tell Automatic Updates about Composer plugins.'
+  drush -n cset --input-format=yaml package_manager.settings additional_trusted_composer_plugins '["cweagans/composer-patches","drupal/site_template_helper"]'
   time drush ev '\Drupal::moduleHandler()->invoke("automatic_updates", "modules_installed", [[], FALSE])'
 
   echo
