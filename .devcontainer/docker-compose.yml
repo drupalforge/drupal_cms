@@ -16,6 +16,7 @@ services:
       APACHE_RUN_GROUP: 'www'
       COMPOSER_HOME: '/home/www/.config/composer'
       CODES_ENABLE: 'no'
+      DRUPALFORGE_DEVCONTAINER: true
       DB_HOST: db
       DB_PORT: 3306
       DB_ROOT_PASSWORD: root
@@ -41,6 +42,8 @@ services:
     image: drupalforge/drupal_cms:main
     environment:
       APP_ROOT: /var/www/html
+      DB_SYNC_VOL: yes
+      DRUPALFORGE_DEVCONTAINER: true
       DB_HOST: db
       DB_PORT: 3306
       DB_ROOT_PASSWORD: root
@@ -48,8 +51,6 @@ services:
       DB_USER: user
       DB_PASSWORD: password
       DB_DRIVER: mysql
-      DB_SYNC_VOL: yes
-      DRUPALFORGE_DEVCONTAINER: true
     entrypoint:
       - sh
       - -c
