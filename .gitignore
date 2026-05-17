@@ -8,7 +8,6 @@
 /composer.lock
 /config/
 /CONTRIBUTING.md
-/launch-drupal-cms.sh
 /LICENSE.txt
 /logs/
 /packages.json
