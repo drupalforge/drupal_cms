@@ -14,6 +14,7 @@ services:
       CODES_WORKING_DIR: '/var/www/html'
       APACHE_RUN_USER: 'www'
       APACHE_RUN_GROUP: 'www'
+      COMPOSER_HOME: '/home/www/.config/composer'
       CODES_ENABLE: 'no'
       DB_HOST: db
       DB_PORT: 3306
@@ -49,6 +50,7 @@ services:
       DB_DRIVER: mysql
       DB_SYNC_VOL: yes
       DRUPALFORGE_DEVCONTAINER: true
+      COMPOSER_HOME: /home/www/.config/composer
     entrypoint:
       - sh
       - -c
