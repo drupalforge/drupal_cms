@@ -30,6 +30,8 @@ if [ -z "$(drush status --field=db-status)" ]; then
     time drush cr
   done
   drush -n cset klaro.klaro_app.deepchat status 0
+  echo 'Pre-seed completed operation hashes for drupal_cms_ai recipe.'
+  time drush --include=.devpanel/drush rrh "$RECIPES_PATH/drupal_cms_ai"
 fi
 
 if [[ -n "$DB_SYNC_VOL" ]]; then

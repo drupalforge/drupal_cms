@@ -9,7 +9,7 @@
 #
 # ----------------------------------------------------------------------
 if [ -n "$DEBUG_SCRIPT" ]; then
-    set -x
+  set -x
 fi
 
 # Install APT packages.
