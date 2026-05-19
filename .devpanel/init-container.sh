@@ -22,6 +22,7 @@ if [ -z "$(drush status --field=db-status)" ]; then
   if [[ -f .devpanel/dumps/db.sql.gz ]]; then
     echo 'Import mysql file ...'
     drush sqlq --file=../.devpanel/dumps/db.sql.gz
+    gzip .devpanel/dumps/db.sql
   fi
   # We apply the AI recipe here to give every container its own key.
   echo 'Apply drupal_cms_ai recipe.'
