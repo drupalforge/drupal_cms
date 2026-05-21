@@ -19,20 +19,6 @@
                 }
             }
         ],
-        "drupal/drupal_cms_seo_basic": [
-            {
-                "description": "#3589783: drupal_cms_seo_basic recipe cannot be reapplied",
-                "url": "https://git.drupalcode.org/issue/drupal_cms-3589783/-/commit/0e1b5a1cd0e85ae4f118fb83698525ffd15ccb18.patch",
-                "depth": 3
-            }
-        ],
-        "drupal/drupal_cms_starter": [
-            {
-                "description": "#3589996: Canvas components no longer save category",
-                "url": "https://git.drupalcode.org/issue/drupal_cms-3589996/-/commit/cbeefbaad46751eba131b19e5808913f414b5e7e.patch",
-                "depth": 3
-            }
-        ],
         "drupal/easy_encryption": {
             "#3589914: Remove global _custom_access registration from Easy Encryption admin access checker": "https://git.drupalcode.org/issue/easy_encryption-3589914/-/commit/50df69038f97da463ddc261a17e69f2b3d21c4f3.patch"
         }
