@@ -37,6 +37,7 @@ fi
 
 if [[ -n "$DB_SYNC_VOL" ]]; then
   if [[ ! -f "../build/.devpanel/init-container.sh" ]]; then
+    php web/modules/contrib/automatic_updates/auto-update
     echo 'Sync volume...'
     if [[ -n "$DRUPALFORGE_DEVCONTAINER" ]]; then
       # Preserve source permissions, but ensure rsync-created directories remain
