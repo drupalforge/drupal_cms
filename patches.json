@@ -18,9 +18,6 @@
                     }
                 }
             }
-        ],
-        "drupal/easy_encryption": {
-            "#3589914: Remove global _custom_access registration from Easy Encryption admin access checker": "https://git.drupalcode.org/issue/easy_encryption-3589914/-/commit/50df69038f97da463ddc261a17e69f2b3d21c4f3.patch"
-        }
+        ]
     }
 }
