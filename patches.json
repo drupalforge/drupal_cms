@@ -1,7 +1,7 @@
 {
     "patches": {
         "drupal/core": {
-            "#3495988: Add redirect for incomplete install": "https://git.drupalcode.org/issue/drupal-3495988/-/compare/c73e7955364c0ee68a22e9b7a6de5f099d69751f...3495988-add-redirect-for?format=diff",
+            "#3495988: Add redirect for incomplete install": "https://git.drupalcode.org/issue/drupal-3495988/-/compare/11.3.11...b43143a448c5c52afc37d2b39e561952fbe1be00?format=diff",
             "#3499225: Fix recipe command ignoring dependencies": "https://git.drupalcode.org/project/drupal/-/commit/12031d11461bd2fddcb9052659af947be0a9defe.patch",
             "#3531174: Add configuration for additional known files in project root": "https://git.drupalcode.org/issue/drupal-3531174/-/compare/eccc454363a947d3eb71a1ca7fa0e134dce002c0...96208fc1e12b4548c115d02dd80b9cfbd4e5bed7?format=diff"
         },
