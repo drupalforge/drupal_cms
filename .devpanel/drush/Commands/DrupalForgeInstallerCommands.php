@@ -3,9 +3,18 @@
 namespace Drush\Commands;
 
 use Composer\InstalledVersions;
+use Drupal\Core\Config\Checkpoint\Checkpoint;
+use Drupal\Core\Config\Checkpoint\CheckpointStorageInterface;
+use Drupal\Core\Config\ConfigImporterException;
+use Drupal\Core\Config\ConfigImporterFactory;
+use Drupal\Core\Config\StorageCacheInterface;
+use Drupal\Core\Config\StorageComparer;
+use Drupal\Core\Config\StorageInterface;
+use Drupal\Core\Recipe\ConsoleInputCollector;
 use Drupal\Core\Recipe\Recipe;
 use Drupal\Core\Recipe\RecipeConfigurator;
 use Drupal\Core\Recipe\RecipeRunner;
+use Symfony\Component\Console\Style\SymfonyStyle;
 use Drupal\drupal_cms_installer\RecipeHandler;
 use Drush\Attributes as CLI;
 use Drush\Boot\DrupalBootLevels;
@@ -44,6 +53,84 @@ final class DrupalForgeInstallerCommands extends DrushCommands {
       $directory = str_replace(['{$name}', '{$vendor}'], '', $directory);
       $this->recipeDirectory = rtrim($directory, DIRECTORY_SEPARATOR);
     }
+  }
+
+  /**
+   * Applies a recipe to the site.
+   *
+   * This works around Drush 13.7.x referencing the old
+   * Drupal\Core\Recipe\RecipeCommand namespace, which was moved to
+   * Drupal\Core\Recipe\Command\RecipeCommand in Drupal 11.4, causing the
+   * built-in 'recipe' command to never be registered.
+   *
+   * @see https://github.com/drush-ops/drush/blob/13.x/src/Runtime/ServiceManager.php
+   */
+  #[CLI\Command(name: 'drupalforge:recipe')]
+  #[CLI\Bootstrap(level: DrupalBootLevels::MAX)]
+  #[CLI\Argument(name: 'path', description: 'The path to the recipe directory to apply.')]
+  #[CLI\Usage(name: 'drush drupalforge:recipe path/to/recipe', description: 'Apply a recipe to the site.')]
+  public function applyRecipe(string $path, $options = ['input|i' => []]): int {
+    if (!is_dir($path)) {
+      $this->logger()->error(dt('The supplied path @path is not a directory.', ['@path' => $path]));
+      return self::EXIT_FAILURE;
+    }
+
+    $recipe = Recipe::createFromDirectory($path);
+
+    // Collect --input / -i values and pass them to the recipe's input system.
+    $io = new SymfonyStyle($this->input(), $this->output());
+    $recipe->input->collectAll(new ConsoleInputCollector($this->input(), $io));
+
+    /** @var \Drupal\Core\Config\Checkpoint\CheckpointStorageInterface $checkpoint_storage */
+    $checkpoint_storage = \Drupal::service(CheckpointStorageInterface::class);
+    /** @var \Drupal\Core\Config\StorageCacheInterface $config_storage */
+    $config_storage = \Drupal::service(StorageCacheInterface::class);
+
+    $backup_checkpoint = $checkpoint_storage->checkpoint("Backup before the '{$recipe->name}' recipe.");
+
+    try {
+      $steps = RecipeRunner::toBatchOperations($recipe);
+      $this->logger()->notice(dt('Applying recipe @name (@count steps).', [
+        '@name' => $recipe->name,
+        '@count' => count($steps),
+      ]));
+
+      $context = ['results' => []];
+      foreach ($steps as $step) {
+        call_user_func_array($step[0], array_merge($step[1], [&$context]));
+      }
+
+      $this->logger()->success(dt('Recipe @name applied successfully.', ['@name' => $recipe->name]));
+      return self::EXIT_SUCCESS;
+    }
+    catch (\Throwable $e) {
+      $this->logger()->error(dt('Recipe failed: @message', ['@message' => $e->getMessage()]));
+      try {
+        $this->rollBackToCheckpoint($backup_checkpoint, $checkpoint_storage, $config_storage);
+        $this->logger()->notice(dt('Rolled back configuration to pre-recipe checkpoint.'));
+      }
+      catch (ConfigImporterException $importer_exception) {
+        $this->logger()->error($importer_exception->getMessage());
+      }
+      throw $e;
+    }
+  }
+
+  /**
+   * Rolls config back to the given checkpoint.
+   */
+  private function rollBackToCheckpoint(
+    Checkpoint $checkpoint,
+    CheckpointStorageInterface $checkpoint_storage,
+    StorageCacheInterface $config_storage,
+  ): void {
+    $checkpoint_storage->setCheckpointToReadFrom($checkpoint);
+
+    assert($config_storage instanceof StorageInterface);
+    $storage_comparer = new StorageComparer($checkpoint_storage, $config_storage);
+    $storage_comparer->reset();
+
+    \Drupal::getContainer()->get(ConfigImporterFactory::class)->get($storage_comparer)->import();
   }
 
   /**

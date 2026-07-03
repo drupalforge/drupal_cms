@@ -34,20 +34,29 @@ else
   time source .devpanel/composer_setup.sh
   echo
 fi
-time composer -n update --no-progress
+if grep '"drupal/core-recommended": "^11.3' composer.json &> /dev/null; then
+  # Drupal CMS has not been updated to work with Drupal 11.4.
+  time composer -n update --no-progress --no-install
+  time composer -n update drupal/core:11.3.* drupal/core-*:11.3.* -W --no-progress --no-install
+fi
+time composer -n install --no-progress
 
 #== Create the private files directory.
 if [ ! -d private ]; then
   echo
   echo 'Create the private files directory.'
-  time mkdir private
+  time mkdir -m 775 private
+else
+  sudo chmod 775 -R private
 fi
 
 #== Create the config sync directory.
 if [ ! -d config/sync ]; then
   echo
   echo 'Create the config sync directory.'
-  time mkdir -p config/sync
+  time mkdir -pm 775 config/sync
+else
+  sudo chmod 775 -R config
 fi
 
 #== Install Drupal.
@@ -69,7 +78,7 @@ if [ -z "$(drush status --field=db-status)" ]; then
     if [[ ! $RECIPE =~ ^core/ ]]; then
       RECIPE="$RECIPES_PATH/$RECIPE"
     fi
-    until time drush --include=.devpanel/drush -q recipe "$RECIPE"; do
+    until time drush --include=.devpanel/drush -q drupalforge:recipe "$RECIPE"; do
       time drush cr
     done
   done
@@ -84,7 +93,6 @@ if [ -z "$(drush status --field=db-status)" ]; then
   drush -n cset --input-format=yaml package_manager.settings include_unknown_files_in_project_root '["assets","patches.json","patches.lock.json"]'
   drush -n cset --input-format=yaml automatic_updates.settings unattended '{"method":"console","level":"patch"}'
   time drush ev '\Drupal::moduleHandler()->invoke("automatic_updates", "modules_installed", [[], FALSE])'
-  time php web/modules/contrib/automatic_updates/auto-update
 
   echo
   time drush cr

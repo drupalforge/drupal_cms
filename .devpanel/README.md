@@ -19,6 +19,8 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
     to include settings.devpanel.php. Installed by the post-drupal-scaffold-cmd
     script. Make sure this works with your Composer project.
   - [`install`](install): Runs interactive installer.
+- [`Dockerfile`](Dockerfile): Provides the `COMPOSER_HOME` variable required by
+  the Drupal Automatic Updates web UI.
 
 
 ## Git integration
