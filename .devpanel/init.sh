@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+export PATH="$APP_ROOT/vendor/bin:$PATH"
 if [ -n "${DEBUG_SCRIPT:-}" ]; then
   set -x
 fi
@@ -33,11 +34,6 @@ else
   echo 'Generate composer.json.'
   time source .devpanel/composer_setup.sh
   echo
-fi
-if grep '"drupal/core-recommended": "^11.3' composer.json &> /dev/null; then
-  # Drupal CMS has not been updated to work with Drupal 11.4.
-  time composer -n update --no-progress --no-install
-  time composer -n update drupal/core:11.3.* drupal/core-*:11.3.* -W --no-progress --no-install
 fi
 time composer -n install --no-progress
 
@@ -108,6 +104,12 @@ time drush cron
 echo
 echo 'Populate caches.'
 time drush cache:warm &> /dev/null || :
+
+#== Fix ownership for strict permissions.
+echo
+echo 'Fix ownership for strict permissions.'
+time sudo chmod 775 -R web/sites/default/files
+time sudo chown -R ${APACHE_RUN_USER:=www-data} web/sites/default/files private config/sync
 
 #== Finish measuring script time.
 INIT_DURATION=$SECONDS

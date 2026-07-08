@@ -15,6 +15,7 @@
 # For GNU Affero General Public License see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+export PATH="$APP_ROOT/vendor/bin:$PATH"
 cd $APP_ROOT
 
 # Install regardless of security audit.
@@ -111,4 +112,4 @@ drush cache:warm &> /dev/null || :
 #== Fix ownership for strict permissions.
 echo
 echo 'Fix ownership for strict permissions.'
-time sudo chown -R ${APACHE_RUN_USER:=www-data} web/sites/default/files private config/sync
+sudo chown -R ${APACHE_RUN_USER:=www-data} web/sites/default/files private config/sync

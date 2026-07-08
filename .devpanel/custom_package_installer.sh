@@ -33,13 +33,6 @@ if command -v direnv >/dev/null 2>&1 && [ -f "$APP_ROOT/.envrc" ]; then
   runuser -u "${SUDO_USER:-$USER}" -- direnv allow "$APP_ROOT" || true
 fi
 
-# Enable AVIF support in GD extension if not already enabled.
-if [ -z "$(php --ri gd | grep AVIF)" ]; then
-  apt-get install -y libavif-dev
-  docker-php-ext-configure gd --with-avif --with-freetype --with-jpeg --with-webp
-  docker-php-ext-install gd
-fi
-
 PECL_UPDATED=false
 # Install APCU extension. Bypass question about enabling internal debugging.
 if ! php --ri apcu > /dev/null 2>&1; then

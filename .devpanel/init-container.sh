@@ -15,6 +15,7 @@
 # For GNU Affero General Public License see <https://www.gnu.org/licenses/>.
 # ----------------------------------------------------------------------
 
+export PATH="$APP_ROOT/vendor/bin:$PATH"
 cd $APP_ROOT
 
 #== Import database
@@ -29,12 +30,12 @@ if [ -z "$(drush status --field=db-status)" ]; then
   echo
   echo 'Apply drupal_cms_ai recipe.'
   RECIPES_PATH=$(drush --include=.devpanel/drush crp)
-  until time drush --include=.devpanel/drush -q drupalforge:recipe "$RECIPES_PATH/drupal_cms_ai" -i drupal_cms_ai.provider=amazeeai; do
-    time drush cr
+  until drush --include=.devpanel/drush -q drupalforge:recipe "$RECIPES_PATH/drupal_cms_ai" -i drupal_cms_ai.provider=amazeeai; do
+    drush cr
   done
   drush -n cset klaro.klaro_app.deepchat status 0
   echo 'Pre-seed completed operation hashes for drupal_cms_ai recipe.'
-  time drush --include=.devpanel/drush rrh "$RECIPES_PATH/drupal_cms_ai"
+  drush --include=.devpanel/drush rrh "$RECIPES_PATH/drupal_cms_ai"
 fi
 
 if [[ -n "$DB_SYNC_VOL" ]]; then
@@ -51,8 +52,6 @@ if [[ -n "$DB_SYNC_VOL" ]]; then
   fi
 fi
 
-drush -n updb
-echo
 echo 'Run cron.'
 drush cron
 echo
@@ -62,4 +61,4 @@ drush cache:warm &> /dev/null || :
 #== Fix ownership for strict permissions.
 echo
 echo 'Fix ownership for strict permissions.'
-time sudo chown -R ${APACHE_RUN_USER:=www-data} web/sites/default/files private config/sync
+sudo chown -R ${APACHE_RUN_USER:=www-data} web/sites/default/files private config/sync
