@@ -78,14 +78,10 @@ truth** for Docker Hub image generation across all Drupal CMS site templates.
 ### `DRUPAL_CMS_SITE_TEMPLATE` environment variable
 
 `init.sh` determines which Drupal CMS site template to install using the
-following priority:
-
-1. The `DRUPAL_CMS_SITE_TEMPLATE` environment variable, if set explicitly.
-2. The basename of the `DP_APP_ID` environment variable (which
-   `docker_publish_action` sets to the image repository name, e.g.
-   `drupalforge/haven` → `haven`).
-3. The built-in recipe-based installation for the generic `drupal_cms` image
-   (backward-compatible fallback).
+`DRUPAL_CMS_SITE_TEMPLATE` environment variable. When the variable is set, the
+installer runs with `installer_site_template_form.add_ons=<value>`. When it is
+not set, the script falls back to the recipe-based base installation (the
+generic `drupal_cms` image path).
 
 When `DRUPAL_CMS_SITE_TEMPLATE` is provided as a Docker build-arg (e.g.
 `--build-arg DRUPAL_CMS_SITE_TEMPLATE=haven`), it is baked into the image as

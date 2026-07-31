@@ -59,14 +59,9 @@ fi
 echo
 if [ -z "$(drush status --field=db-status)" ]; then
   # Determine the site template to install.
-  # Priority: explicit DRUPAL_CMS_SITE_TEMPLATE env var → basename of DP_APP_ID
-  # (set to the image repo by docker_publish_action) → legacy recipe path.
+  # Set DRUPAL_CMS_SITE_TEMPLATE to the template name to select it; leave it
+  # unset to fall back to the recipe-based base install.
   SITE_TEMPLATE="${DRUPAL_CMS_SITE_TEMPLATE:-}"
-  if [ -z "$SITE_TEMPLATE" ] && [ -n "${DP_APP_ID:-}" ]; then
-    _REPO=$(basename "$DP_APP_ID")
-    # Only use DP_APP_ID when it is a template name (not the generic drupal_cms repo).
-    [ "$_REPO" != "drupal_cms" ] && SITE_TEMPLATE="$_REPO"
-  fi
 
   if [ -n "$SITE_TEMPLATE" ]; then
     echo "Install Drupal with site template: $SITE_TEMPLATE."
