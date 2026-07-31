@@ -17,3 +17,45 @@ jobs:
     secrets:
       dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
       dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}
+
+  get-templates:
+    runs-on: ubuntu-latest
+    outputs:
+      templates: ${{ steps.fetch.outputs.templates }}
+    steps:
+      - name: Fetch template list from Drupal CMS
+        id: fetch
+        run: |
+          # Fallback list derived from the known site-template repositories.
+          FALLBACK_TEMPLATES='["archimedes","byte","caresphere","convene","convivial_gov","drupal_cms_site_template_base","drupal_cms_starter","everbright","forma","haven","healthcare","local","lupus_decoupled_starter","mercury","provus_edu","pulse"]'
+          YAML_URL="https://git.drupalcode.org/api/v4/projects/204857/repository/files/site-templates.yml/raw?ref=HEAD"
+          YAML_CONTENT=$(curl -sf --max-time 30 "$YAML_URL" 2>/dev/null || echo "")
+          TEMPLATES=""
+          if [ -n "$YAML_CONTENT" ]; then
+            pip install PyYAML -q 2>/dev/null || true
+            TEMPLATES=$(echo "$YAML_CONTENT" | python3 -c "import sys,json,yaml; d=yaml.safe_load(sys.stdin.read()); print(json.dumps(list(d.keys()) if isinstance(d,dict) else [str(x) for x in d] if isinstance(d,list) else []))" 2>/dev/null || echo "")
+          fi
+          if [ -z "$TEMPLATES" ] || [ "$TEMPLATES" = "[]" ]; then
+            echo "::warning::Could not fetch or parse site-templates.yml — using fallback template list."
+            TEMPLATES="$FALLBACK_TEMPLATES"
+          fi
+          echo "templates=$TEMPLATES" >> "$GITHUB_OUTPUT"
+
+  build-template-images:
+    needs: get-templates
+    strategy:
+      matrix:
+        template: ${{ fromJson(needs.get-templates.outputs.templates) }}
+      fail-fast: false
+    # Each template is published as drupalforge/<template-name>.
+    # init.sh selects the matching Drupal CMS site template via DP_APP_ID
+    # (set to image_repo by docker_publish_action) or the DRUPAL_CMS_SITE_TEMPLATE
+    # environment variable when it is baked into the image.
+    uses: drupalforge/docker_publish_action/.github/workflows/docker-publish.yml@main
+    with:
+      dockerhub_username: ${{ vars.DOCKERHUB_USERNAME }}
+      base_image: devpanel/php:8.5-base
+      image_repo: "drupalforge/${{ matrix.template }}"
+    secrets:
+      dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+      dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}
