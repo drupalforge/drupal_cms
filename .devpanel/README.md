@@ -20,7 +20,8 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
     script. Make sure this works with your Composer project.
   - [`install`](install): Runs interactive installer.
 - [`Dockerfile`](Dockerfile): Provides the `COMPOSER_HOME` variable required by
-  the Drupal Automatic Updates web UI.
+  the Drupal Automatic Updates web UI, and declares the
+  `DRUPAL_CMS_SITE_TEMPLATE` build-arg / runtime ENV described below.
 
 
 ## Git integration
@@ -40,3 +41,63 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
 - [`create_quickstart.sh`](create_quickstart.sh): Archives the database and
   files for the _Drupal Forge Docker Publish Workflow_ which can be added in
   [GitHub Actions](../../actions).
+
+
+## Centralized Docker Hub image publishing
+
+The GitHub Actions workflow
+[`docker-publish-template`](../.github/workflows/docker-publish-template.yml)
+in **this repository** (`drupalforge/drupal_cms`) is the **single source of
+truth** for Docker Hub image generation across all Drupal CMS site templates.
+
+### How it works
+
+1. A `get-templates` job fetches the canonical template list from the
+   Drupal CMS project:
+
+   ```
+   https://git.drupalcode.org/api/v4/projects/204857/repository/files/site-templates.yml/raw?ref=HEAD
+   ```
+
+   The job fails if the remote file is unreachable. Templates with a `paid`
+   or `price` field in their metadata are treated as paid; all others are free.
+
+2. Two matrix jobs build **one Docker image per template**:
+
+   - `build-free-template-images` – publishes to Docker Hub as
+     `drupalforge/<template-name>:main`.
+   - `build-paid-template-images` – publishes to a **private** GHCR registry
+     (`ghcr.io/drupalforge/<template-name>:main`). Requires the
+     `COMPOSER_AUTH` org-level secret to install paid Composer packages.
+
+   Both jobs use
+   [`drupalforge/docker_publish_action`](https://github.com/drupalforge/docker_publish_action).
+
+3. Each image is published with the tag pattern:
+
+   ```
+   drupalforge/<template-name>:main
+   ```
+
+   where `<template-name>` exactly matches the name in `site-templates.yml`
+   (e.g. `drupalforge/haven:main`, `drupalforge/convene:main`).
+
+### `DRUPAL_CMS_SITE_TEMPLATE` environment variable
+
+`init.sh` determines which Drupal CMS site template to install using the
+`DRUPAL_CMS_SITE_TEMPLATE` environment variable. When the variable is set, the
+installer runs with `installer_site_template_form.add_ons=<value>`. When it is
+not set, the script falls back to the recipe-based base installation (the
+generic `drupal_cms` image path).
+
+When `DRUPAL_CMS_SITE_TEMPLATE` is provided as a Docker build-arg (e.g.
+`--build-arg DRUPAL_CMS_SITE_TEMPLATE=haven`), it is baked into the image as
+an ENV so that the template name is self-describing at runtime.
+
+### Deprecating per-template repository workflows
+
+Image generation in separate site-template repositories
+(e.g. `drupalforge/haven`, `drupalforge/convene`) should be **disabled** so
+that `drupalforge/drupal_cms` remains the single publishing source. Set the
+`docker-publish-template.yml` workflow in each template repository to disabled
+or remove it once the centralized workflow is validated.

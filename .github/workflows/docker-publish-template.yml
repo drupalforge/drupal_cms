@@ -8,6 +8,7 @@ on:
   workflow_dispatch:
 permissions:
   actions: write
+  packages: write
 jobs:
   build-application:
     uses: drupalforge/docker_publish_action/.github/workflows/docker-publish.yml@main
@@ -17,3 +18,74 @@ jobs:
     secrets:
       dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
       dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}
+
+  get-templates:
+    runs-on: ubuntu-latest
+    outputs:
+      free_templates: ${{ steps.fetch.outputs.free_templates }}
+      paid_templates: ${{ steps.fetch.outputs.paid_templates }}
+    steps:
+      - name: Fetch and parse template list from Drupal CMS
+        id: fetch
+        run: |
+          YAML_URL="https://git.drupalcode.org/api/v4/projects/204857/repository/files/site-templates.yml/raw?ref=HEAD"
+          YAML_CONTENT=$(curl -sf --max-time 30 "$YAML_URL") || {
+            echo "::error::Failed to fetch site-templates.yml from $YAML_URL"
+            exit 1
+          }
+          cat > /tmp/parse_templates.py << 'PYEOF'
+          import sys, json, yaml
+          d = yaml.safe_load(sys.stdin.read())
+          if isinstance(d, dict):
+              free = [k for k, v in d.items() if not (isinstance(v, dict) and v.get('purchase'))]
+              paid = [k for k, v in d.items() if isinstance(v, dict) and v.get('purchase')]
+          elif isinstance(d, list):
+              free = [str(x) for x in d]
+              paid = []
+          else:
+              sys.exit('Unexpected YAML structure')
+          print(json.dumps({'free': free, 'paid': paid}))
+          PYEOF
+          RESULT=$(echo "$YAML_CONTENT" | python3 /tmp/parse_templates.py)
+          echo "free_templates=$(echo "$RESULT" | jq -c '.free')" >> "$GITHUB_OUTPUT"
+          echo "paid_templates=$(echo "$RESULT" | jq -c '.paid')" >> "$GITHUB_OUTPUT"
+
+  build-free-template-images:
+    needs: get-templates
+    if: needs.get-templates.outputs.free_templates != '[]'
+    strategy:
+      matrix:
+        template: ${{ fromJson(needs.get-templates.outputs.free_templates) }}
+      fail-fast: false
+    # Each free template is published as drupalforge/<template-name>:main on Docker Hub.
+    # DRUPAL_CMS_SITE_TEMPLATE is baked into the image via ARG/ENV in .devpanel/Dockerfile
+    # so init.sh installs the correct site template.
+    uses: drupalforge/docker_publish_action/.github/workflows/docker-publish.yml@main
+    with:
+      dockerhub_username: ${{ vars.DOCKERHUB_USERNAME }}
+      base_image: devpanel/php:8.5-base
+      image_repo: "drupalforge/${{ matrix.template }}"
+      drupal_cms_site_template: ${{ matrix.template }}
+    secrets:
+      dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
+      dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}
+
+  build-paid-template-images:
+    needs: get-templates
+    if: needs.get-templates.outputs.paid_templates != '[]'
+    strategy:
+      matrix:
+        template: ${{ fromJson(needs.get-templates.outputs.paid_templates) }}
+      fail-fast: false
+    # Paid templates are published to a private GHCR registry.
+    # COMPOSER_AUTH is required to install paid Composer packages during the build.
+    # DRUPAL_CMS_SITE_TEMPLATE is baked into the image so init.sh installs the correct template.
+    uses: drupalforge/docker_publish_action/.github/workflows/docker-publish.yml@main
+    with:
+      base_image: devpanel/php:8.5-base
+      image_repo: "drupalforge/${{ matrix.template }}"
+      drupal_cms_site_template: ${{ matrix.template }}
+      private: true
+    secrets:
+      dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}
+      composer_auth: ${{ secrets.COMPOSER_AUTH }}
