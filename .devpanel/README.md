@@ -59,11 +59,18 @@ truth** for Docker Hub image generation across all Drupal CMS site templates.
    https://git.drupalcode.org/api/v4/projects/204857/repository/files/site-templates.yml/raw?ref=HEAD
    ```
 
-   If the remote file is unreachable, the workflow falls back to a built-in
-   list of known templates.
+   The job fails if the remote file is unreachable. Templates with a `paid`
+   or `price` field in their metadata are treated as paid; all others are free.
 
-2. A `build-template-images` matrix job builds **one Docker Hub image per
-   template**, using
+2. Two matrix jobs build **one Docker image per template**:
+
+   - `build-free-template-images` – publishes to Docker Hub as
+     `drupalforge/<template-name>:main`.
+   - `build-paid-template-images` – publishes to a **private** GHCR registry
+     (`ghcr.io/drupalforge/<template-name>:main`). Requires the
+     `COMPOSER_AUTH` org-level secret to install paid Composer packages.
+
+   Both jobs use
    [`drupalforge/docker_publish_action`](https://github.com/drupalforge/docker_publish_action).
 
 3. Each image is published with the tag pattern:

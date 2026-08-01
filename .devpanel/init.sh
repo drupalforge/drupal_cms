@@ -58,17 +58,14 @@ fi
 #== Install Drupal.
 echo
 if [ -z "$(drush status --field=db-status)" ]; then
-  # Determine the site template to install.
-  # Set DRUPAL_CMS_SITE_TEMPLATE to the template name to select it; leave it
-  # unset to fall back to the recipe-based base install.
-  SITE_TEMPLATE="${DRUPAL_CMS_SITE_TEMPLATE:-}"
-
-  if [ -n "$SITE_TEMPLATE" ]; then
-    echo "Install Drupal with site template: $SITE_TEMPLATE."
+  # If DRUPAL_CMS_SITE_TEMPLATE is set, install the named template; otherwise
+  # fall back to the recipe-based base install.
+  if [ -n "${DRUPAL_CMS_SITE_TEMPLATE:-}" ]; then
+    echo "Install Drupal with site template: $DRUPAL_CMS_SITE_TEMPLATE."
     if [ -z "${DRUPALFORGE_DEVCONTAINER:-}" ] && [ "${IS_DDEV_PROJECT:-}" != "true" ]; then
-      time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$SITE_TEMPLATE"
+      time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$DRUPAL_CMS_SITE_TEMPLATE"
     else
-      until time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$SITE_TEMPLATE"; do
+      until time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$DRUPAL_CMS_SITE_TEMPLATE"; do
         :
       done
     fi
