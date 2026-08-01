@@ -37,8 +37,8 @@ jobs:
           import sys, json, yaml
           d = yaml.safe_load(sys.stdin.read())
           if isinstance(d, dict):
-              free = [k for k, v in d.items() if not (isinstance(v, dict) and (v.get('paid') or v.get('price')))]
-              paid = [k for k, v in d.items() if isinstance(v, dict) and (v.get('paid') or v.get('price'))]
+              free = [k for k, v in d.items() if not (isinstance(v, dict) and v.get('purchase'))]
+              paid = [k for k, v in d.items() if isinstance(v, dict) and v.get('purchase')]
           elif isinstance(d, list):
               free = [str(x) for x in d]
               paid = []
