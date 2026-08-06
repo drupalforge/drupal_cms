@@ -5,8 +5,6 @@
 /.vscode/
 /AGENTS*
 /assets/
-/composer.json
-/composer.lock
 /config/
 /CONTRIBUTING*
 /LICENSE*
