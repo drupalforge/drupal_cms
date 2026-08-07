@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Session node teaser template - video thumbnail only.
+ */
+#}
+<article{{ attributes.addClass('session-teaser') }}>
+  <a href="{{ url }}" class="session-teaser__link">
+    {% if content.field_session_video[0] %}
+      <div class="session-teaser__video">
+        {{ content.field_session_video }}
+      </div>
+    {% endif %}
+
+    <div class="session-teaser__overlay">
+      {{ title_prefix }}
+      <h3{{ title_attributes.addClass('session-teaser__title') }}>
+        {{ label }}
+      </h3>
+      {{ title_suffix }}
+    </div>
+  </a>
+</article>

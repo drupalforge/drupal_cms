@@ -1,0 +1,11 @@
+uuid: cc6384b3-c1ee-41f3-8092-de68f450fb14
+langcode: en
+status: true
+dependencies: {  }
+name: Event
+type: event
+description: 'SFDUG meetings and special events.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

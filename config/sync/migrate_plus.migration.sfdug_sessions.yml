@@ -1,0 +1,129 @@
+uuid: e6f77c84-97b2-4f09-9a4a-18281794e977
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: V72rHysx04mh0m1-UumhQkInKJWjCKNESxAIxIu2S9k
+id: sfdug_sessions
+class: null
+idMap: {  }
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - SFDUG
+  - Historical
+migration_group: sfdug
+label: 'Import SFDUG Historical Sessions'
+source:
+  plugin: csv
+  path: modules/custom/sfdug_migrate/migrations/sfdug_nodes_parsed_enriched.csv
+  header_offset: 0
+  ids:
+    - node_id
+  fields:
+    -
+      name: node_id
+      label: 'Node ID'
+    -
+      name: drupal_org_url
+      label: 'Drupal.org URL'
+    -
+      name: category
+      label: Category
+    -
+      name: title
+      label: Title
+    -
+      name: created_date
+      label: 'Created Date'
+    -
+      name: author
+      label: Author
+    -
+      name: author_url
+      label: 'Author URL'
+    -
+      name: featured_image_url
+      label: 'Featured Image'
+    -
+      name: event_start
+      label: 'Event Start'
+    -
+      name: event_end
+      label: 'Event End'
+    -
+      name: timezone
+      label: Timezone
+    -
+      name: organizers
+      label: Organizers
+    -
+      name: event_type
+      label: 'Event Type'
+    -
+      name: url_field_links
+      label: 'URL Field Links'
+    -
+      name: meetup_urls
+      label: 'Meetup URLs'
+    -
+      name: attachments
+      label: Attachments
+    -
+      name: speakers_inferred
+      label: Speakers
+    -
+      name: body_html_clean
+      label: Body
+    -
+      name: event_date
+      label: 'Event Date'
+    -
+      name: norm_title
+      label: 'Normalized Title'
+    -
+      name: slug
+      label: Slug
+    -
+      name: meetup_title
+      label: 'Meetup Title'
+    -
+      name: meetup_date_raw
+      label: 'Meetup Date'
+    -
+      name: venue_name_raw
+      label: Venue
+    -
+      name: event_mode
+      label: 'Event Mode'
+    -
+      name: rsvp_count
+      label: 'RSVP Count'
+    -
+      name: meetup_match_score
+      label: 'Match Score'
+process:
+  type:
+    plugin: default_value
+    default_value: session
+  title: title
+  status:
+    plugin: default_value
+    default_value: 1
+  created:
+    plugin: callback
+    callable: strtotime
+    source: created_date
+  changed: '@created'
+  body/value: body_html_clean
+  body/format:
+    plugin: default_value
+    default_value: full_html
+  field_description/value: body_html_clean
+  field_description/format:
+    plugin: default_value
+    default_value: full_html
+destination:
+  plugin: 'entity:node'
+migration_dependencies: {  }
+include: null

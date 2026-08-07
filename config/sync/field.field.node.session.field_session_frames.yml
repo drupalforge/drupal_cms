@@ -1,0 +1,24 @@
+uuid: 0174c0db-8d5a-444f-9990-b9e7faada11c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_session_frames
+    - media.type.image
+    - node.type.session
+id: node.session.field_session_frames
+field_name: field_session_frames
+entity_type: node
+bundle: session
+label: 'Session Frames'
+description: 'Extracted video frames'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:media'
+  handler_settings:
+    target_bundles:
+      image: image
+field_type: entity_reference

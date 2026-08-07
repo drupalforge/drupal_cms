@@ -1,0 +1,11 @@
+uuid: c4139b8e-8b27-4495-a83e-135254fd8786
+langcode: en
+status: true
+dependencies: {  }
+name: Location
+type: location
+description: 'Dedicated locations for Events.'
+help: null
+new_revision: true
+preview_mode: 1
+display_submitted: true

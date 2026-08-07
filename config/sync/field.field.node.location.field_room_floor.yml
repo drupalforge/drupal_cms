@@ -1,0 +1,19 @@
+uuid: 968fd1a5-350b-4bf5-9676-ced6067dae9c
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_room_floor
+    - node.type.location
+id: node.location.field_room_floor
+field_name: field_room_floor
+entity_type: node
+bundle: location
+label: 'Room / floor'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

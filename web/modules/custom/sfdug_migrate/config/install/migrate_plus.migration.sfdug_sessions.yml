@@ -1,0 +1,143 @@
+id: sfdug_sessions
+label: 'Import SFDUG Historical Sessions'
+migration_group: sfdug
+migration_tags:
+  - SFDUG
+  - Historical
+
+source:
+  plugin: csv
+  path: modules/custom/sfdug_migrate/migrations/sfdug_nodes_parsed_enriched.csv
+  header_offset: 0
+  ids:
+    - node_id
+  fields:
+    0:
+      name: node_id
+      label: 'Node ID'
+    1:
+      name: drupal_org_url
+      label: 'Drupal.org URL'
+    2:
+      name: category
+      label: 'Category'
+    3:
+      name: title
+      label: 'Title'
+    4:
+      name: created_date
+      label: 'Created Date'
+    5:
+      name: author
+      label: 'Author'
+    6:
+      name: author_url
+      label: 'Author URL'
+    7:
+      name: featured_image_url
+      label: 'Featured Image'
+    8:
+      name: event_start
+      label: 'Event Start'
+    9:
+      name: event_end
+      label: 'Event End'
+    10:
+      name: timezone
+      label: 'Timezone'
+    11:
+      name: organizers
+      label: 'Organizers'
+    12:
+      name: event_type
+      label: 'Event Type'
+    13:
+      name: url_field_links
+      label: 'URL Field Links'
+    14:
+      name: meetup_urls
+      label: 'Meetup URLs'
+    15:
+      name: attachments
+      label: 'Attachments'
+    16:
+      name: speakers_inferred
+      label: 'Speakers'
+    17:
+      name: body_html_clean
+      label: 'Body'
+    18:
+      name: event_date
+      label: 'Event Date'
+    19:
+      name: norm_title
+      label: 'Normalized Title'
+    20:
+      name: slug
+      label: 'Slug'
+    21:
+      name: meetup_title
+      label: 'Meetup Title'
+    22:
+      name: meetup_date_raw
+      label: 'Meetup Date'
+    23:
+      name: venue_name_raw
+      label: 'Venue'
+    24:
+      name: event_mode
+      label: 'Event Mode'
+    25:
+      name: rsvp_count
+      label: 'RSVP Count'
+    26:
+      name: meetup_match_score
+      label: 'Match Score'
+
+process:
+  # Basic fields
+  type:
+    plugin: default_value
+    default_value: session
+
+  title: title
+
+  status:
+    plugin: default_value
+    default_value: 1
+
+  # Set created and changed dates
+  created:
+    plugin: callback
+    callable: strtotime
+    source: created_date
+
+  changed: '@created'
+
+  # Body field
+  body/value: body_html_clean
+  body/format:
+    plugin: default_value
+    default_value: full_html
+
+  # Session description
+  field_description/value: body_html_clean
+  field_description/format:
+    plugin: default_value
+    default_value: full_html
+
+  # Event reference - will need to be set manually or via a separate Event migration
+  # field_event: TBD
+
+  # Organizers - split semicolon-separated list
+  # Will need separate Person migration first
+  # field_organizers: TBD
+
+  # Speakers - split semicolon-separated list
+  # Will need separate Person migration first
+  # field_person_speakers: TBD
+
+destination:
+  plugin: 'entity:node'
+
+migration_dependencies: {}

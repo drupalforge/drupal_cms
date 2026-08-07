@@ -1,0 +1,35 @@
+<div class="layout-container">
+  <header role="banner">
+    <div class="container site-header__inner">
+      {{ page.header }}
+      {% if page.primary_menu %}
+        <nav class="primary-menu" role="navigation">
+          {{ page.primary_menu }}
+        </nav>
+      {% endif %}
+    </div>
+  </header>
+
+  {{ page.highlighted }}
+  {{ page.breadcrumb }}
+
+  <main role="main">
+    <div class="container">
+      <a id="main-content" tabindex="-1"></a>
+      {{ page.content }}
+    </div>
+  </main>
+
+  {% if page.sidebar_first %}
+    <aside class="layout-sidebar-first" role="complementary">
+      {{ page.sidebar_first }}
+    </aside>
+  {% endif %}
+
+  <footer role="contentinfo">
+    <div class="container">
+      {{ page.footer }}
+      <p>Est. April 2006 | Celebrating 20 Years of Bay Area Drupal</p>
+    </div>
+  </footer>
+</div>

@@ -1,0 +1,15 @@
+uuid: e75bc535-5d4d-41ae-a25e-c325f9ec9694
+langcode: en
+status: true
+dependencies: {  }
+name: 'Full HTML'
+format: full_html
+weight: 0
+filters:
+  filter_url:
+    id: filter_url
+    provider: filter
+    status: true
+    weight: 0
+    settings:
+      filter_url_length: 72

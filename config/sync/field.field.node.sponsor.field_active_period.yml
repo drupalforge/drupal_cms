@@ -1,0 +1,21 @@
+uuid: 41c3e323-e807-4617-8d21-794c52ae665b
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_active_period
+    - node.type.sponsor
+  module:
+    - datetime_range
+id: node.sponsor.field_active_period
+field_name: field_active_period
+entity_type: node
+bundle: sponsor
+label: 'Active period'
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: daterange

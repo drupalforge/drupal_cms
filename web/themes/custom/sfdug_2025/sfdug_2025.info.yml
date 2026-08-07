@@ -1,0 +1,21 @@
+name: SFDUG 2025
+type: theme
+description: 'A custom theme for the San Francisco Drupal Users Group 20th Anniversary.'
+package: Custom
+core_version_requirement: ^10 || ^11
+base theme: false
+
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  highlighted: Highlighted
+  breadcrumb: Breadcrumb
+  content: Content
+  sidebar_first: 'Left sidebar'
+  footer: Footer
+
+libraries:
+  - sfdug_2025/global-styling
+
+logo: sfdug-logo.jpeg
+

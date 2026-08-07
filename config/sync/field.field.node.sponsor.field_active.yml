@@ -1,0 +1,21 @@
+uuid: 26613b3b-8205-4002-a664-4e41d51bc224
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_active
+    - node.type.sponsor
+id: node.sponsor.field_active
+field_name: field_active
+entity_type: node
+bundle: sponsor
+label: Active
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  on_label: 'On'
+  off_label: 'Off'
+field_type: boolean

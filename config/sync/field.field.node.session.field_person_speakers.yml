@@ -1,0 +1,24 @@
+uuid: 86306436-f119-4a4f-946f-dd0f904226be
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_person_speakers
+    - node.type.person
+    - node.type.session
+id: node.session.field_person_speakers
+field_name: field_person_speakers
+entity_type: node
+bundle: session
+label: 'Person Speaker(s)'
+description: 'Person nodes for speakers (use instead of user accounts)'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings:
+  handler: 'default:node'
+  handler_settings:
+    target_bundles:
+      person: person
+field_type: entity_reference

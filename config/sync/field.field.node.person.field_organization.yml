@@ -1,0 +1,19 @@
+uuid: 2be5fe8a-e6b9-4060-9db2-47f82d921515
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_organization
+    - node.type.person
+id: node.person.field_organization
+field_name: field_organization
+entity_type: node
+bundle: person
+label: Organization
+description: ''
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

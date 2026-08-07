@@ -1,0 +1,9 @@
+uuid: 31db12f5-866c-4fa9-b237-96be7e823a46
+langcode: en
+status: true
+dependencies: {  }
+name: Role
+vid: role
+description: 'Roles for People (speaker, organizer, sponsor_rep, videographer, etc.)'
+weight: 0
+new_revision: false

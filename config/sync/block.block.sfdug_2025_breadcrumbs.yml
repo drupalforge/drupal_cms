@@ -1,0 +1,22 @@
+uuid: 6a85a478-1ad7-4984-97a1-34f47b7509c8
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - sfdug_2025
+_core:
+  default_config_hash: rUKMsaj4XvIHtU3kRiHIA6Rkn4IHzCkhTiUZudMkp14
+id: sfdug_2025_breadcrumbs
+theme: sfdug_2025
+region: breadcrumb
+weight: -5
+provider: null
+plugin: system_breadcrumb_block
+settings:
+  id: system_breadcrumb_block
+  label: Breadcrumbs
+  label_display: '0'
+  provider: system
+visibility: {  }

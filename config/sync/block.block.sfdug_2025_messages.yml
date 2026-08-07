@@ -1,0 +1,22 @@
+uuid: cc933505-38db-4b05-a309-48106fd1dde9
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - sfdug_2025
+_core:
+  default_config_hash: 5ra2HNIksWbp6AhPpTufTGSlgx2FR7RR_ssxdjgFg4I
+id: sfdug_2025_messages
+theme: sfdug_2025
+region: highlighted
+weight: -3
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: 'Status messages'
+  label_display: '0'
+  provider: system
+visibility: {  }

@@ -1,0 +1,13 @@
+uuid: 7bcd5b15-171b-4911-b68c-30e69f7d5137
+langcode: en
+status: true
+dependencies:
+  module:
+    - storage
+_core:
+  default_config_hash: XOMfWp9zpdirMH0NwdjGj_ezxp_K2MjSDVMoWT0o-ck
+id: storage_delete_action
+label: 'Delete storage data'
+type: storage
+plugin: 'entity:delete_action:storage'
+configuration: {  }

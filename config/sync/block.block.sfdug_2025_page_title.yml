@@ -1,0 +1,20 @@
+uuid: 3e43b2b6-31f7-4b17-adc5-7a15ce331fe5
+langcode: en
+status: true
+dependencies:
+  theme:
+    - sfdug_2025
+_core:
+  default_config_hash: dY7_Wihz9ohfBPKP554_brUfc9nPaecShShmC_VTGRM
+id: sfdug_2025_page_title
+theme: sfdug_2025
+region: header
+weight: -3
+provider: null
+plugin: page_title_block
+settings:
+  id: page_title_block
+  label: 'Page title'
+  label_display: '0'
+  provider: core
+visibility: {  }

@@ -1,0 +1,21 @@
+uuid: d56919e5-c535-47ca-990a-ff916b87c136
+langcode: en
+status: true
+dependencies:
+  module:
+    - address
+    - crm
+_core:
+  default_config_hash: W5CUcWEfVfP0SyOgQ8ljLaDhhZZFWR_8DQ6n37b03tI
+id: crm_contact_method.address
+field_name: address
+entity_type: crm_contact_method
+type: address
+settings: {  }
+module: address
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: true
+custom_storage: false

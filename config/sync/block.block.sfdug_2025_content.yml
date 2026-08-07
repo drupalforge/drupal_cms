@@ -1,0 +1,22 @@
+uuid: 321d1dfa-93c4-4706-bf38-d711180e6ed4
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - sfdug_2025
+_core:
+  default_config_hash: G4iNGvy_k2yNIEH_FJmbkvgBBar1etJIhKJYuygT7hU
+id: sfdug_2025_content
+theme: sfdug_2025
+region: content
+weight: -4
+provider: null
+plugin: system_main_block
+settings:
+  id: system_main_block
+  label: 'Main page content'
+  label_display: '0'
+  provider: system
+visibility: {  }

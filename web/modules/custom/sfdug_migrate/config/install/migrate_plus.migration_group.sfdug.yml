@@ -1,0 +1,4 @@
+id: sfdug
+label: 'SFDUG Historical Content'
+description: 'Migrations for SFDUG historical meetings, people, and media'
+source_type: 'CSV'

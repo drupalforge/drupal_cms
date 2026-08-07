@@ -1,0 +1,11 @@
+uuid: d8f88475-abe1-4157-8537-3de6e1af9a2f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: 3T0QooYv-SkxCEL3AOuQNx0e3HLlP95bov03gV49_sg
+name: Venue
+vid: venue
+description: 'Meeting locations (physical venues and virtual)'
+weight: 0
+new_revision: false

@@ -1,0 +1,8 @@
+langcode: en
+status: true
+dependencies: {  }
+name: Venue
+vid: venue
+description: 'Meeting locations (physical venues and virtual)'
+weight: 0
+new_revision: false

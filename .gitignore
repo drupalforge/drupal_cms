@@ -5,7 +5,9 @@
 /.vscode/
 /AGENTS*
 /assets/
-/config/
+/config/*
+!/config/sync/
+!/config/sync/**
 /CONTRIBUTING*
 /LICENSE*
 /logs/*
@@ -16,4 +18,10 @@
 /README*
 /recipes/
 /vendor/
-/web/
+/web/*
+!/web/modules/
+!/web/modules/custom/
+!/web/modules/custom/**
+!/web/themes/
+!/web/themes/custom/
+!/web/themes/custom/**

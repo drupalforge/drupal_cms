@@ -1,0 +1,22 @@
+uuid: 343e97ee-8f32-48b9-a9ae-a6951875c7a1
+langcode: en
+status: true
+dependencies:
+  theme:
+    - sfdug_2025
+_core:
+  default_config_hash: A_KsAw1fyIvdBubmxkvtCtoSuV62cVV-p0RSPnvqc9U
+id: sfdug_2025_primary_local_tasks
+theme: sfdug_2025
+region: highlighted
+weight: -2
+provider: null
+plugin: local_tasks_block
+settings:
+  id: local_tasks_block
+  label: 'Primary tabs'
+  label_display: '0'
+  provider: core
+  primary: true
+  secondary: false
+visibility: {  }

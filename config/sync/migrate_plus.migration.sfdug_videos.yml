@@ -1,0 +1,61 @@
+uuid: e04fd192-633d-4d4b-8a26-e10ce2a62e3f
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: lBFawbszmEpAuc--_QvHJP620dZwkcBFaqfAy1NYSoY
+id: sfdug_videos
+class: null
+idMap: {  }
+field_plugin_method: null
+cck_plugin_method: null
+migration_tags:
+  - SFDUG
+  - Media
+migration_group: sfdug
+label: 'Import SFDUG YouTube Videos'
+source:
+  plugin: csv
+  path: modules/custom/sfdug_migrate/migrations/sfdug_videos.csv
+  header_offset: 0
+  ids:
+    - video_id
+  fields:
+    -
+      name: video_id
+      label: 'Video ID'
+    -
+      name: date
+      label: Date
+    -
+      name: title
+      label: Title
+    -
+      name: speaker
+      label: Speaker
+    -
+      name: url
+      label: URL
+    -
+      name: suggested_filename
+      label: 'Suggested Filename'
+    -
+      name: thumbnail_url
+      label: 'Thumbnail URL'
+process:
+  bundle:
+    plugin: default_value
+    default_value: remote_video
+  name: title
+  status:
+    plugin: default_value
+    default_value: 1
+  created:
+    plugin: callback
+    callable: strtotime
+    source: date
+  field_media_oembed_video: url
+destination:
+  plugin: 'entity:media'
+migration_dependencies: {  }
+include: null

@@ -1,0 +1,12 @@
+uuid: a5fb2490-7d55-47b0-a78d-4eaa2a7a419b
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: gHoh6O1Kpo0EfK_trDjlFh1bKaRJ-KBXhBuU6Hi5Cgo
+id: sfdug
+label: 'SFDUG Historical Content'
+description: 'Migrations for SFDUG historical meetings, people, and media'
+source_type: CSV
+module: null
+shared_configuration: null

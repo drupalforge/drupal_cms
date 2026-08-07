@@ -1,0 +1,29 @@
+uuid: abcc157a-666e-49d1-a349-cada0b19c5ff
+langcode: en
+status: true
+dependencies:
+  config:
+    - filter.format.full_html
+    - filter.format.webform_default
+    - storage.storage_type.sponsorship
+  module:
+    - field_permissions
+    - filter
+    - media
+    - storage
+    - system
+_core:
+  default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
+id: authenticated
+label: 'Authenticated user'
+weight: 1
+is_admin: false
+permissions:
+  - 'access content'
+  - 'access user profiles'
+  - 'use text format full_html'
+  - 'use text format webform_default'
+  - 'view field_r'
+  - 'view field_time_slot'
+  - 'view media'
+  - 'view published sponsorship storage entities'

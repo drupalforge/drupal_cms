@@ -1,0 +1,27 @@
+uuid: 6025c178-bb45-496a-8010-b88fd9cbfd63
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.article.field_event
+    - node.type.article
+  module:
+    - user
+id: node.article.default
+targetEntityType: node
+bundle: article
+mode: default
+content:
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+  test:
+    type: entity_reference_label
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+hidden:
+  field_event: true

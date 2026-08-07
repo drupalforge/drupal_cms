@@ -1,0 +1,18 @@
+uuid: 99365a5c-ef71-4e86-8d2b-5b8dbd3e3f61
+langcode: en
+status: true
+dependencies: {  }
+_core:
+  default_config_hash: OkO0pgDXShiwBaYMaCutJp6XZYOCk6dmcA-XnJRMHfY
+id: household
+label: Household
+description: 'A family or group of people living at the same address.'
+help: ''
+new_revision: true
+date:
+  start_date:
+    label: 'Date of Establishment'
+    description: ''
+  end_date:
+    label: 'Date of Dissolution'
+    description: ''

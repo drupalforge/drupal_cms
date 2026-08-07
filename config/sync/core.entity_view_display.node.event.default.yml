@@ -1,0 +1,42 @@
+uuid: dfd2e31e-11d2-4fe5-90c5-22934622b61d
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.field.node.event.body
+    - field.field.node.event.field_event_date
+    - field.field.node.event.field_event_mode
+    - field.field.node.event.field_location
+    - field.field.node.event.field_organizers
+    - field.field.node.event.field_rsvp_count
+    - field.field.node.event.field_source_url
+    - field.field.node.event.field_sponsors
+    - node.type.event
+  module:
+    - text
+    - user
+id: node.event.default
+targetEntityType: node
+bundle: event
+mode: default
+content:
+  body:
+    type: text_default
+    label: above
+    settings: {  }
+    third_party_settings: {  }
+    weight: 101
+    region: content
+  links:
+    settings: {  }
+    third_party_settings: {  }
+    weight: 100
+    region: content
+hidden:
+  field_event_date: true
+  field_event_mode: true
+  field_location: true
+  field_organizers: true
+  field_rsvp_count: true
+  field_source_url: true
+  field_sponsors: true

@@ -1,0 +1,13 @@
+{#
+/**
+ * @file
+ * Unformatted view template for SFDUG meetings.
+ */
+#}
+<div class="meetings-grid">
+  {% for row in rows %}
+    <div{{ row.attributes.addClass('meeting-card') }}>
+      {{ row.content }}
+    </div>
+  {% endfor %}
+</div>

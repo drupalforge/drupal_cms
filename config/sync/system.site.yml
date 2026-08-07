@@ -1,0 +1,15 @@
+_core:
+  default_config_hash: HlN7eAN2N4JIHsYv56V4E7sqC9bS609KwvGFjyD_mgk
+langcode: en
+uuid: 41c1e027-8adf-4da6-a8cb-b858324ce29a
+name: 'San Francisco Drupal Users Group'
+mail: admin@example.com
+slogan: 'Celebrating 20 Years of Bay Area Drupal'
+page:
+  403: ''
+  404: ''
+  front: /meetings
+admin_compact_mode: false
+weight_select_max: 100
+default_langcode: en
+mail_notification: null

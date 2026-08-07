@@ -1,0 +1,9 @@
+uuid: 1205ac25-fa85-48c2-903f-92c1086588ad
+langcode: en
+status: true
+dependencies: {  }
+name: Topic
+vid: topic
+description: 'Topics for tagging Events and Sessions (e.g., Headless Drupal, Twig, Layout Builder)'
+weight: 0
+new_revision: false

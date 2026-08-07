@@ -1,0 +1,20 @@
+uuid: c78a6128-b902-4bb4-a502-13f0ba36ad23
+langcode: en
+status: true
+dependencies:
+  theme:
+    - sfdug_2025
+_core:
+  default_config_hash: bXIY_bcTLD1-0gwNQhWPHANNy6hQa_RxJgvHxKhNS2E
+id: sfdug_2025_primary_admin_actions
+theme: sfdug_2025
+region: highlighted
+weight: -4
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Primary admin actions'
+  label_display: '0'
+  provider: core
+visibility: {  }
