@@ -264,6 +264,7 @@
         "drupal/auto_entitylabel": "^3.4",
         "drupal/automatic_updates": "^4.1",
         "drupal/autosave_form": "^1.11",
+        "drupal/backup_migrate": "^5.1",
         "drupal/byte": "^1",
         "drupal/canvas": "^1.5",
         "drupal/captcha": "^2.0",
