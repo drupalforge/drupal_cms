@@ -1,0 +1,11 @@
+uuid: 27d954d1-fe5a-4717-9d07-a6171ebc549a
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.card
+label: 'Card (video grid)'
+description: null
+targetEntityType: node
+cache: true

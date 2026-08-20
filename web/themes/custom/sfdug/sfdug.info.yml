@@ -1,0 +1,30 @@
+name: SFDUG
+type: theme
+description: 'San Francisco Drupal Users Group — cream, purple and gold. Meeting monthly since 2006.'
+package: Custom
+core_version_requirement: ^11
+base theme: stable9
+
+libraries:
+  - sfdug/global
+
+libraries-override:
+  core/normalize: false
+
+logo: images/sfdug-logo.jpg
+
+regions:
+  header: Header
+  primary_menu: 'Primary menu'
+  infobar: 'Info bar'
+  hero: Hero
+  highlighted: Highlighted
+  breadcrumb: Breadcrumb
+  recordings: Recordings
+  content: Content
+  sidebar_first: 'Left sidebar'
+  footer_first: 'Footer — brand'
+  footer_second: 'Footer — column 2'
+  footer_third: 'Footer — column 3'
+  footer_fourth: 'Footer — column 4'
+  footer_bottom: 'Footer — bottom bar'

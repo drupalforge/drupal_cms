@@ -1,0 +1,9 @@
+<div class="datebar">
+  {% if date %}<div class="d-date">{{ date }}</div>{% endif %}
+  {% if date and time %}<div class="vrule"></div>{% endif %}
+  {% if time %}<div class="d-time">{{ time }}</div>{% endif %}
+  {% if where %}<div class="d-where">{{ where }}</div>{% endif %}
+  {% if rsvp_url %}
+    <a class="btn-accent" href="{{ rsvp_url }}" target="_blank" rel="noopener">{{ rsvp_label|default('RSVP for free →') }}</a>
+  {% endif %}
+</div>

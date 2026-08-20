@@ -1,0 +1,32 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Video card
+status: stable
+description: A recorded session with its real YouTube thumbnail.
+props:
+  type: object
+  required:
+  - title
+  properties:
+    title:
+      type: string
+    date:
+      type:
+      - string
+      - 'null'
+    speaker:
+      type:
+      - string
+      - 'null'
+    url:
+      type:
+      - string
+      - 'null'
+    thumbnail:
+      type:
+      - string
+      - 'null'
+    external:
+      type:
+      - boolean
+      - 'null'
+      default: true

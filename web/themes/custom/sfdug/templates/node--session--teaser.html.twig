@@ -1,0 +1,24 @@
+{#
+/**
+ * @file
+ * Listing teaser.
+ *
+ * Links to the session page rather than straight to YouTube so listings keep
+ * people on the site. Sessions with no recording fall back to the archive
+ * card, which is built for a missing thumbnail.
+ */
+#}
+{% set card = {
+  title: label,
+  date: date_long ?: month_label,
+  speaker: speaker_names,
+  url: url,
+  thumbnail: thumbnail,
+  external: false,
+} %}
+
+{% if thumbnail %}
+  {{ include('sfdug:video-card', card, with_context = false) }}
+{% else %}
+  {{ include('sfdug:archive-card', card|merge({ gradient: gradient }), with_context = false) }}
+{% endif %}

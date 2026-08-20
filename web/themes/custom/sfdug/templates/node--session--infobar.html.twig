@@ -1,0 +1,12 @@
+{#
+/**
+ * @file
+ * A session rendered as the "NEXT MEETUP" strip under the header.
+ */
+#}
+{{ include('sfdug:infobar', {
+  when: when_line,
+  badge: badge,
+  rsvp_url: rsvp_url,
+  rsvp_label: 'RSVP →'|t,
+}, with_context = false) }}

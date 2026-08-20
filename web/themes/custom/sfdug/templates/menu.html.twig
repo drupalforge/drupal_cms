@@ -1,0 +1,23 @@
+{#
+/**
+ * @file
+ * Default menu: a simple vertical list. Used by the footer columns.
+ */
+#}
+{% import _self as menus %}
+{{ menus.links(items, 0) }}
+
+{% macro links(items, depth) %}
+  {% if items %}
+    <ul class="menu menu--level-{{ depth }}">
+      {% for item in items %}
+        <li>
+          <a href="{{ item.url }}"{{ item.in_active_trail ? ' class="is-active"' }}>{{ item.title }}</a>
+          {% if item.below %}
+            {{ _self.links(item.below, depth + 1) }}
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% endif %}
+{% endmacro %}

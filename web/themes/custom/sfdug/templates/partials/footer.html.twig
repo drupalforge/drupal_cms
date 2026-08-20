@@ -1,0 +1,54 @@
+{#
+/**
+ * @file
+ * Site footer: brand blurb, two link columns, social icons, and the bottom bar.
+ *
+ * Each column falls back to sensible default markup when nothing is placed in
+ * its region, so the footer is never half-built.
+ */
+#}
+<footer class="site-footer" role="contentinfo">
+  <div class="wrap footer-top">
+    <div>
+      {% if page.footer_first %}
+        {{ page.footer_first }}
+      {% else %}
+        <div class="footer-brand">
+          <img src="{{ base_path ~ directory }}/images/sfdug-logo.jpg" alt="" width="46" height="46">
+          <span>SFDUG</span>
+        </div>
+        <p class="about-blurb">{{ 'The San Francisco Drupal Users Group — meeting monthly since 2006. Part of the Bay Area Drupal community.'|t }}</p>
+      {% endif %}
+    </div>
+
+    <div class="footer-col">{{ page.footer_second }}</div>
+    <div class="footer-col">{{ page.footer_third }}</div>
+
+    <div class="footer-col">
+      {% if page.footer_fourth %}
+        {{ page.footer_fourth }}
+      {% else %}
+        <h4>{{ 'Connect'|t }}</h4>
+        <div class="social">
+          <a href="https://www.youtube.com/@sfdug" aria-label="{{ 'YouTube'|t }}">
+            {{ include('sfdug:icon', { name: 'youtube', size: 20 }, with_context = false) }}
+          </a>
+          <a href="#join" aria-label="{{ 'Email'|t }}">
+            {{ include('sfdug:icon', { name: 'envelope', size: 20 }, with_context = false) }}
+          </a>
+        </div>
+      {% endif %}
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="wrap footer-bottom-inner">
+      {% if page.footer_bottom %}
+        {{ page.footer_bottom }}
+      {% else %}
+        <span>© {{ current_year }} {{ site_name }}.</span>
+        <span>{{ 'Built by the community with Drupal.'|t }}</span>
+      {% endif %}
+    </div>
+  </div>
+</footer>

@@ -1,0 +1,29 @@
+uuid: 80bd4633-7fe4-4283-8362-aef15118bfbe
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.sfdug_meetings
+  module:
+    - system
+    - views
+  theme:
+    - sfdug
+id: sfdug_infobar
+theme: sfdug
+region: infobar
+weight: 0
+provider: null
+plugin: 'views_block:sfdug_meetings-block_infobar'
+settings:
+  id: views_block_sfdug_meetings-block_infobar
+  label: Infobar
+  label_display: '0'
+  provider: views
+  views_label: ''
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

@@ -1,0 +1,25 @@
+uuid: 0f602cb4-2a44-41f3-9326-10dc49b28e94
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.footer-community
+  module:
+    - system
+  theme:
+    - sfdug
+id: sfdug_footer_community
+theme: sfdug
+region: footer_third
+weight: 0
+provider: null
+plugin: 'system_menu_block:footer-community'
+settings:
+  id: system_menu_block_footer-community
+  label: Community
+  label_display: visible
+  provider: system
+  level: 1
+  depth: null
+  expand_all_items: false
+visibility: {  }

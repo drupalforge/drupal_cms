@@ -1,0 +1,29 @@
+uuid: 1c8bafbd-a79a-4836-a49f-38afadf5a242
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.sfdug_meetings
+  module:
+    - system
+    - views
+  theme:
+    - sfdug
+id: sfdug_season
+theme: sfdug
+region: recordings
+weight: 0
+provider: null
+plugin: 'views_block:sfdug_meetings-block_season'
+settings:
+  id: views_block_sfdug_meetings-block_season
+  label: Season
+  label_display: '0'
+  provider: views
+  views_label: ''
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

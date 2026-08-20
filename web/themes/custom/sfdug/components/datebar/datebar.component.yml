@@ -1,0 +1,28 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Date bar
+status: stable
+description: The black bar under the promo poster carrying date, time, venue and the RSVP button.
+props:
+  type: object
+  properties:
+    date:
+      type:
+      - string
+      - 'null'
+    time:
+      type:
+      - string
+      - 'null'
+    where:
+      type:
+      - string
+      - 'null'
+    rsvp_url:
+      type:
+      - string
+      - 'null'
+    rsvp_label:
+      type:
+      - string
+      - 'null'
+      default: RSVP for free →

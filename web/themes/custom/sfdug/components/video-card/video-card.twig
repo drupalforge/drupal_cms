@@ -1,0 +1,16 @@
+<a class="card" href="{{ url }}"{% if external %} target="_blank" rel="noopener"{% endif %}>
+  <div class="card-thumb">
+    {% if thumbnail %}
+      <img src="{{ thumbnail }}" alt="" loading="lazy">
+    {% endif %}
+    <div class="fade"></div>
+    <span class="watch-pill">
+      {{ include('sfdug:icon', { name: 'play', size: 16 }, with_context = false) }} Watch recording
+    </span>
+  </div>
+  <div class="card-body">
+    {% if date %}<div class="card-date">{{ date }}</div>{% endif %}
+    <div class="card-title">{{ title }}</div>
+    {% if speaker %}<div class="card-speaker">{{ speaker }}</div>{% endif %}
+  </div>
+</a>

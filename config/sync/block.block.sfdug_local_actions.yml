@@ -1,0 +1,18 @@
+uuid: e844d423-9230-4c5d-abec-0999fcf466c8
+langcode: en
+status: true
+dependencies:
+  theme:
+    - sfdug
+id: sfdug_local_actions
+theme: sfdug
+region: highlighted
+weight: 2
+provider: null
+plugin: local_actions_block
+settings:
+  id: local_actions_block
+  label: 'Local actions'
+  label_display: '0'
+  provider: system
+visibility: {  }

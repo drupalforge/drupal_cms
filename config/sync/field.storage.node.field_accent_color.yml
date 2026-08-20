@@ -1,0 +1,21 @@
+uuid: 6706af30-8401-4580-bad3-5782a9dbe8a2
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.field_accent_color
+field_name: field_accent_color
+entity_type: node
+type: string
+settings:
+  max_length: 9
+  case_sensitive: false
+  is_ascii: false
+module: core
+locked: false
+cardinality: 1
+translatable: true
+indexes: {  }
+persist_with_no_fields: false
+custom_storage: false

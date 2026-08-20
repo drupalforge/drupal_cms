@@ -1,0 +1,168 @@
+/**
+ * Design tokens, reset and typography.
+ *
+ * Ported from the static prototype at web/HTML/css/styles.css. Two deliberate
+ * changes were made during the port:
+ *
+ * 1. Type sizes are rem, not px, so the page respects the browser's font size.
+ *    The prototype was px throughout.
+ * 2. Colours that were hardcoded in the prototype are tokens here — most
+ *    importantly the per-event accent, which was a whole second stylesheet
+ *    (eca.css) and is now driven by a field on the session node.
+ */
+
+:root {
+  /* Ink and body text. */
+  --ink: #1a1a1a;
+  --body: #3f3a36;
+  --muted: #6b655f;
+
+  /* Brand. */
+  --purple: #2c2160;
+  --purple-mid: #6c5cc4;
+  --purple-deep: #1c1538;
+  --purple-hover: #5a4bb0;
+  --gold: #f0c76a;
+  --gold-hover: #f5d27e;
+  --orange: #d26a3f;
+  --rust: #b5482a;
+  --teal: #2b5a6b;
+  --teal-soft: #e9f3f6;
+  --cream: #faf6ef;
+  --cream-soft: #fcf2e2;
+  --yt: #e33a2e;
+  --yt-hover: #cf2f24;
+  --footer-bg: #171025;
+  --gold-border: #f0d9a8;
+
+  /* Hairlines and shadows, all warm-tinted. */
+  --hairline: rgba(26, 26, 26, 0.08);
+  --hairline-soft: rgba(26, 26, 26, 0.06);
+  --shadow-card: 0 2px 4px rgba(26, 26, 26, 0.04), 0 18px 38px -18px rgba(74, 50, 30, 0.3);
+  --shadow-card-hover: 0 10px 18px rgba(26, 26, 26, 0.07), 0 32px 60px -18px rgba(44, 33, 96, 0.4);
+  --shadow-card-sm: 0 2px 4px rgba(26, 26, 26, 0.04), 0 14px 30px -16px rgba(74, 50, 30, 0.24);
+  --shadow-card-sm-hover: 0 8px 16px rgba(26, 26, 26, 0.06), 0 26px 48px -16px rgba(74, 50, 30, 0.34);
+
+  /**
+   * Per-event skin.
+   *
+   * These four are overridden inline on <body> when the featured session has a
+   * value in field_accent_color — see sfdug_preprocess_html(). Setting an accent
+   * switches the page from the default purple/gold treatment to the darker
+   * "poster" treatment the ECA edition used.
+   */
+  --accent: var(--orange);
+  --accent-strong: var(--rust);
+  --infobar-bg: var(--purple);
+  --infobar-accent: var(--gold);
+
+  /* Type scale. Prototype px values in comments for traceability. */
+  --fs-hero: 3.375rem;      /* 54px */
+  --fs-h2-lg: 2.875rem;     /* 46px */
+  --fs-h2: 2.375rem;        /* 38px */
+  --fs-h3: 1.6875rem;       /* 27px */
+  --fs-lead: 1.3125rem;     /* 21px */
+  --fs-prose: 1.125rem;     /* 18px */
+  --fs-card-title: 1.1875rem; /* 19px */
+  --fs-base: 1.0625rem;     /* 17px */
+  --fs-sm: 0.9375rem;       /* 15px */
+  --fs-xs: 0.90625rem;      /* 14.5px */
+  --fs-label: 0.875rem;     /* 14px */
+  --fs-tiny: 0.8125rem;     /* 13px */
+  --fs-micro: 0.71875rem;   /* 11.5px */
+
+  --maxw: 1180px;
+  --gutter: 28px;
+  --header-h: 84px;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: var(--header-h);
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  background: #fff;
+  color: var(--ink);
+  font-size: 1rem;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+::selection {
+  background: var(--purple-mid);
+  color: #fff;
+}
+
+/* Visible focus. The prototype had none — keyboard users got nothing. */
+:focus-visible {
+  outline: 3px solid var(--purple-mid);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.visually-hidden {
+  position: absolute !important;
+  overflow: hidden;
+  clip: rect(1px, 1px, 1px, 1px);
+  width: 1px;
+  height: 1px;
+  word-wrap: normal;
+}
+
+/* Skip link — also absent from the prototype. */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 16px;
+  z-index: 200;
+  padding: 12px 22px;
+  border-radius: 0 0 12px 12px;
+  background: var(--purple);
+  color: #fff;
+  font-weight: 700;
+  transition: top 0.2s;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

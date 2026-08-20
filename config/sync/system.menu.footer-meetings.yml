@@ -1,0 +1,8 @@
+uuid: 4fe4995e-c40e-438c-ba79-042345a77391
+langcode: en
+status: true
+dependencies: {  }
+id: footer-meetings
+label: 'Footer — Meetings'
+description: 'SFDUG footer links.'
+locked: false

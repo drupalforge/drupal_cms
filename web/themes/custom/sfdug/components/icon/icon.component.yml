@@ -1,0 +1,38 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Icon
+status: stable
+description: 'The inline SVG set used across the site. The prototype pasted these SVGs wherever they were
+  needed; collecting them here keeps one copy of each.
+
+  '
+props:
+  type: object
+  required:
+  - name
+  properties:
+    name:
+      type: string
+      title: Icon name
+      enum:
+      - calendar
+      - clock
+      - pin
+      - tag
+      - youtube
+      - youtube_button
+      - mastodon
+      - envelope
+      - play
+      - play_badge
+    size:
+      type:
+      - integer
+      - 'null'
+      title: Width and height in pixels
+      default: 22
+    label:
+      type:
+      - string
+      - 'null'
+      title: Accessible label
+      description: Leave empty for decorative icons, which are hidden from AT.

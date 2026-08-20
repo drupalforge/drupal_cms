@@ -60,6 +60,7 @@ module:
   maxlength: 0
   media: 0
   media_library: 0
+  menu_link_attributes: 0
   menu_link_content: 0
   menu_ui: 0
   metatag: 0
@@ -120,4 +121,6 @@ theme:
   claro: 0
   gin: 0
   sfdug_2025: 0
+  stable9: 0
+  sfdug: 0
 profile: minimal

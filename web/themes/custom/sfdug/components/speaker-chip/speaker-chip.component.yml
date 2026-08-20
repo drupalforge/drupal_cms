@@ -1,0 +1,31 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Speaker chip
+status: stable
+description: A speaker's avatar, name and role.
+props:
+  type: object
+  required:
+  - name
+  properties:
+    name:
+      type: string
+    role:
+      type:
+      - string
+      - 'null'
+    image_url:
+      type:
+      - string
+      - 'null'
+    url:
+      type:
+      - string
+      - 'null'
+      title: Link to the speaker's page
+    line_art:
+      type:
+      - boolean
+      - 'null'
+      title: Contain rather than crop the image
+      description: For logos and illustrations, which get cut off by a cover crop.
+      default: false

@@ -1,0 +1,11 @@
+uuid: cbac085a-d092-441a-879c-3f45adb6c3ea
+langcode: en
+status: true
+dependencies:
+  module:
+    - node
+id: node.card_archive
+label: 'Card — archive'
+description: null
+targetEntityType: node
+cache: true

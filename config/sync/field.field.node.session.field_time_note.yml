@@ -1,0 +1,19 @@
+uuid: 5f5ed12d-cd5e-43ef-aaee-839168dd8ca1
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_time_note
+    - node.type.session
+id: node.session.field_time_note
+field_name: field_time_note
+entity_type: node
+bundle: session
+label: 'Time note'
+description: 'Small print under the time, e.g. “New afternoon meeting time”.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

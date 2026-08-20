@@ -1,0 +1,89 @@
+uuid: 2a2cccfd-9f3f-4cce-92ff-23636b24d182
+langcode: en
+status: true
+dependencies:
+  config:
+    - core.entity_view_mode.node.card
+    - field.field.node.session.field_accent_color
+    - field.field.node.session.field_audience
+    - field.field.node.session.field_badge
+    - field.field.node.session.field_description
+    - field.field.node.session.field_event
+    - field.field.node.session.field_is_non_session
+    - field.field.node.session.field_is_training
+    - field.field.node.session.field_organizers
+    - field.field.node.session.field_parent_event
+    - field.field.node.session.field_person_speakers
+    - field.field.node.session.field_r
+    - field.field.node.session.field_rsvp_url
+    - field.field.node.session.field_session_category
+    - field.field.node.session.field_session_date
+    - field.field.node.session.field_session_frames
+    - field.field.node.session.field_session_sponsors
+    - field.field.node.session.field_session_video
+    - field.field.node.session.field_short_description
+    - field.field.node.session.field_slides
+    - field.field.node.session.field_social_media_card
+    - field.field.node.session.field_source_url
+    - field.field.node.session.field_speakers
+    - field.field.node.session.field_time_note
+    - field.field.node.session.field_time_slot
+    - field.field.node.session.field_topics
+    - field.field.node.session.field_venue
+    - field.field.node.session.field_venue_note
+    - node.type.session
+id: node.session.card
+targetEntityType: node
+bundle: session
+mode: card
+content:
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
+hidden:
+  changed: true
+  default_langcode: true
+  field_accent_color: true
+  field_audience: true
+  field_badge: true
+  field_description: true
+  field_event: true
+  field_is_non_session: true
+  field_is_training: true
+  field_organizers: true
+  field_parent_event: true
+  field_person_speakers: true
+  field_r: true
+  field_rsvp_url: true
+  field_session_category: true
+  field_session_date: true
+  field_session_frames: true
+  field_session_sponsors: true
+  field_session_video: true
+  field_short_description: true
+  field_slides: true
+  field_social_media_card: true
+  field_source_url: true
+  field_speakers: true
+  field_time_note: true
+  field_time_slot: true
+  field_topics: true
+  field_venue: true
+  field_venue_note: true
+  links: true
+  metatag: true
+  nid: true
+  path: true
+  promote: true
+  revision_default: true
+  revision_log: true
+  revision_timestamp: true
+  revision_translation_affected: true
+  revision_uid: true
+  status: true
+  sticky: true
+  type: true
+  uuid: true
+  vid: true

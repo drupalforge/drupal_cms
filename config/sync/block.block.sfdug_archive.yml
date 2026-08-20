@@ -1,0 +1,29 @@
+uuid: 7c3ba7f5-2737-422f-be1d-b83c69d13c15
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.sfdug_meetings
+  module:
+    - system
+    - views
+  theme:
+    - sfdug
+id: sfdug_archive
+theme: sfdug
+region: recordings
+weight: 1
+provider: null
+plugin: 'views_block:sfdug_meetings-block_archive'
+settings:
+  id: views_block_sfdug_meetings-block_archive
+  label: Archive
+  label_display: '0'
+  provider: views
+  views_label: ''
+  items_per_page: null
+visibility:
+  request_path:
+    id: request_path
+    negate: false
+    pages: '<front>'

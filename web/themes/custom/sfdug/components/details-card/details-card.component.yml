@@ -1,0 +1,51 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Details card
+status: stable
+description: The sticky "Meeting Details" panel beside the talk description.
+props:
+  type: object
+  properties:
+    title:
+      type:
+      - string
+      - 'null'
+      default: Meeting Details
+    rows:
+      type:
+      - array
+      - 'null'
+      title: Detail rows
+      items:
+        type: object
+        properties:
+          icon:
+            type:
+            - string
+            - 'null'
+          text:
+            type:
+            - string
+            - 'null'
+          note:
+            type:
+            - string
+            - 'null'
+    rsvp_url:
+      type:
+      - string
+      - 'null'
+    rsvp_label:
+      type:
+      - string
+      - 'null'
+      default: RSVP for free
+    addtocal_url:
+      type:
+      - string
+      - 'null'
+      title: Add-to-calendar URL
+      description: Consumed by the `extra` slot rather than the component body.
+slots:
+  extra:
+    title: Extra
+    description: Anything below the RSVP button, such as an add-to-calendar link.

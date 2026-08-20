@@ -1,0 +1,14 @@
+{#
+/**
+ * @file
+ * A recorded session as a card with its real YouTube thumbnail.
+ */
+#}
+{{ include('sfdug:video-card', {
+  title: label,
+  date: month_label,
+  speaker: speaker_names,
+  url: video_url ?: url,
+  thumbnail: thumbnail,
+  external: video_url ? true : false,
+}, with_context = false) }}

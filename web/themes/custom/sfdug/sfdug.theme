@@ -1,0 +1,401 @@
+<?php
+
+/**
+ * @file
+ * Theme hooks for the SFDUG theme.
+ */
+
+use Drupal\Core\Template\Attribute;
+use Drupal\node\NodeInterface;
+
+/**
+ * Returns the next upcoming published session, or NULL if there isn't one.
+ *
+ * "Upcoming" means the session has not finished yet, so a meetup stays featured
+ * while it is actually running rather than disappearing at its start time.
+ */
+function sfdug_next_session(): ?NodeInterface {
+  $cache = &drupal_static(__FUNCTION__);
+  if ($cache !== NULL) {
+    return $cache ?: NULL;
+  }
+
+  $now = \Drupal::time()->getRequestTime();
+  $ids = \Drupal::entityQuery('node')
+    ->accessCheck(TRUE)
+    ->condition('type', 'session')
+    ->condition('status', NodeInterface::PUBLISHED)
+    ->condition('field_session_date.end_value', $now, '>=')
+    ->sort('field_session_date.value', 'ASC')
+    ->range(0, 1)
+    ->execute();
+
+  $cache = $ids
+    ? \Drupal::entityTypeManager()->getStorage('node')->load(reset($ids))
+    : FALSE;
+
+  return $cache ?: NULL;
+}
+
+/**
+ * Returns the session whose accent colour should skin the current page.
+ *
+ * On a session page that's the session being viewed; on the front page it's
+ * whichever session is currently featured. Everywhere else, nothing — the page
+ * keeps the default purple and gold.
+ */
+function _sfdug_accent_session(): ?NodeInterface {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if ($node instanceof NodeInterface && $node->bundle() === 'session') {
+    return $node;
+  }
+
+  return \Drupal::service('path.matcher')->isFrontPage() ? sfdug_next_session() : NULL;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for html.html.twig.
+ *
+ * Paints the per-event skin onto <body> as custom properties. In the static
+ * prototype this was a whole second stylesheet (eca.css) hand-swapped each
+ * month; here one field on the session drives it.
+ */
+function sfdug_preprocess_html(array &$variables): void {
+  $session = _sfdug_accent_session();
+  if (!$session || !$session->hasField('field_accent_color')) {
+    return;
+  }
+
+  $accent = trim((string) $session->get('field_accent_color')->value);
+  // Only ever emit a literal hex colour into the style attribute.
+  if (!preg_match('/^#(?:[0-9a-f]{3}|[0-9a-f]{6})$/i', $accent)) {
+    return;
+  }
+
+  if (!isset($variables['attributes']) || !$variables['attributes'] instanceof Attribute) {
+    $variables['attributes'] = new Attribute((array) ($variables['attributes'] ?? []));
+  }
+
+  // An accent implies the darker "poster" treatment, matching eca.css.
+  $variables['attributes']->setAttribute('style', sprintf(
+    '--accent:%s;--accent-strong:%s;--infobar-bg:var(--ink);--infobar-accent:%s;',
+    $accent,
+    $accent,
+    $accent
+  ));
+
+  $variables['#cache']['contexts'][] = 'url.path.is_front';
+  $variables['#cache']['tags'] = array_merge(
+    $variables['#cache']['tags'] ?? [],
+    $session->getCacheTags(),
+    ['node_list:session']
+  );
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for page.html.twig.
+ */
+function sfdug_preprocess_page(array &$variables): void {
+  $variables['is_front'] = \Drupal::service('path.matcher')->isFrontPage();
+  $variables['site_name'] = \Drupal::config('system.site')->get('name');
+  $variables['current_year'] = date('Y', \Drupal::time()->getRequestTime());
+  $variables['#cache']['contexts'][] = 'url.path.is_front';
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for block.html.twig.
+ */
+function sfdug_preprocess_block(array &$variables): void {
+  $plugin = $variables['plugin_id'] ?? '';
+
+  if ($plugin === 'system_branding_block') {
+    $variables['site_name'] = \Drupal::config('system.site')->get('name');
+    $variables['site_slogan'] = \Drupal::config('system.site')->get('slogan');
+    return;
+  }
+
+  /**
+   * Session pages lay out their own heading — eyebrow, rule, title, hook — as
+   * one unit inside the node template, so the standalone page-title block would
+   * be a second H1 saying the same thing.
+   */
+  if ($plugin === 'page_title_block') {
+    $node = \Drupal::routeMatch()->getParameter('node');
+    if ($node instanceof NodeInterface && $node->bundle() === 'session') {
+      $variables['content'] = [];
+    }
+  }
+}
+
+/**
+ * Implements hook_theme_suggestions_HOOK_alter() for menu.
+ *
+ * Gives every menu its own template name, so the footer menus and the primary
+ * nav can render as different shapes.
+ */
+function sfdug_theme_suggestions_menu_alter(array &$suggestions, array $variables): void {
+  if (!empty($variables['menu_name'])) {
+    $suggestions[] = 'menu__' . str_replace('-', '_', $variables['menu_name']);
+  }
+}
+
+/**
+ * Pulls the YouTube video id out of any of the URL shapes oEmbed accepts.
+ */
+function _sfdug_youtube_id(string $url): ?string {
+  if (preg_match('~(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|live/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{11})~', $url, $m)) {
+    return $m[1];
+  }
+  return NULL;
+}
+
+/**
+ * Returns the absolute URL of an image media entity's file, or NULL.
+ */
+function _sfdug_media_image_url($media): ?string {
+  if (!$media || !$media->hasField('field_media_image')) {
+    return NULL;
+  }
+  $file = $media->get('field_media_image')->entity;
+  return $file ? \Drupal::service('file_url_generator')->generateString($file->getFileUri()) : NULL;
+}
+
+/**
+ * Flattens a session node into the values the templates and components need.
+ *
+ * Doing this here keeps the Twig free of four-deep entity chains and gives one
+ * place to change how a date or a speaker photo is resolved.
+ */
+function _sfdug_session_vars(NodeInterface $node): array {
+  $formatter = \Drupal::service('date.formatter');
+  $vars = [
+    'hook' => NULL,
+    'date_long' => NULL,
+    'date_short' => NULL,
+    'time' => NULL,
+    'month_label' => NULL,
+    'when_line' => NULL,
+    'badge' => NULL,
+    'venue' => NULL,
+    'venue_note' => NULL,
+    'time_note' => NULL,
+    'category' => NULL,
+    'rsvp_url' => NULL,
+    'promo_url' => NULL,
+    'video_url' => NULL,
+    'thumbnail' => NULL,
+    'speakers' => [],
+    'speaker_names' => NULL,
+    'details_rows' => [],
+    'gradient' => NULL,
+    'addtocal_url' => NULL,
+  ];
+
+  if ($node->hasField('field_short_description')) {
+    $vars['hook'] = trim((string) $node->get('field_short_description')->value) ?: NULL;
+  }
+  foreach (['badge' => 'field_badge', 'venue_note' => 'field_venue_note', 'time_note' => 'field_time_note'] as $key => $field) {
+    if ($node->hasField($field)) {
+      $vars[$key] = trim((string) $node->get($field)->value) ?: NULL;
+    }
+  }
+
+  if ($node->hasField('field_session_date') && !$node->get('field_session_date')->isEmpty()) {
+    $start = (int) $node->get('field_session_date')->value;
+    $vars['date_long'] = $formatter->format($start, 'custom', 'l, M j, Y');
+    $vars['date_short'] = $formatter->format($start, 'custom', 'l, M j');
+    $vars['time'] = $formatter->format($start, 'custom', 'g:i A T');
+    $vars['month_label'] = $formatter->format($start, 'custom', 'F Y');
+  }
+
+  if ($node->hasField('field_venue') && ($term = $node->get('field_venue')->entity)) {
+    $vars['venue'] = $term->label();
+  }
+  if ($node->hasField('field_session_category') && ($term = $node->get('field_session_category')->entity)) {
+    $vars['category'] = $term->label();
+  }
+  if ($node->hasField('field_rsvp_url') && !$node->get('field_rsvp_url')->isEmpty()) {
+    $vars['rsvp_url'] = $node->get('field_rsvp_url')->first()->getUrl()->toString();
+  }
+  if ($node->hasField('field_social_media_card') && ($file = $node->get('field_social_media_card')->entity)) {
+    $vars['promo_url'] = \Drupal::service('file_url_generator')->generateString($file->getFileUri());
+  }
+
+  // The video, and the YouTube thumbnail derived from it.
+  if ($node->hasField('field_session_video') && ($media = $node->get('field_session_video')->entity)) {
+    $url = (string) $media->get('field_media_oembed_video')->value;
+    $vars['video_url'] = $url ?: NULL;
+    if ($id = _sfdug_youtube_id($url)) {
+      $vars['thumbnail'] = "https://img.youtube.com/vi/$id/maxresdefault.jpg";
+    }
+  }
+
+  // Speakers, with their photos resolved through the media entity.
+  if ($node->hasField('field_person_speakers')) {
+    $names = [];
+    foreach ($node->get('field_person_speakers')->referencedEntities() as $person) {
+      $role = trim((string) $person->get('field_organization')->value);
+      $image = _sfdug_media_image_url($person->get('field_photo')->entity);
+      $names[] = $person->label();
+      $vars['speakers'][] = [
+        'name' => $person->label(),
+        'role' => $role ?: NULL,
+        'image_url' => $image,
+        'url' => $person->toUrl()->toString(),
+        // Illustrated or logo-style portraits get contained, not cropped.
+        'line_art' => str_contains(strtolower((string) $image), 'avatar'),
+      ];
+    }
+    $vars['speaker_names'] = $names ? implode(', ', $names) : NULL;
+  }
+
+  // The four rows of the details panel, in the design's order.
+  foreach ([
+    ['calendar', $vars['date_long'], NULL],
+    ['clock', $vars['time'], $vars['time_note']],
+    ['pin', $vars['venue'], $vars['venue_note']],
+    ['tag', $vars['category'], NULL],
+  ] as [$icon, $text, $note]) {
+    if ($text) {
+      $vars['details_rows'][] = ['icon' => $icon, 'text' => $text, 'note' => $note];
+    }
+  }
+
+  // "Add to calendar". The prototype's link was href="#"; this builds a real
+  // Google Calendar template URL from the session's own date.
+  if ($node->hasField('field_session_date') && !$node->get('field_session_date')->isEmpty()) {
+    $item = $node->get('field_session_date')->first();
+    $start = (int) $item->value;
+    $end = (int) ($item->end_value ?: $start + 3600);
+    $vars['addtocal_url'] = 'https://calendar.google.com/calendar/render?' . http_build_query([
+      'action' => 'TEMPLATE',
+      'text' => $node->label(),
+      'dates' => gmdate('Ymd\\THis\\Z', $start) . '/' . gmdate('Ymd\\THis\\Z', $end),
+      'details' => $node->toUrl('canonical', ['absolute' => TRUE])->toString(),
+      'location' => (string) ($vars['venue'] ?? ''),
+    ]);
+  }
+
+  // The single "when" line the info bar shows.
+  $vars['when_line'] = implode(' · ', array_filter([
+    $vars['date_short'],
+    $vars['time'],
+    $vars['venue'],
+  ]));
+
+  // Deterministic gradient plate for archive cards with no thumbnail, using the
+  // same palette the prototype hardcoded per row.
+  $palette = [
+    'linear-gradient(135deg,#3a2c7e,#6c5cc4)',
+    'linear-gradient(135deg,#244a63,#3f7d96)',
+    'linear-gradient(135deg,#7a3f2a,#c47a4a)',
+    'linear-gradient(135deg,#2c2160,#4a3a9e)',
+    'linear-gradient(135deg,#1f4d2e,#3e6b45)',
+    'linear-gradient(135deg,#4a2c6e,#8a5cc4)',
+  ];
+  $vars['gradient'] = $palette[$node->id() % count($palette)];
+
+  return $vars;
+}
+
+/**
+ * Implements hook_preprocess_HOOK() for node.html.twig.
+ */
+function sfdug_preprocess_node(array &$variables): void {
+  $node = $variables['node'];
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'session') {
+    return;
+  }
+  $variables += _sfdug_session_vars($node);
+}
+
+/**
+ * Implements hook_page_attachments_alter().
+ *
+ * Emits Event JSON-LD for session pages.
+ *
+ * This is done here rather than through schema_metatag because Smart Date's
+ * tokens resolve to raw UNIX timestamps, and Schema.org requires ISO 8601.
+ */
+function sfdug_page_attachments_alter(array &$attachments): void {
+  $node = \Drupal::routeMatch()->getParameter('node');
+  if (!$node instanceof NodeInterface || $node->bundle() !== 'session') {
+    return;
+  }
+  if (!$node->hasField('field_session_date') || $node->get('field_session_date')->isEmpty()) {
+    return;
+  }
+
+  $item = $node->get('field_session_date')->first();
+  $start = (int) $item->value;
+  $end = (int) ($item->end_value ?: $start + 3600);
+  $tz = new DateTimeZone(date_default_timezone_get());
+
+  $data = [
+    '@context' => 'https://schema.org',
+    '@type' => 'Event',
+    'name' => $node->label(),
+    'startDate' => (new DateTime("@$start"))->setTimezone($tz)->format('c'),
+    'endDate' => (new DateTime("@$end"))->setTimezone($tz)->format('c'),
+    'eventStatus' => 'https://schema.org/EventScheduled',
+    'url' => $node->toUrl('canonical', ['absolute' => TRUE])->toString(),
+    'organizer' => [
+      '@type' => 'Organization',
+      'name' => \Drupal::config('system.site')->get('name'),
+      'url' => \Drupal::request()->getSchemeAndHttpHost(),
+    ],
+  ];
+
+  if ($summary = trim((string) $node->get('field_short_description')->value)) {
+    $data['description'] = $summary;
+  }
+
+  $venue = $node->get('field_venue')->entity;
+  $venue_name = $venue ? $venue->label() : '';
+  $is_online = $venue_name === '' || stripos($venue_name, 'online') !== FALSE || stripos($venue_name, 'zoom') !== FALSE || stripos($venue_name, 'virtual') !== FALSE;
+
+  if ($is_online) {
+    $data['eventAttendanceMode'] = 'https://schema.org/OnlineEventAttendanceMode';
+    $data['location'] = [
+      '@type' => 'VirtualLocation',
+      'url' => $node->get('field_rsvp_url')->isEmpty()
+        ? $data['url']
+        : $node->get('field_rsvp_url')->first()->getUrl()->toString(),
+    ];
+  }
+  else {
+    $data['eventAttendanceMode'] = 'https://schema.org/OfflineEventAttendanceMode';
+    $data['location'] = ['@type' => 'Place', 'name' => $venue_name];
+  }
+
+  if ($file = $node->get('field_social_media_card')->entity) {
+    $data['image'] = \Drupal::service('file_url_generator')->generateAbsoluteString($file->getFileUri());
+  }
+
+  $performers = [];
+  foreach ($node->get('field_person_speakers')->referencedEntities() as $person) {
+    $performers[] = ['@type' => 'Person', 'name' => $person->label()];
+  }
+  if ($performers) {
+    $data['performer'] = $performers;
+  }
+
+  if (!$node->get('field_rsvp_url')->isEmpty()) {
+    $data['offers'] = [
+      '@type' => 'Offer',
+      'price' => '0',
+      'priceCurrency' => 'USD',
+      'availability' => 'https://schema.org/InStock',
+      'url' => $node->get('field_rsvp_url')->first()->getUrl()->toString(),
+    ];
+  }
+
+  $attachments['#attached']['html_head'][] = [
+    [
+      '#tag' => 'script',
+      '#attributes' => ['type' => 'application/ld+json'],
+      '#value' => json_encode($data, JSON_UNESCAPED_SLASHES | JSON_UNESCAPED_UNICODE | JSON_PRETTY_PRINT),
+    ],
+    'sfdug_event_jsonld',
+  ];
+}

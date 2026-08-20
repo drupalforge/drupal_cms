@@ -1,0 +1,15 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Section divider
+status: stable
+description: A labelled rule separating groups of cards.
+props:
+  type: object
+  properties:
+    label:
+      type:
+      - string
+      - 'null'
+    note:
+      type:
+      - string
+      - 'null'

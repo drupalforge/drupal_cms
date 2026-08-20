@@ -1,0 +1,10 @@
+{% set tag = url ? 'a' : 'div' %}
+<{{ tag }} class="speaker-chip{{ line_art ? ' speaker-chip--line' }}"{% if url %} href="{{ url }}"{% endif %}>
+  {% if image_url %}
+    <img src="{{ image_url }}" alt="{{ name }}" width="56" height="56" loading="lazy">
+  {% endif %}
+  <div>
+    <b>{{ name }}</b>
+    {% if role %}<small>{{ role }}</small>{% endif %}
+  </div>
+</{{ tag }}>

@@ -1,0 +1,18 @@
+{#
+/**
+ * @file
+ * Administrative tabs.
+ *
+ * Stable 9 emits a bare <ul> here; this adds the hooks the theme styles.
+ */
+#}
+{% if primary %}
+  <nav class="tabs" aria-label="{{ 'Primary tabs'|t }}">
+    <ul class="tabs__list">{{ primary }}</ul>
+  </nav>
+{% endif %}
+{% if secondary %}
+  <nav class="tabs tabs--secondary" aria-label="{{ 'Secondary tabs'|t }}">
+    <ul class="tabs__list">{{ secondary }}</ul>
+  </nav>
+{% endif %}

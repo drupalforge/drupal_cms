@@ -1,0 +1,47 @@
+{#
+/**
+ * @file
+ * Front page.
+ *
+ * Sections in the order the design lays them out. Everything between the header
+ * and the footer comes from content: the info bar and hero are the next
+ * upcoming session rendered through views blocks, the recordings grids are two
+ * more views, and the closing sections are fields on the Home node.
+ */
+#}
+<a href="#main-content" class="skip-link">{{ 'Skip to main content'|t }}</a>
+
+<header class="site-header" role="banner">
+  <div class="wrap nav-inner">
+    {{ page.header }}
+    <button type="button"
+            class="nav-toggle"
+            data-nav-toggle
+            aria-controls="primary-nav"
+            aria-expanded="false">
+      <span></span>
+      <span class="visually-hidden">{{ 'Menu'|t }}</span>
+    </button>
+    {% if page.primary_menu %}
+      <nav id="primary-nav" class="nav" role="navigation" aria-label="{{ 'Main navigation'|t }}">
+        {{ page.primary_menu }}
+      </nav>
+    {% endif %}
+  </div>
+</header>
+
+{{ page.infobar }}
+
+<main role="main">
+  <a id="main-content" tabindex="-1"></a>
+
+  {% if page.highlighted %}
+    <div class="wrap highlighted">{{ page.highlighted }}</div>
+  {% endif %}
+
+  {{ page.hero }}
+  {% include '@sfdug/partials/recordings.html.twig' %}
+  {{ page.content }}
+</main>
+
+{% include '@sfdug/partials/footer.html.twig' %}

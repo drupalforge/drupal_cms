@@ -1,0 +1,95 @@
+/**
+ * Page scaffolding: the centred container and the section grids.
+ */
+
+.wrap {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding-left: var(--gutter);
+  padding-right: var(--gutter);
+}
+
+/* Two-column talk layout: prose + sticky details card. */
+.talk-inner {
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 56px;
+  align-items: start;
+  padding-top: 80px;
+  padding-bottom: 80px;
+}
+
+/* Video grids. */
+.grid-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  margin-bottom: 54px;
+}
+
+.grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 26px;
+}
+
+/* The two cards at the foot of the page. */
+.join-inner {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 28px;
+  align-items: stretch;
+  padding-top: 78px;
+  padding-bottom: 78px;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: 1.6fr 1fr 1fr 1fr;
+  gap: 34px;
+  padding-top: 56px;
+  padding-bottom: 30px;
+}
+
+/* Interior pages: same container, no hero furniture. */
+.page-inner {
+  padding-top: 56px;
+  padding-bottom: 78px;
+}
+
+.layout-with-sidebar {
+  display: grid;
+  grid-template-columns: 1fr 300px;
+  gap: 48px;
+  align-items: start;
+}
+
+@media (max-width: 980px) {
+  .talk-inner,
+  .layout-with-sidebar {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+@media (max-width: 760px) {
+  .grid-2,
+  .grid-3,
+  .join-inner {
+    grid-template-columns: 1fr;
+  }
+
+  .talk-inner {
+    gap: 40px;
+    padding-top: 52px;
+    padding-bottom: 52px;
+  }
+
+  .footer-top {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+}

@@ -1,0 +1,15 @@
+{#
+/**
+ * @file
+ * Site brand: logo, short name, and the full group name beneath it.
+ */
+#}
+<a class="brand" href="{{ path('<front>') }}" rel="home">
+  {% if site_logo %}
+    <img src="{{ site_logo }}" alt="{{ site_name }}" width="50" height="50">
+  {% endif %}
+  <span class="brand-name">
+    <b>SFDUG</b>
+    <small>{{ site_name }}</small>
+  </span>
+</a>

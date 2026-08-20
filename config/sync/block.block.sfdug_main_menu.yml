@@ -1,0 +1,27 @@
+uuid: b1c66f82-3948-4915-9dc2-d891d311954b
+langcode: en
+status: true
+dependencies:
+  config:
+    - system.menu.main
+  module:
+    - system
+  theme:
+    - sfdug
+_core:
+  default_config_hash: IYx37JlV-JCEqldSOUCsYu6gh4RpwuLDPpoeQcEF7mk
+id: sfdug_main_menu
+theme: sfdug
+region: primary_menu
+weight: 0
+provider: null
+plugin: 'system_menu_block:main'
+settings:
+  id: system_menu_block_main
+  label: 'Main menu'
+  label_display: '0'
+  provider: system
+  level: 1
+  depth: 1
+  expand_all_items: true
+visibility: {  }

@@ -1,0 +1,28 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Info bar
+status: stable
+description: The "NEXT MEETUP" strip that sits directly under the header.
+props:
+  type: object
+  properties:
+    when:
+      type:
+      - string
+      - 'null'
+      title: Formatted date, time and place
+    badge:
+      type:
+      - string
+      - 'null'
+      title: Highlight pill
+    rsvp_url:
+      type:
+      - string
+      - 'null'
+      title: Registration URL
+    rsvp_label:
+      type:
+      - string
+      - 'null'
+      title: Link text
+      default: RSVP →

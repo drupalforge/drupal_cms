@@ -1,0 +1,17 @@
+<a class="card card--sm" href="{{ url }}"{% if external %} target="_blank" rel="noopener"{% endif %}>
+  <div class="card-thumb"{% if not thumbnail and gradient %} style="background:{{ gradient }}"{% endif %}>
+    {% if thumbnail %}
+      <img src="{{ thumbnail }}" alt="" loading="lazy">
+    {% endif %}
+    <div class="thumb-fade-archive"></div>
+    <span class="thumb-tag">SFDUG</span>
+    {% if not thumbnail %}
+      {{ include('sfdug:icon', { name: 'play_badge' }, with_context = false) }}
+    {% endif %}
+  </div>
+  <div class="card-body">
+    {% if date %}<div class="card-date">{{ date }}</div>{% endif %}
+    <div class="card-title">{{ title }}</div>
+    {% if speaker %}<div class="card-speaker">{{ speaker }}</div>{% endif %}
+  </div>
+</a>

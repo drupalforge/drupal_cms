@@ -1,0 +1,17 @@
+{#
+/**
+ * @file
+ * Primary navigation: a flat row of links, with any link carrying a `btn-purple`
+ * class from its menu-link attributes rendering as the call-to-action button.
+ */
+#}
+{% import _self as menus %}
+{{ menus.links(items) }}
+
+{% macro links(items) %}
+  {% for item in items %}
+    {% set classes = item.url.getOption('attributes').class|default([]) %}
+    <a href="{{ item.url }}"
+       class="{{ classes|join(' ') }}{{ item.in_active_trail ? ' is-active' }}">{{ item.title }}</a>
+  {% endfor %}
+{% endmacro %}

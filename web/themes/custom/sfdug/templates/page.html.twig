@@ -1,0 +1,57 @@
+{#
+/**
+ * @file
+ * Interior pages.
+ *
+ * The front page has its own template; everything else lands here.
+ */
+#}
+<a href="#main-content" class="skip-link">{{ 'Skip to main content'|t }}</a>
+
+<header class="site-header" role="banner">
+  <div class="wrap nav-inner">
+    {{ page.header }}
+    <button type="button"
+            class="nav-toggle"
+            data-nav-toggle
+            aria-controls="primary-nav"
+            aria-expanded="false">
+      <span></span>
+      <span class="visually-hidden">{{ 'Menu'|t }}</span>
+    </button>
+    {% if page.primary_menu %}
+      <nav id="primary-nav" class="nav" role="navigation" aria-label="{{ 'Main navigation'|t }}">
+        {{ page.primary_menu }}
+      </nav>
+    {% endif %}
+  </div>
+</header>
+
+{{ page.infobar }}
+{{ page.hero }}
+
+<main role="main">
+  <a id="main-content" tabindex="-1"></a>
+
+  <div class="wrap page-inner">
+    {% if page.breadcrumb or page.highlighted %}
+      <div class="page-header">
+        {{ page.breadcrumb }}
+        {{ page.highlighted }}
+      </div>
+    {% endif %}
+
+    {% if page.sidebar_first %}
+      <div class="layout-with-sidebar">
+        <div>{{ page.content }}</div>
+        <aside role="complementary">{{ page.sidebar_first }}</aside>
+      </div>
+    {% else %}
+      {{ page.content }}
+    {% endif %}
+  </div>
+
+  {% include '@sfdug/partials/recordings.html.twig' %}
+</main>
+
+{% include '@sfdug/partials/footer.html.twig' %}

@@ -1,0 +1,16 @@
+{#
+/**
+ * @file
+ * An older session as a compact card. Falls back to a gradient plate when the
+ * video has no usable thumbnail.
+ */
+#}
+{{ include('sfdug:archive-card', {
+  title: label,
+  date: date_long ?: month_label,
+  speaker: speaker_names,
+  url: video_url ?: url,
+  thumbnail: thumbnail,
+  gradient: gradient,
+  external: video_url ? true : false,
+}, with_context = false) }}

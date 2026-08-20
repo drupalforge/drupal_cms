@@ -1,0 +1,20 @@
+<aside class="details">
+  <h3>{{ title|default('Meeting Details') }}</h3>
+  <div class="details-list">
+    {% for row in rows %}
+      {% if row.text %}
+        <div class="detail">
+          {{ include('sfdug:icon', { name: row.icon, size: 22 }, with_context = false) }}
+          <div>
+            <b>{{ row.text }}</b>
+            {% if row.note %}<small>{{ row.note }}</small>{% endif %}
+          </div>
+        </div>
+      {% endif %}
+    {% endfor %}
+  </div>
+  {% if rsvp_url %}
+    <a class="btn-purple" href="{{ rsvp_url }}" target="_blank" rel="noopener">{{ rsvp_label|default('RSVP for free') }}</a>
+  {% endif %}
+  {% block extra %}{% endblock %}
+</aside>

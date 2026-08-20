@@ -1,0 +1,69 @@
+{#
+/**
+ * @file
+ * The featured session on the front page.
+ *
+ * Two sections: the promo poster with its date bar, then the talk description
+ * alongside the sticky details panel.
+ */
+#}
+<section class="hero-poster">
+  <div class="wrap hero-poster-inner">
+    {% if promo_url %}
+      <div class="promo">
+        <img src="{{ promo_url }}" alt="{{ node.label }}">
+      </div>
+    {% endif %}
+
+    {{ include('sfdug:datebar', {
+      date: date_short,
+      time: time,
+      where: venue,
+      rsvp_url: rsvp_url,
+      rsvp_label: 'RSVP for free →'|t,
+    }, with_context = false) }}
+  </div>
+</section>
+
+<section class="talk" id="talk">
+  <div class="wrap talk-inner">
+    <div>
+      <div class="eyebrow">{{ 'About this talk'|t }}</div>
+      <span class="rule"></span>
+
+      {{ title_prefix }}
+      <h2>{{ label }}</h2>
+      {{ title_suffix }}
+
+      {% if hook %}
+        <p class="talk-hook">{{ hook }}</p>
+      {% endif %}
+
+      {% if content.field_description|render %}
+        <div class="prose">{{ content.field_description }}</div>
+      {% endif %}
+
+      {% if speakers %}
+        <div class="speaker-chips">
+          {% for speaker in speakers %}
+            {{ include('sfdug:speaker-chip', speaker, with_context = false) }}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+
+    {% embed 'sfdug:details-card' with {
+      title: 'Meeting Details'|t,
+      rows: details_rows,
+      rsvp_url: rsvp_url,
+      rsvp_label: 'RSVP for free'|t,
+      addtocal_url: addtocal_url,
+    } only %}
+      {% block extra %}
+        {% if addtocal_url %}
+          <a class="addcal" href="{{ addtocal_url }}" target="_blank" rel="noopener">{{ '+ Add to calendar'|t }}</a>
+        {% endif %}
+      {% endblock %}
+    {% endembed %}
+  </div>
+</section>

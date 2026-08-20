@@ -1,0 +1,30 @@
+{#
+/**
+ * @file
+ * Wrapper for the recordings region.
+ *
+ * The two group dividers are Views header text areas on the blocks inside, so
+ * they stay editable in the Views UI. The section heading and blurb live here
+ * because they carry an inline SVG the Views text filter would strip.
+ */
+#}
+{% if page.recordings %}
+  <section class="recordings" id="recordings">
+    <div class="wrap recordings-inner">
+      <div class="rec-head">
+        <div>
+          <div class="eyebrow">{{ 'On YouTube'|t }}</div>
+          <span class="rule"></span>
+          <h2>{{ 'Catch up on past meetings'|t }}</h2>
+          <p>{{ 'Missed one? Every SFDUG meetup is recorded. Twenty years of talks — from Views deep-dives to accessibility, migrations, and the new AI tooling.'|t }}</p>
+        </div>
+        <a class="btn-yt" href="https://www.youtube.com/@sfdug">
+          {{ include('sfdug:icon', { name: 'youtube_button' }, with_context = false) }}
+          {{ 'Watch all on YouTube'|t }}
+        </a>
+      </div>
+
+      {{ page.recordings }}
+    </div>
+  </section>
+{% endif %}

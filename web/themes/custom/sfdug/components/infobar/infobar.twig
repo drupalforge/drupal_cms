@@ -1,0 +1,11 @@
+<div class="infobar">
+  <div class="wrap infobar-inner">
+    <span class="tag"><span class="dot"></span> Next meetup</span>
+    <span class="sep">|</span>
+    {% if when %}<span>{{ when }}</span>{% endif %}
+    {% if badge %}<span class="new-badge">{{ badge }}</span>{% endif %}
+    {% if rsvp_url %}
+      <a class="rsvp" href="{{ rsvp_url }}" target="_blank" rel="noopener">{{ rsvp_label|default('RSVP →') }}</a>
+    {% endif %}
+  </div>
+</div>

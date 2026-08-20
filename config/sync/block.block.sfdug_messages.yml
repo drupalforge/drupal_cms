@@ -1,0 +1,22 @@
+uuid: 13a56056-70e2-4925-800b-cc3efc085f58
+langcode: en
+status: true
+dependencies:
+  module:
+    - system
+  theme:
+    - sfdug
+_core:
+  default_config_hash: 5ra2HNIksWbp6AhPpTufTGSlgx2FR7RR_ssxdjgFg4I
+id: sfdug_messages
+theme: sfdug
+region: highlighted
+weight: 0
+provider: null
+plugin: system_messages_block
+settings:
+  id: system_messages_block
+  label: Messages
+  label_display: '0'
+  provider: system
+visibility: {  }
