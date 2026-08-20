@@ -101,6 +101,11 @@ body {
   line-height: 1.5;
   -webkit-font-smoothing: antialiased;
   text-rendering: optimizeLegibility;
+  /**
+   * A backstop for stray wide content, not a layout tool. It hides sideways
+   * overflow rather than fixing it, so if the page ever looks truncated on a
+   * phone, check for a blown-out grid track before trusting this line.
+   */
   overflow-x: hidden;
 }
 

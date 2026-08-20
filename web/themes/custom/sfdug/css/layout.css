@@ -9,6 +9,25 @@
   padding-right: var(--gutter);
 }
 
+/**
+ * Grid and flex children default to `min-width: auto`, which means they refuse
+ * to shrink below the widest unbreakable thing inside them. A `<pre>` of shell
+ * commands was enough to force the single mobile column to 410px inside a 371px
+ * viewport; `body { overflow-x: hidden }` then clipped the result rather than
+ * revealing it, so the page looked truncated instead of scrollable.
+ *
+ * Letting these tracks shrink is what makes the inner `overflow-x: auto` on
+ * code blocks actually engage.
+ */
+.talk-inner > *,
+.layout-with-sidebar > *,
+.grid-2 > *,
+.grid-3 > *,
+.join-inner > *,
+.footer-top > * {
+  min-width: 0;
+}
+
 /* Two-column talk layout: prose + sticky details card. */
 .talk-inner {
   display: grid;

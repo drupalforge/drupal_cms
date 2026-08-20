@@ -530,6 +530,30 @@
   padding-left: 24px;
 }
 
+/**
+ * Defences for body copy written in CKEditor, where a pasted table, a wide
+ * code sample or a bare URL can otherwise push the layout sideways.
+ */
+.prose {
+  overflow-wrap: break-word;
+}
+
+.prose img {
+  max-width: 100%;
+  height: auto;
+}
+
+.prose pre {
+  max-width: 100%;
+  overflow-x: auto;
+}
+
+.prose table {
+  display: block;
+  max-width: 100%;
+  overflow-x: auto;
+}
+
 .prose li {
   margin-bottom: 7px;
 }

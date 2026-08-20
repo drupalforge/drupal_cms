@@ -39,8 +39,9 @@
           }
         });
 
-        // Reset when the viewport grows back past the breakpoint.
-        window.matchMedia('(min-width: 761px)').addEventListener('change', (e) => {
+        // Reset when the viewport grows back past the breakpoint
+        // (kept in step with the 900px query in sections.css).
+        window.matchMedia('(min-width: 901px)').addEventListener('change', (e) => {
           if (e.matches) {
             setOpen(false);
           }

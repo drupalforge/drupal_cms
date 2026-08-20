@@ -160,7 +160,13 @@
   transform: translateY(-6px) rotate(-45deg);
 }
 
-@media (max-width: 760px) {
+/**
+ * The nav switches to the hamburger at 900px, not at the 760px the rest of the
+ * layout uses: the five links plus the CTA measure ~443px, and together with
+ * the brand they stop fitting well before 760px. The prototype hid the nav at
+ * 760 with nothing in its place, so the gap never showed up there.
+ */
+@media (max-width: 900px) {
   .nav-toggle {
     display: flex;
   }
