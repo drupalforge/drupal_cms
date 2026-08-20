@@ -29,8 +29,13 @@ $term_storage = $entity_type_manager->getStorage('taxonomy_term');
 $media_storage = $entity_type_manager->getStorage('media');
 $file_repository = \Drupal::service('file.repository');
 
-/** Source images shipped with the static prototype. */
-$image_source = DRUPAL_ROOT . '/HTML/img';
+/**
+ * Source images.
+ *
+ * These live in the module rather than in web/HTML, which is git-ignored: a
+ * copy there would vanish the moment the prototype folder is cleaned up.
+ */
+$image_source = __DIR__ . '/../assets';
 
 $meetup_url = 'https://www.meetup.com/sfdug-san-francisco-drupal-users-group/events/316123460/?utm_medium=referral&utm_campaign=share-btn_savedevents_share_modal&utm_source=link&utm_version=v2&member_id=10134746';
 

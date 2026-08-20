@@ -267,11 +267,13 @@ $home_ids = \Drupal::entityTypeManager()->getStorage('node')->getQuery()
   ->execute();
 
 if ($home_ids) {
-  $nid = reset($home_ids);
+  // Point at the alias, not the node id: the Home node lands on a different
+  // nid in every environment, and a hardcoded /node/N would break the front
+  // page as soon as this config was imported somewhere else.
   \Drupal::configFactory()->getEditable('system.site')
-    ->set('page.front', '/node/' . $nid)
+    ->set('page.front', '/home')
     ->save();
-  echo "  front page -> /node/$nid (aliased /home)\n";
+  echo '  front page -> /home (node ' . reset($home_ids) . ")\n";
 }
 else {
   echo "  !! Home node not found; front page left as-is\n";
