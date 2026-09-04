@@ -1,18 +1,9 @@
-uuid: 56030252-ff59-41ce-92c2-88a321ee2f4c
+uuid: 167160d5-bd9a-4c36-bda1-0b803e0aa58f
 langcode: en
 status: true
-dependencies:
-  config:
-    - eca.eca.new_article_set_event
-_core:
-  default_config_hash: FVbWW_FbFIrExboIIgpclpLQhAWBv0eSu1093hyB75E
-id: new_article_set_event
-label: 'New Article Set Event'
-tags:
-  - untagged
-documentation: ''
-filename: ''
-modeldata: |
+dependencies: {  }
+id: eca_bpmn_io_new_article_set_event
+data: |
   <?xml version="1.0" encoding="UTF-8"?>
   <bpmn2:definitions xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:bpmn2="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:qa="http://some-company/schema/bpmn/qa" id="sample-diagram" targetNamespace="http://bpmn.io/schema/bpmn" xsi:schemaLocation="http://www.omg.org/spec/BPMN/20100524/MODEL BPMN20.xsd">
     <bpmn2:process id="new_article_set_event" name="New Article Set Event" isExecutable="true">
