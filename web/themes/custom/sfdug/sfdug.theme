@@ -159,16 +159,6 @@ function sfdug_theme_suggestions_menu_alter(array &$suggestions, array $variable
 }
 
 /**
- * Pulls the YouTube video id out of any of the URL shapes oEmbed accepts.
- */
-function _sfdug_youtube_id(string $url): ?string {
-  if (preg_match('~(?:youtube\.com/(?:watch\?(?:.*&)?v=|embed/|live/|shorts/)|youtu\.be/)([A-Za-z0-9_-]{11})~', $url, $m)) {
-    return $m[1];
-  }
-  return NULL;
-}
-
-/**
  * Returns the absolute URL of an image media entity's file, or NULL.
  */
 function _sfdug_media_image_url($media): ?string {
@@ -235,12 +225,17 @@ function _sfdug_session_vars(NodeInterface $node): array {
     $vars['promo_url'] = \Drupal::service('file_url_generator')->generateString($file->getFileUri());
   }
 
-  // The video, and the YouTube thumbnail derived from it.
+  // The video, and its poster image. Drupal already downloads the oEmbed
+  // thumbnail to public://oembed_thumbnails/ when the media is saved, so use
+  // that local copy rather than hot-linking img.youtube.com: the remote URL
+  // hands every visitor's IP to Google before they have asked to watch
+  // anything, which is exactly what Klaro blocks -- it replaced each poster
+  // with a "Load external content supplied by YouTube?" consent box.
   if ($node->hasField('field_session_video') && ($media = $node->get('field_session_video')->entity)) {
     $url = (string) $media->get('field_media_oembed_video')->value;
     $vars['video_url'] = $url ?: NULL;
-    if ($id = _sfdug_youtube_id($url)) {
-      $vars['thumbnail'] = "https://img.youtube.com/vi/$id/maxresdefault.jpg";
+    if ($media->hasField('thumbnail') && ($file = $media->get('thumbnail')->entity)) {
+      $vars['thumbnail'] = \Drupal::service('file_url_generator')->generateString($file->getFileUri());
     }
   }
 
