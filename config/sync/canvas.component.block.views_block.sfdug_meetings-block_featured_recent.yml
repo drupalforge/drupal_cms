@@ -1,0 +1,26 @@
+uuid: 11e4a03e-52d0-4853-a3ff-988311ca61dd
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.sfdug_meetings
+  module:
+    - views
+active_version: c078e4ca5d8704b1
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'views_block:sfdug_meetings-block_featured_recent'
+        label: 'SFDUG Meetings: Featured (most recent, when nothing is scheduled)'
+        label_display: '0'
+        provider: views
+        views_label: ''
+        items_per_page: null
+    fallback_metadata:
+      slot_definitions: null
+label: 'SFDUG Meetings: Featured (most recent, when nothing is scheduled)'
+id: block.views_block.sfdug_meetings-block_featured_recent
+provider: views
+source: block
+source_local_id: 'views_block:sfdug_meetings-block_featured_recent'

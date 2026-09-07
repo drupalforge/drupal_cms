@@ -1,6 +1,6 @@
 <div class="infobar">
   <div class="wrap infobar-inner">
-    <span class="tag"><span class="dot"></span> Next meetup</span>
+    <span class="tag"><span class="dot"></span> {{ label|default('Next meetup'|t) }}</span>
     <span class="sep">|</span>
     {% if when %}<span>{{ when }}</span>{% endif %}
     {% if badge %}<span class="new-badge">{{ badge }}</span>{% endif %}

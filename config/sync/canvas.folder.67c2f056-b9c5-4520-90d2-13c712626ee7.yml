@@ -6,7 +6,9 @@ dependencies:
     - canvas.component.block.views_block.recent_pages-block_recent_pages
     - canvas.component.block.views_block.sfdug_meetings-block_archive
     - canvas.component.block.views_block.sfdug_meetings-block_featured
+    - canvas.component.block.views_block.sfdug_meetings-block_featured_recent
     - canvas.component.block.views_block.sfdug_meetings-block_infobar
+    - canvas.component.block.views_block.sfdug_meetings-block_infobar_recent
     - canvas.component.block.views_block.sfdug_meetings-block_season
 name: 'Lists (Views)'
 configEntityTypeId: component
@@ -15,5 +17,7 @@ items:
   - block.views_block.recent_pages-block_recent_pages
   - block.views_block.sfdug_meetings-block_archive
   - block.views_block.sfdug_meetings-block_featured
+  - block.views_block.sfdug_meetings-block_featured_recent
   - block.views_block.sfdug_meetings-block_infobar
+  - block.views_block.sfdug_meetings-block_infobar_recent
   - block.views_block.sfdug_meetings-block_season

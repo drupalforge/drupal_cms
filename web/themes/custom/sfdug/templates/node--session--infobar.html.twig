@@ -5,6 +5,7 @@
  */
 #}
 {{ include('sfdug:infobar', {
+  label: is_upcoming ? 'Next meetup'|t : 'Latest meeting'|t,
   when: when_line,
   badge: badge,
   rsvp_url: rsvp_url,

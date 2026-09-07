@@ -175,6 +175,7 @@ function _sfdug_session_vars(NodeInterface $node): array {
     'time' => NULL,
     'month_label' => NULL,
     'when_line' => NULL,
+    'is_upcoming' => FALSE,
     'badge' => NULL,
     'venue' => NULL,
     'rsvp_url' => NULL,
@@ -193,6 +194,10 @@ function _sfdug_session_vars(NodeInterface $node): array {
   }
   if ($node->hasField('field_session_date') && !$node->get('field_session_date')->isEmpty()) {
     $start = (int) $node->get('field_session_date')->value;
+    // The hero falls back to the most recent past meeting when nothing is
+    // scheduled, so templates need to know which of the two they are showing.
+    $end = (int) ($node->get('field_session_date')->end_value ?: $start);
+    $vars['is_upcoming'] = $end >= \Drupal::time()->getRequestTime();
     $vars['date_long'] = $formatter->format($start, 'custom', 'l, M j, Y');
     $vars['date_short'] = $formatter->format($start, 'custom', 'l, M j');
     $vars['time'] = $formatter->format($start, 'custom', 'g:i A T');
@@ -204,7 +209,7 @@ function _sfdug_session_vars(NodeInterface $node): array {
   if ($node->hasField('field_location')) {
     $vars['venue'] = trim((string) $node->get('field_location')->value) ?: NULL;
   }
-  if ($node->hasField('field_rsvp_url') && !$node->get('field_rsvp_url')->isEmpty()) {
+  if ($vars['is_upcoming'] && $node->hasField('field_rsvp_url') && !$node->get('field_rsvp_url')->isEmpty()) {
     $vars['rsvp_url'] = $node->get('field_rsvp_url')->first()->getUrl()->toString();
   }
   if ($node->hasField('field_social_media_card') && ($file = $node->get('field_social_media_card')->entity)) {
@@ -251,9 +256,9 @@ function _sfdug_session_vars(NodeInterface $node): array {
     }
   }
 
-  // "Add to calendar". The prototype's link was href="#"; this builds a real
-  // Google Calendar template URL from the session's own date.
-  if ($node->hasField('field_session_date') && !$node->get('field_session_date')->isEmpty()) {
+  // "Add to calendar", for upcoming meetings only. The prototype's link was
+  // href="#"; this builds a real Google Calendar template URL from the date.
+  if ($vars['is_upcoming'] && !$node->get('field_session_date')->isEmpty()) {
     $item = $node->get('field_session_date')->first();
     $start = (int) $item->value;
     $end = (int) ($item->end_value ?: $start + 3600);

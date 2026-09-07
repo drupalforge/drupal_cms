@@ -3,11 +3,15 @@ langcode: en
 status: true
 dependencies:
   config:
-    - field.storage.node.field_session_date
-    - field.storage.node.field_session_video
+    - core.entity_view_mode.node.card
+    - core.entity_view_mode.node.card_archive
+    - core.entity_view_mode.node.featured
+    - core.entity_view_mode.node.infobar
+    - core.entity_view_mode.node.teaser
     - node.type.session
   module:
     - node
+    - smart_date
     - user
 id: sfdug_meetings
 label: 'SFDUG Meetings'
@@ -122,6 +126,13 @@ display:
           - user.permissions
         tags:
           - 'config:field.storage.node.field_session_date'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   block_archive:
     id: block_archive
     display_title: 'Block: from the archive'
@@ -222,6 +233,13 @@ display:
         tags:
           - 'config:field.storage.node.field_session_date'
           - 'config:field.storage.node.field_session_video'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   block_featured:
     id: block_featured
     display_title: 'Block: featured session'
@@ -233,6 +251,15 @@ display:
         options:
           offset: 0
           items_per_page: 1
+      empty:
+        area_view:
+          id: area_view
+          table: views
+          field: view
+          plugin_id: view
+          empty: true
+          view_to_insert: 'sfdug_meetings:block_featured_recent'
+          inherit_arguments: false
       sorts:
         field_session_date_value:
           id: field_session_date_value
@@ -268,6 +295,8 @@ display:
           table: node__field_session_date
           field: field_session_date_end_value
           relationship: none
+          group_type: group
+          admin_label: ''
           plugin_id: date
           operator: '>='
           value:
@@ -275,7 +304,38 @@ display:
             max: ''
             value: now
             type: offset
+            granularity: day
           group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups:
@@ -292,6 +352,7 @@ display:
           relationship: none
           view_mode: featured
       defaults:
+        empty: false
         pager: false
         style: false
         row: false
@@ -310,6 +371,141 @@ display:
           - user.permissions
         tags:
           - 'config:field.storage.node.field_session_date'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  block_featured_recent:
+    id: block_featured_recent
+    display_title: 'Featured (most recent, when nothing is scheduled)'
+    display_plugin: block
+    position: 7
+    display_options:
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 1
+      sorts:
+        field_session_date_value:
+          id: field_session_date_value
+          table: node__field_session_date
+          field: field_session_date_value
+          relationship: none
+          plugin_id: date
+          order: DESC
+          granularity: second
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          operator: in
+          value:
+            session: session
+          group: 1
+        field_session_date_end_value:
+          id: field_session_date_end_value
+          table: node__field_session_date
+          field: field_session_date_end_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          operator: '<'
+          value:
+            min: ''
+            max: ''
+            value: now
+            type: offset
+            granularity: day
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: featured
+      defaults:
+        empty: false
+        pager: false
+        style: false
+        row: false
+        sorts: false
+        filters: false
+        filter_groups: false
+      display_description: 'The upcoming meetup rendered large on the front page.'
+      display_extenders: {  }
+      cache_metadata:
+        max-age: 0
+        contexts:
+          - 'languages:language_content'
+          - 'languages:language_interface'
+          - url.query_args
+          - user.permissions
+        tags:
+          - 'config:field.storage.node.field_session_date'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   block_infobar:
     id: block_infobar
     display_title: 'Block: next meetup bar'
@@ -321,6 +517,15 @@ display:
         options:
           offset: 0
           items_per_page: 1
+      empty:
+        area_view:
+          id: area_view
+          table: views
+          field: view
+          plugin_id: view
+          empty: true
+          view_to_insert: 'sfdug_meetings:block_infobar_recent'
+          inherit_arguments: false
       sorts:
         field_session_date_value:
           id: field_session_date_value
@@ -356,6 +561,8 @@ display:
           table: node__field_session_date
           field: field_session_date_end_value
           relationship: none
+          group_type: group
+          admin_label: ''
           plugin_id: date
           operator: '>='
           value:
@@ -363,7 +570,38 @@ display:
             max: ''
             value: now
             type: offset
+            granularity: day
           group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
       filter_groups:
         operator: AND
         groups:
@@ -380,6 +618,7 @@ display:
           relationship: none
           view_mode: infobar
       defaults:
+        empty: false
         pager: false
         style: false
         row: false
@@ -398,6 +637,141 @@ display:
           - user.permissions
         tags:
           - 'config:field.storage.node.field_session_date'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
+  block_infobar_recent:
+    id: block_infobar_recent
+    display_title: 'Infobar (most recent, when nothing is scheduled)'
+    display_plugin: block
+    position: 8
+    display_options:
+      pager:
+        type: some
+        options:
+          offset: 0
+          items_per_page: 1
+      sorts:
+        field_session_date_value:
+          id: field_session_date_value
+          table: node__field_session_date
+          field: field_session_date_value
+          relationship: none
+          plugin_id: date
+          order: DESC
+          granularity: second
+      filters:
+        status:
+          id: status
+          table: node_field_data
+          field: status
+          entity_type: node
+          entity_field: status
+          plugin_id: boolean
+          value: '1'
+          group: 1
+        type:
+          id: type
+          table: node_field_data
+          field: type
+          entity_type: node
+          entity_field: type
+          plugin_id: bundle
+          operator: in
+          value:
+            session: session
+          group: 1
+        field_session_date_end_value:
+          id: field_session_date_end_value
+          table: node__field_session_date
+          field: field_session_date_end_value
+          relationship: none
+          group_type: group
+          admin_label: ''
+          plugin_id: date
+          operator: '<'
+          value:
+            min: ''
+            max: ''
+            value: now
+            type: offset
+            granularity: day
+          group: 1
+          exposed: false
+          expose:
+            operator_id: ''
+            label: ''
+            description: ''
+            use_operator: false
+            operator: ''
+            operator_limit_selection: false
+            operator_list: {  }
+            identifier: ''
+            required: false
+            remember: false
+            multiple: false
+            remember_roles:
+              authenticated: authenticated
+            min_placeholder: ''
+            max_placeholder: ''
+            placeholder: ''
+          is_grouped: false
+          group_info:
+            label: ''
+            description: ''
+            identifier: ''
+            optional: true
+            widget: select
+            multiple: false
+            remember: false
+            default_group: All
+            default_group_multiple: {  }
+            group_items: {  }
+      filter_groups:
+        operator: AND
+        groups:
+          1: AND
+      style:
+        type: default
+        options:
+          grouping: {  }
+          row_class: ''
+          default_row_class: false
+      row:
+        type: 'entity:node'
+        options:
+          relationship: none
+          view_mode: infobar
+      defaults:
+        empty: false
+        pager: false
+        style: false
+        row: false
+        sorts: false
+        filters: false
+        filter_groups: false
+      display_description: 'The NEXT MEETUP strip. Shows the soonest session that has not finished yet.'
+      display_extenders: {  }
+      cache_metadata:
+        max-age: 0
+        contexts:
+          - 'languages:language_content'
+          - 'languages:language_interface'
+          - url.query_args
+          - user.permissions
+        tags:
+          - 'config:field.storage.node.field_session_date'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   block_season:
     id: block_season
     display_title: 'Block: this season'
@@ -491,6 +865,13 @@ display:
         tags:
           - 'config:field.storage.node.field_session_date'
           - 'config:field.storage.node.field_session_video'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   page_archive:
     id: page_archive
     display_title: 'Page: past meetings'
@@ -574,6 +955,14 @@ display:
           - user.permissions
         tags:
           - 'config:field.storage.node.field_session_date'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }
   page_upcoming:
     id: page_upcoming
     display_title: 'Page: upcoming meetings'
@@ -667,3 +1056,11 @@ display:
           - user.permissions
         tags:
           - 'config:field.storage.node.field_session_date'
+    cache_metadata:
+      max-age: -1
+      contexts:
+        - 'languages:language_interface'
+        - url.query_args
+        - 'user.node_grants:view'
+        - user.permissions
+      tags: {  }

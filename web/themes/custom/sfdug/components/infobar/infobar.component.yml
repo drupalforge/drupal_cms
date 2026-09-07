@@ -5,6 +5,12 @@ description: The "NEXT MEETUP" strip that sits directly under the header.
 props:
   type: object
   properties:
+    label:
+      type:
+      - string
+      - 'null'
+      title: Strip label
+      default: Next meetup
     when:
       type:
       - string
