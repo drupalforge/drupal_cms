@@ -1,0 +1,45 @@
+id: sfdug_pages
+label: 'SFDUG pages'
+migration_group: sfdug
+migration_tags:
+  - sfdug
+source:
+  plugin: csv
+  path: /var/www/html/web/modules/custom/sfdug_migrate/data/pages.csv
+  header_offset: 0
+  ids:
+    - nid
+process:
+  # nid 75 "Front Page" is a superseded HTML prototype: a logo slideshow of
+  # placeholder SVGs and a <script> tag, with no alias. The theme replaced it.
+  _skip_prototype:
+    plugin: skip_on_value
+    source: nid
+    method: row
+    value: 75
+  title: title
+  status: status
+  created: created
+  changed: created
+  uid:
+    plugin: default_value
+    default_value: 1
+  body/value: body
+  body/format:
+    plugin: default_value
+    default_value: full_html
+  # `page` is moderated by basic_editorial, whose default state is draft.
+  # Without this the node saves unpublished no matter what `status` says.
+  moderation_state:
+    plugin: default_value
+    default_value: published
+  path/alias:
+    plugin: skip_on_empty
+    method: process
+    source: alias
+  path/pathauto:
+    plugin: default_value
+    default_value: 0
+destination:
+  plugin: 'entity:node'
+  default_bundle: page

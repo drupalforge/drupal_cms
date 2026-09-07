@@ -1,4 +1,4 @@
-uuid: cf27fb85-14eb-4fd7-a1e2-4f7d2e7deab4
+uuid: c444516a-7f9b-470b-ae42-139896cdc2b5
 langcode: en
 status: true
 dependencies:
@@ -10,7 +10,7 @@ id: node.session.field_session_video
 field_name: field_session_video
 entity_type: node
 bundle: session
-label: 'Session Video'
+label: Recording
 description: ''
 required: false
 translatable: true

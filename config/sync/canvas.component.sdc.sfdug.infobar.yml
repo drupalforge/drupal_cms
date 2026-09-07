@@ -1,0 +1,58 @@
+uuid: 996c14bd-fabd-4845-85de-b0110d68cfa5
+langcode: en
+status: true
+dependencies:
+  theme:
+    - sfdug
+active_version: 9624eb7dbd610ef7
+versioned_properties:
+  active:
+    settings:
+      prop_field_definitions:
+        when:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        badge:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        rsvp_url:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+        rsvp_label:
+          required: false
+          field_type: string
+          field_storage_settings: {  }
+          field_instance_settings: {  }
+          field_widget: string_textfield
+          default_value: null
+          expression: ℹ︎string␟value
+          derived_schema_metadata:
+            string_shape: {  }
+    fallback_metadata:
+      slot_definitions: {  }
+label: 'Info bar'
+id: sdc.sfdug.infobar
+provider: sfdug
+source: sdc
+source_local_id: 'sfdug:infobar'

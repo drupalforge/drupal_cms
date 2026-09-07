@@ -1,0 +1,26 @@
+uuid: 592a72e1-4c0b-4bf1-a8d8-cd69952b82d3
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.sfdug_meetings
+  module:
+    - views
+active_version: f287995292e2bd88
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'views_block:sfdug_meetings-block_infobar'
+        label: 'SFDUG: next meetup bar'
+        label_display: '0'
+        provider: views
+        views_label: ''
+        items_per_page: null
+    fallback_metadata:
+      slot_definitions: null
+label: 'SFDUG: next meetup bar'
+id: block.views_block.sfdug_meetings-block_infobar
+provider: views
+source: block
+source_local_id: 'views_block:sfdug_meetings-block_infobar'

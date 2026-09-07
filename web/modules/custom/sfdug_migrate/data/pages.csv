@@ -1,0 +1,112 @@
+nid,title,status,created,body,body_format,alias
+75,"Front Page",1,1767501401,"<header><div class=""logo-container""><div class=""logo-slideshow"" id=""logoSlideshow""><!-- Placeholder logos - replace with actual historical logos/images --><img class=""active"" src=""data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 48 48&apos;%3E%3Crect fill=&apos;%230f3460&apos; width=&apos;48&apos; height=&apos;48&apos;/%3E%3Ctext x=&apos;24&apos; y=&apos;32&apos; text-anchor=&apos;middle&apos; fill=&apos;white&apos; font-family=&apos;system-ui&apos; font-size=&apos;20&apos; font-weight=&apos;bold&apos;%3E06%3C/text%3E%3C/svg%3E"" alt=""2006""> <img src=""data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 48 48&apos;%3E%3Crect fill=&apos;%23e94560&apos; width=&apos;48&apos; height=&apos;48&apos;/%3E%3Ctext x=&apos;24&apos; y=&apos;32&apos; text-anchor=&apos;middle&apos; fill=&apos;white&apos; font-family=&apos;system-ui&apos; font-size=&apos;20&apos; font-weight=&apos;bold&apos;%3E11%3C/text%3E%3C/svg%3E"" alt=""2011""> <img src=""data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 48 48&apos;%3E%3Crect fill=&apos;%231a1a2e&apos; width=&apos;48&apos; height=&apos;48&apos;/%3E%3Ctext x=&apos;24&apos; y=&apos;32&apos; text-anchor=&apos;middle&apos; fill=&apos;white&apos; font-family=&apos;system-ui&apos; font-size=&apos;20&apos; font-weight=&apos;bold&apos;%3E15%3C/text%3E%3C/svg%3E"" alt=""2015""> <img src=""data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 48 48&apos;%3E%3Crect fill=&apos;%2316213e&apos; width=&apos;48&apos; height=&apos;48&apos;/%3E%3Ctext x=&apos;24&apos; y=&apos;32&apos; text-anchor=&apos;middle&apos; fill=&apos;white&apos; font-family=&apos;system-ui&apos; font-size=&apos;20&apos; font-weight=&apos;bold&apos;%3E20%3C/text%3E%3C/svg%3E"" alt=""2020""> <img src=""data:image/svg+xml,%3Csvg xmlns=&apos;http://www.w3.org/2000/svg&apos; viewBox=&apos;0 0 48 48&apos;%3E%3Crect fill=&apos;%23e94560&apos; width=&apos;48&apos; height=&apos;48&apos;/%3E%3Ctext x=&apos;24&apos; y=&apos;32&apos; text-anchor=&apos;middle&apos; fill=&apos;white&apos; font-family=&apos;system-ui&apos; font-size=&apos;20&apos; font-weight=&apos;bold&apos;%3E26%3C/text%3E%3C/svg%3E"" alt=""2026""></div><div><div class=""site-title"">SFDUG</div><div class=""site-subtitle"">San Francisco Drupal Users Group</div></div></div></header><main><section class=""hero""><div class=""established"">Est. April 2006</div><h1>Twenty Years of Bay Area Drupal</h1><p class=""hero-text"">In April 2006, <strong>Zack Rosen</strong> and <strong>Gregory Heller</strong> organized the first Drupal Camp SF — a two-day training at Compumentor's offices with <strong>Jeff Robbins</strong> from Lullabot. It sold out in five days.</p><p class=""hero-text"">That was the beginning. We're still here.</p><div class=""anniversary"">April 2026 — 20th Anniversary</div><p><br><br><a class=""cta-button"" href=""#"">Join the mailing list</a></p></section><!-- Organizers Crawl --><section class=""crawl-section""><div class=""crawl-label"">Organizers Past &amp; Present</div><div class=""crawl-track"" id=""organizersCrawl""><!-- Content duplicated for seamless loop -->&nbsp;</div></section><!-- Speakers Crawl --><section class=""crawl-section""><div class=""crawl-label"">Speakers Who've Presented</div><div class=""crawl-track"" id=""speakersCrawl""><!-- Content duplicated for seamless loop -->&nbsp;</div></section><!-- Topics Crawl --><section class=""crawl-section topics-crawl""><div class=""crawl-label"">Topics We've Covered</div><div class=""crawl-track"" id=""topicsCrawl""><!-- Content duplicated for seamless loop -->&nbsp;</div></section><!-- Venues --><section class=""venues-section""><h3>Venues That Hosted Us</h3><p class=""venues-list"">Pantheon · Chapter Three · Compumentor · UCSF Mission Center<br><em style=""opacity:0.6;"">(and your living room, 2020–present)</em></p></section></main><footer><p>Part of the Bay Area Drupal community that brings you <a href=""https://www.badcamp.org"">BADCamp</a>.</p></footer><script>
+    // Logo slideshow
+    const logos = document.querySelectorAll('#logoSlideshow img');
+    let currentLogo = 0;
+    
+    setInterval(() => {
+      logos[currentLogo].classList.remove('active');
+      currentLogo = (currentLogo + 1) % logos.length;
+      logos[currentLogo].classList.add('active');
+    }, 2500);
+
+    // Crawl data
+    const organizers = [
+      { name: 'Zack Rosen', initials: 'ZR' },
+      { name: 'John Faber', initials: 'JF' },
+      { name: 'Mark Ferree', initials: 'MF' },
+      { name: 'Anne Stefanyk', initials: 'AS' },
+      { name: 'Anne Bonham', initials: 'AB' },
+      { name: 'Eric Guirren', initials: 'EG' },
+      { name: 'AmyJune Hineline', initials: 'AH' },
+      { name: 'Annabella', initials: 'A' },
+      { name: 'Sean Dietrich', initials: 'SD' },
+      { name: 'Mark Casias', initials: 'MC' },
+      { name: 'James Kealy', initials: 'JK' }
+    ];
+
+    const speakers = [
+      { name: 'Alex Pott', initials: 'AP' },
+      { name: 'Jen Lampton', initials: 'JL' },
+      { name: 'Cathy Theys', initials: 'CT' },
+      { name: 'Matt Glaman', initials: 'MG' },
+      { name: 'Mike Herchel', initials: 'MH' },
+      { name: 'Martin Anderson-Clutz', initials: 'MA' },
+      { name: 'Mario Hernandez', initials: 'MH' },
+      { name: 'Danny Englander', initials: 'DE' },
+      { name: 'Greg Anderson', initials: 'GA' },
+      { name: 'Josh Koenig', initials: 'JK' },
+      { name: 'David Hwang', initials: 'DH' },
+      { name: 'Mauricio Dinarte', initials: 'MD' },
+      { name: 'Jürgen Haas', initials: 'JH' }
+    ];
+
+    const topics = [
+      'Headless Drupal', 'Twig', 'Layout Builder', 'Configuration Management',
+      'Composer', 'Backdrop CMS', 'Accessibility', 'WCAG', 'Migrations',
+      'DevOps', 'Responsive Images', 'PHPStan', 'Solr', 'Views', 'Theming',
+      'Gift of Open Source', 'React', 'Tailwind CSS', 'DDEV', 'Pantheon',
+      'Multisite', 'Performance', 'Security', 'Contrib', 'Core'
+    ];
+
+    // Build crawl content
+    function buildPeopleCrawl(container, people) {
+      const content = people.map(p => `
+        <div class=""crawl-item"">
+          <div class=""placeholder-avatar"">${p.initials}</div>
+          ${p.name}
+        </div>
+        <span class=""crawl-separator"">·</span>
+      `).join('');
+      // Duplicate for seamless loop
+      container.innerHTML = content + content;
+    }
+
+    function buildTopicsCrawl(container, items) {
+      const content = items.map(t => `
+        <div class=""crawl-item"">${t}</div>
+        <span class=""crawl-separator"">·</span>
+      `).join('');
+      container.innerHTML = content + content;
+    }
+
+    buildPeopleCrawl(document.getElementById('organizersCrawl'), organizers);
+    buildPeopleCrawl(document.getElementById('speakersCrawl'), speakers);
+    buildTopicsCrawl(document.getElementById('topicsCrawl'), topics);
+  </script>",full_html,
+96,Home,1,1787188052,"<section class=""history"" id=""about"">
+<div class=""wrap history-inner"">
+<div class=""eyebrow"">Est. April 2006</div>
+
+<h2>Twenty Years of Bay Area Drupal</h2>
+
+<p>In April 2006, Zack Rosen and Gregory Heller organized the first Drupal Camp SF — a two-day training at CivicSpace’s offices with Jeff Robbins from Lullabot. It sold out in five days; half the attendees flew in from out of state.</p>
+
+<p class=""closer"">That was the beginning. We’re still here, still meeting every month.</p>
+</div>
+</section>
+
+<section class=""join"" id=""join"">
+<div class=""wrap join-inner"">
+<div class=""card-flat badcamp"">
+<div class=""pill-tag"">Part of the community</div>
+
+<h3>SFDUG is part of <span>BADCamp</span></h3>
+
+<p>We’re part of the wider Bay Area Drupal community behind the Bay Area Drupal Camp. Our monthly meetups may soon be hosted right alongside BADCamp — same friendly crowd, more ways to connect year-round.</p>
+
+<a class=""more"" href=""https://www.badcamp.org"">Visit Bay Area Drupal Camp →</a></div>
+
+<div class=""card-flat newsletter"">
+<h3>Never miss a meetup</h3>
+
+<p>Join the mailing list and we’ll send you the topic, speaker, and Zoom link before each month’s meeting. No spam — just Drupal.</p>
+
+<form class=""news-form"" id=""news-form""><input aria-label=""Email address"" name=""email"" placeholder=""you@example.com"" required=""required"" type=""email"" /> <button type=""submit"">Sign me up</button></form>
+
+<div class=""news-fine"">Free · online every month · everyone welcome</div>
+
+<div aria-live=""polite"" class=""news-msg"" id=""news-msg"" role=""status"">&nbsp;</div>
+</div>
+</div>
+</section>",full_html,/home

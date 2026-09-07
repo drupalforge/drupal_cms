@@ -1,10 +1,10 @@
 _core:
-  default_config_hash: jtno5biznHZbrIgKwzq-ze-7XaQxLCGe6PeUOR7bRiQ
+  default_config_hash: wGvJj14l_owd0ghDskKv-kXAVLZpga6dnGsPwBgxYBs
 cache:
   page:
-    max_age: 0
+    max_age: 900
 css:
-  preprocess: false
+  preprocess: true
   compress: true
 fast_404:
   enabled: true

@@ -30,8 +30,8 @@
         <div class="session-full__video">{{ content.field_session_video }}</div>
       {% endif %}
 
-      {% if content.field_description|render %}
-        <div class="prose">{{ content.field_description }}</div>
+      {% if content.body|render %}
+        <div class="prose">{{ content.body }}</div>
       {% endif %}
 
       {% if speakers %}
@@ -53,7 +53,7 @@
       {% endif %}
 
       {{ content|without(
-        'field_description',
+        'body',
         'field_session_video',
         'field_person_speakers',
         'field_slides',
@@ -61,12 +61,9 @@
         'field_short_description',
         'field_session_date',
         'field_rsvp_url',
-        'field_venue',
-        'field_venue_note',
-        'field_time_note',
-        'field_badge',
+        'field_location',
+        'field_event_mode',
         'field_accent_color',
-        'field_session_category',
         'links'
       ) }}
     </div>

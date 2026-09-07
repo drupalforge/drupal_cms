@@ -39,8 +39,8 @@
         <p class="talk-hook">{{ hook }}</p>
       {% endif %}
 
-      {% if content.field_description|render %}
-        <div class="prose">{{ content.field_description }}</div>
+      {% if content.body|render %}
+        <div class="prose">{{ content.body }}</div>
       {% endif %}
 
       {% if speakers %}

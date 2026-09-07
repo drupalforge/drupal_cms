@@ -1,0 +1,755 @@
+<title>SFDUG Rebuild Plan</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
+<style>
+  /* ---- Palette lifted from the SFDUG theme's own tokens (web/themes/custom/sfdug/css) ---- */
+  :root {
+    --purple-deep: #1c1538;
+    --purple: #2c2160;
+    --purple-mid: #6c5cc4;
+    --gold: #f0c76a;
+    --gold-border: #f0d9a8;
+    --rust: #b5482a;
+    --teal: #2b5a6b;
+
+    --ground: #faf6ef;          /* cream */
+    --surface: #fffdf9;
+    --surface-sunk: #f4eee2;
+    --ink: #1a1a1a;
+    --body: #3f3a36;
+    --muted: #6b655f;
+    --rule: #e4dbc9;
+    --rule-soft: #efe8da;
+
+    --accent: var(--gold);
+    --heading: var(--purple);
+    --keep: var(--teal);
+    --cut: var(--rust);
+
+    --measure: 66ch;
+    --wide: 74rem;
+
+    --f-display: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    --f-body: 'Source Serif 4', Georgia, 'Times New Roman', serif;
+    --f-mono: 'JetBrains Mono', ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --ground: #14101f;
+      --surface: #1c1730;
+      --surface-sunk: #221c3a;
+      --ink: #f6f1e6;
+      --body: #d8d1c4;
+      --muted: #9a9384;
+      --rule: #342c50;
+      --rule-soft: #2a2342;
+
+      --gold: #f3d081;
+      --purple: #b3a6ee;
+      --rust: #e0805f;
+      --teal: #6fb3c4;
+
+      --accent: var(--gold);
+      --heading: var(--purple);
+      --keep: var(--teal);
+      --cut: var(--rust);
+    }
+  }
+
+  :root[data-theme="dark"] {
+    --ground: #14101f;
+    --surface: #1c1730;
+    --surface-sunk: #221c3a;
+    --ink: #f6f1e6;
+    --body: #d8d1c4;
+    --muted: #9a9384;
+    --rule: #342c50;
+    --rule-soft: #2a2342;
+
+    --gold: #f3d081;
+    --purple: #b3a6ee;
+    --rust: #e0805f;
+    --teal: #6fb3c4;
+
+    --accent: var(--gold);
+    --heading: var(--purple);
+    --keep: var(--teal);
+    --cut: var(--rust);
+  }
+
+  * { box-sizing: border-box; }
+
+  body {
+    background: var(--ground);
+    color: var(--body);
+    font-family: var(--f-body);
+    font-size: 1.0625rem;
+    line-height: 1.65;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap {
+    max-width: var(--wide);
+    margin-inline: auto;
+    padding-inline: clamp(1.25rem, 4vw, 3rem);
+  }
+
+  .measure { max-width: var(--measure); }
+
+  /* ---------- Masthead ---------- */
+  .masthead {
+    background: var(--purple-deep);
+    color: #f6f1e6;
+    border-bottom: 3px solid var(--gold);
+    padding-block: clamp(2.5rem, 6vw, 4.25rem) clamp(2rem, 5vw, 3rem);
+  }
+  .masthead .wrap { display: flex; flex-direction: column; gap: 1.25rem; }
+  .eyebrow {
+    font-family: var(--f-mono);
+    font-size: 0.75rem;
+    font-weight: 500;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--gold-border);
+  }
+  .masthead h1 {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: clamp(2.4rem, 6.5vw, 4rem);
+    line-height: 1.02;
+    letter-spacing: -0.025em;
+    margin: 0;
+    color: #fffdf9;
+    text-wrap: balance;
+  }
+  .masthead .standfirst {
+    max-width: 54ch;
+    font-size: clamp(1.05rem, 2vw, 1.25rem);
+    line-height: 1.55;
+    color: #ded6c4;
+    margin: 0;
+  }
+  .masthead .standfirst strong { color: var(--gold); font-weight: 600; }
+  .meta-line {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1.5rem;
+    font-family: var(--f-mono);
+    font-size: 0.78rem;
+    color: #a79ec4;
+    padding-top: 0.75rem;
+    border-top: 1px solid rgba(240, 199, 106, 0.25);
+  }
+
+  /* ---------- Scoreboard ---------- */
+  .scoreboard {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+    gap: 0;
+    border: 1px solid var(--rule);
+    background: var(--surface);
+    margin-block: clamp(2rem, 5vw, 3rem);
+  }
+  .score {
+    padding: 1.4rem 1.5rem;
+    border-right: 1px solid var(--rule);
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .score:last-child { border-right: 0; }
+  .score .label {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .score .figures {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.9rem;
+    line-height: 1;
+    letter-spacing: -0.02em;
+    color: var(--heading);
+    font-variant-numeric: tabular-nums;
+    display: flex;
+    align-items: baseline;
+    gap: 0.4rem;
+  }
+  .score .from { color: var(--muted); font-weight: 500; text-decoration: line-through; text-decoration-thickness: 2px; }
+  .score .arrow { color: var(--accent); font-size: 1.1rem; font-weight: 600; }
+  .score .note { font-size: 0.85rem; color: var(--muted); line-height: 1.4; }
+
+  /* ---------- Sections ---------- */
+  section { padding-block: clamp(2.25rem, 5vw, 3.5rem); border-top: 1px solid var(--rule-soft); }
+  section:first-of-type { border-top: 0; }
+
+  .sec-head { display: flex; align-items: baseline; gap: 1rem; margin-bottom: 1.5rem; }
+  .sec-num {
+    font-family: var(--f-mono);
+    font-size: 0.8rem;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.08em;
+    flex: none;
+    padding-top: 0.15rem;
+  }
+  h2 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: clamp(1.5rem, 3.2vw, 2.05rem);
+    line-height: 1.15;
+    letter-spacing: -0.02em;
+    color: var(--heading);
+    margin: 0;
+    text-wrap: balance;
+  }
+  h3 {
+    font-family: var(--f-display);
+    font-weight: 600;
+    font-size: 1.08rem;
+    letter-spacing: 0.005em;
+    color: var(--ink);
+    margin: 2rem 0 0.7rem;
+  }
+  p { margin: 0 0 1rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { color: var(--ink); font-weight: 600; }
+  a { color: var(--heading); text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  a:focus-visible, summary:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  code, .mono { font-family: var(--f-mono); font-size: 0.86em; }
+  p code, li code, td code {
+    background: var(--surface-sunk);
+    border: 1px solid var(--rule-soft);
+    border-radius: 3px;
+    padding: 0.08em 0.34em;
+    color: var(--ink);
+  }
+
+  ul.prose { margin: 0 0 1rem; padding-left: 1.15rem; }
+  ul.prose li { margin-bottom: 0.5rem; }
+
+  /* ---------- Verdict callout ---------- */
+  .callout {
+    border-left: 4px solid var(--cut);
+    background: var(--surface);
+    padding: 1.25rem 1.5rem;
+    margin: 1.75rem 0;
+  }
+  .callout .tag {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--cut);
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+  }
+  .callout.keep { border-left-color: var(--keep); }
+  .callout.keep .tag { color: var(--keep); }
+
+  /* ---------- Tables ---------- */
+  .table-scroll { overflow-x: auto; margin: 1.5rem 0; border: 1px solid var(--rule); background: var(--surface); }
+  table { border-collapse: collapse; width: 100%; min-width: 40rem; }
+  th, td { text-align: left; padding: 0.8rem 1.1rem; border-bottom: 1px solid var(--rule-soft); vertical-align: top; }
+  thead th {
+    font-family: var(--f-mono);
+    font-size: 0.7rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--muted);
+    font-weight: 500;
+    background: var(--surface-sunk);
+    border-bottom: 1px solid var(--rule);
+  }
+  tbody tr:last-child td { border-bottom: 0; }
+  td .type-name {
+    font-family: var(--f-display);
+    font-weight: 600;
+    color: var(--ink);
+    font-size: 1rem;
+    display: block;
+  }
+  td .machine { font-family: var(--f-mono); font-size: 0.78rem; color: var(--muted); }
+  .num { font-variant-numeric: tabular-nums; font-family: var(--f-mono); font-size: 0.85rem; white-space: nowrap; }
+
+  .chips { display: flex; flex-wrap: wrap; gap: 0.3rem; }
+  .chip {
+    font-family: var(--f-mono);
+    font-size: 0.74rem;
+    padding: 0.16rem 0.44rem;
+    border: 1px solid var(--rule);
+    background: var(--surface-sunk);
+    border-radius: 3px;
+    color: var(--body);
+    white-space: nowrap;
+  }
+  .chip.new { border-color: var(--keep); color: var(--keep); background: transparent; }
+
+  /* ---------- Ledger ---------- */
+  .ledger { display: grid; grid-template-columns: repeat(auto-fit, minmax(19rem, 1fr)); gap: 1.5rem; margin-top: 1.5rem; }
+  .ledger-col { border-top: 3px solid var(--rule); padding-top: 1rem; }
+  .ledger-col.cut { border-top-color: var(--cut); }
+  .ledger-col.keep { border-top-color: var(--keep); }
+  .ledger-col h4 {
+    font-family: var(--f-display);
+    font-size: 0.95rem;
+    font-weight: 600;
+    margin: 0 0 0.85rem;
+    color: var(--ink);
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 1rem;
+  }
+  .ledger-col h4 .count { font-family: var(--f-mono); font-size: 0.78rem; font-weight: 400; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .ledger-col ul { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 0.45rem; }
+  .ledger-col li { display: flex; gap: 0.6rem; font-size: 0.92rem; line-height: 1.45; }
+  .ledger-col li::before { content: ""; flex: none; width: 3px; margin-top: 0.42em; height: 0.8em; background: var(--rule); }
+  .ledger-col.cut li::before { background: var(--cut); }
+  .ledger-col.keep li::before { background: var(--keep); }
+  .ledger-col li .why { color: var(--muted); font-size: 0.85rem; }
+
+  /* ---------- Code block ---------- */
+  .code {
+    background: var(--purple-deep);
+    color: #ded6c4;
+    font-family: var(--f-mono);
+    font-size: 0.8rem;
+    line-height: 1.65;
+    padding: 1.25rem 1.4rem;
+    overflow-x: auto;
+    margin: 1.25rem 0;
+    border-left: 3px solid var(--gold);
+  }
+  .code .c { color: #8b81ad; }        /* comment */
+  .code .k { color: #f3d081; }        /* key */
+  .code .v { color: #a8d5c2; }        /* value */
+  .code .add { color: #ffffff; font-weight: 500; }
+  .code-cap { font-size: 0.82rem; color: var(--muted); margin-top: -0.6rem; }
+
+  /* ---------- Phases ---------- */
+  .phases { display: flex; flex-direction: column; gap: 0; margin-top: 1.5rem; border-top: 1px solid var(--rule); }
+  .phase { display: grid; grid-template-columns: 3.5rem 1fr; gap: 1.25rem; padding: 1.4rem 0; border-bottom: 1px solid var(--rule-soft); }
+  .phase-num {
+    font-family: var(--f-display);
+    font-weight: 700;
+    font-size: 1.6rem;
+    line-height: 1;
+    color: var(--accent);
+    font-variant-numeric: tabular-nums;
+  }
+  .phase h3 { margin: 0 0 0.4rem; font-size: 1.05rem; }
+  .phase p { font-size: 0.95rem; margin-bottom: 0.5rem; }
+  .phase .out {
+    font-family: var(--f-mono);
+    font-size: 0.76rem;
+    color: var(--muted);
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.3rem 0.9rem;
+  }
+
+  /* ---------- Open questions ---------- */
+  .opens { display: flex; flex-direction: column; gap: 0.9rem; margin-top: 1.25rem; }
+  .open {
+    border: 1px solid var(--rule);
+    border-left: 4px solid var(--accent);
+    background: var(--surface);
+    padding: 1rem 1.25rem;
+  }
+  .open h4 { font-family: var(--f-display); font-size: 0.98rem; font-weight: 600; margin: 0 0 0.35rem; color: var(--ink); }
+  .open p { font-size: 0.92rem; margin: 0; color: var(--muted); }
+
+  footer {
+    background: var(--purple-deep);
+    color: #a79ec4;
+    padding-block: 2rem;
+    margin-top: clamp(2.5rem, 6vw, 4rem);
+    font-family: var(--f-mono);
+    font-size: 0.78rem;
+    border-top: 3px solid var(--gold);
+  }
+  footer .wrap { display: flex; flex-wrap: wrap; gap: 0.5rem 2rem; justify-content: space-between; }
+
+  @media (prefers-reduced-motion: reduce) {
+    * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+</style>
+
+<header class="masthead">
+  <div class="wrap">
+    <span class="eyebrow">San Francisco Drupal Users Group · Build plan</span>
+    <h1>SFDUG Rebuild Plan</h1>
+    <p class="standfirst">The current site runs conference software to publish a monthly meetup archive. We rebuild it on a clean Drupal CMS 2 install with <strong>three content types</strong>, keep the 2026 theme untouched, and migrate the content that matters.</p>
+    <div class="meta-line">
+      <span>Drupal CMS 1.2.8 → 2.1.4</span>
+      <span>core 11.4.6 · unchanged</span>
+      <span>branch: sfdug-2026-redesign</span>
+      <span>drafted 5 Sep 2026</span>
+    </div>
+  </div>
+</header>
+
+<div class="wrap">
+
+  <div class="scoreboard">
+    <div class="score">
+      <span class="label">Content types</span>
+      <span class="figures"><span class="from">10</span><span class="arrow">→</span>3</span>
+      <span class="note">Five had zero nodes</span>
+    </div>
+    <div class="score">
+      <span class="label">Field instances</span>
+      <span class="figures"><span class="from">68</span><span class="arrow">→</span>22</span>
+      <span class="note">27 on <code>session</code> alone</span>
+    </div>
+    <div class="score">
+      <span class="label">Views</span>
+      <span class="figures"><span class="from">48</span><span class="arrow">→</span>20</span>
+      <span class="note">3 ours, 17 stock</span>
+    </div>
+    <div class="score">
+      <span class="label">ECA models</span>
+      <span class="figures"><span class="from">15</span><span class="arrow">→</span>8</span>
+      <span class="note">All Drupal CMS plumbing</span>
+    </div>
+    <div class="score">
+      <span class="label">Vocabularies</span>
+      <span class="figures"><span class="from">9</span><span class="arrow">→</span>1</span>
+      <span class="note">Only Drupal CMS's tags</span>
+    </div>
+  </div>
+
+  <div class="callout keep" style="margin-top:0">
+    <span class="tag">Built · 6 September 2026</span>
+    <p>All seven phases are done. The site runs at <code>sfdug-2026-refactor.ddev.site</code> with <strong>79 meetings, 5 people, 48 recordings and the Home node</strong> in place; <code>/</code>, <code>/meetings</code>, <code>/upcoming</code>, <code>/people</code> and <code>/videos</code> all render, and a fresh crawl of eight pages logs zero errors and zero warnings. Modules are down from 116 to 94 and config objects from 734 to 592.</p>
+  </div>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">01</span><h2>Why rebuild rather than cut</h2></div>
+    <div class="measure">
+      <p>The site began from a conference recipe that didn't fit. What it left behind is a session-submission and moderation platform — registration, ratings, sponsorships, BOFs, trainings, job listings — sitting on top of a site whose entire public surface is four destinations: <code>/upcoming</code>, <code>/meetings</code>, <code>/people</code>, and the <code>#about</code> / <code>#join</code> anchors on the front page.</p>
+      <p>Unwinding that means auditing 734 config objects and hoping nothing depends on what you removed. Rebuilding means writing three content types. The content is small enough that the second is faster and lands somewhere you can reason about.</p>
+    </div>
+
+    <h3>The evidence that settled the content model</h3>
+    <div class="measure">
+      <p>Sessions and events are the same thing here. <strong>72 dated sessions occupy 72 distinct dates</strong>, spanning 2013-10-14 to 2026-08-20 — not one collision in thirteen years. That is one talk per monthly meeting, not a multi-track schedule.</p>
+    </div>
+
+    <div class="callout">
+      <span class="tag">Discarded, not migrated</span>
+      <p>The six <code>event</code> nodes are recipe residue, not a parallel model: three are unpublished drafts, and all six carry <code>field_event_date</code> = <strong>1969-12-31 16:33:45</strong> — a broken near-epoch timestamp. The three published ones ("October 2025: Drupal CMS Launch Party", "November 2025: AI and Drupal", "December 2025: Holiday Social") are meetings that belong in the archive as sessions.</p>
+    </div>
+
+    <div class="measure">
+      <p>One bug turned up while tracing this. The current site's <code>system.site.front</code> is <code>/node</code>, so <code>/</code> serves the frontpage view and the About and Join sections <strong>never render</strong> — they appear only at <code>/home</code>. The rebuild sets <code>page.front: /home</code>, which fixes it.</p>
+      <p>The theme settles the rest. <code>sfdug</code> is <code>core_version_requirement: ^11</code> on base theme <code>stable9</code> with no contrib dependencies — it ports to 11.4 as-is. So <strong>field machine names carry over unchanged</strong>, and the templates keep working. That also reframes the field audit: nine empty fields are actively rendered by the templates. They aren't dead, they're designed and not yet filled in.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">02</span><h2>The content model</h2></div>
+    <div class="measure">
+      <p>Three types, no taxonomies of our own. Machine names match the current site so the theme needs no rewrite; only the human label changes on the first one.</p>
+      <p><strong>Page is Drupal CMS's, not ours.</strong> It arrives with four fields already on it — <code>field_content</code> (Canvas), <code>field_description</code>, <code>field_featured_image</code> and <code>field_tags</code>. We add <code>body</code>, because the Home node carries the front page's About and Join sections as hand-authored HTML whose classes the stylesheet targets. That puts the real total at 22 fields, not the 18 an earlier draft claimed.</p>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead>
+          <tr><th>Type</th><th>Fields</th><th class="num">Was</th></tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+              <span class="type-name">Meeting</span>
+              <span class="machine">session</span>
+            </td>
+            <td>
+              <div class="chips">
+                <span class="chip">field_description</span>
+                <span class="chip">field_session_date</span>
+                <span class="chip">field_session_video</span>
+                <span class="chip">field_person_speakers</span>
+                <span class="chip">field_rsvp_url</span>
+                <span class="chip">field_short_description</span>
+                <span class="chip">field_social_media_card</span>
+                <span class="chip">field_accent_color</span>
+                <span class="chip">field_slides</span>
+                <span class="chip new">field_event_mode</span>
+                <span class="chip new">field_location</span>
+              </div>
+            </td>
+            <td class="num">27 → 11</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="type-name">Person</span>
+              <span class="machine">person</span>
+            </td>
+            <td>
+              <div class="chips">
+                <span class="chip">field_bio</span>
+                <span class="chip">field_photo</span>
+                <span class="chip">field_organization</span>
+                <span class="chip">field_linkedin</span>
+                <span class="chip">field_drupal_org_profile</span>
+                <span class="chip">field_website</span>
+              </div>
+            </td>
+            <td class="num">7 → 6</td>
+          </tr>
+          <tr>
+            <td>
+              <span class="type-name">Page</span>
+              <span class="machine">page</span>
+            </td>
+            <td><div class="chips"><span class="chip new">body</span><span class="chip">field_content</span><span class="chip">field_description</span><span class="chip">field_featured_image</span><span class="chip">field_tags</span></div></td>
+            <td class="num">1 → 5</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>The two new fields, and why they earn their place</h3>
+    <div class="measure">
+      <p>Meetings are online now, with in-person a live possibility. <code>field_event_mode</code> is a list — Online / In person / Hybrid, defaulting to Online — and <code>field_location</code> is plain text, empty until you book a room.</p>
+      <p>The mode field also fixes something. The theme emits schema.org Event JSON-LD, and today it decides attendance mode by <strong>string-sniffing a taxonomy term name</strong>:</p>
+    </div>
+
+<div class="code"><span class="c">// sfdug.theme:355 — replaced by field_event_mode</span>
+$is_online = $venue_name === '' || stripos($venue_name, <span class="v">'online'</span>) !== FALSE
+  || stripos($venue_name, <span class="v">'zoom'</span>) !== FALSE || stripos($venue_name, <span class="v">'virtual'</span>) !== FALSE;</div>
+
+    <p class="code-cap measure">Name a venue "Zoom Room at Twitter HQ" and Google is told an in-person meeting is virtual. Dropping the venue vocabulary makes the structured data more correct, not less.</p>
+
+    <div class="ledger">
+      <div class="ledger-col cut">
+        <h4>Removed <span class="count">7 types · 6 vocabularies</span></h4>
+        <ul>
+          <li><span><code>event</code>, <code>location</code> <span class="why">— merged into Meeting</span></span></li>
+          <li><span><code>article</code>, <code>bof</code>, <code>featured_speaker</code>, <code>job_listing</code>, <code>sponsor</code> <span class="why">— zero nodes each</span></span></li>
+          <li><span><code>topic</code> <span class="why">— 29 terms, zero references</span></span></li>
+          <li><span><code>venue</code>, <code>session_category</code>, <code>room</code>, <code>sponsor_level</code>, <code>session_audience</code></span></li>
+          <li><span>13 dead session fields <span class="why">— no data and no theme reference, including <code>field_is_training</code> and <code>field_is_non_session</code>, both FALSE on all 79 nodes</span></span></li>
+          <li><span>All 15 ECA models <span class="why">— session submission, moderation, confirmation deadlines</span></span></li>
+          <li><span><code>registration</code>, <code>crm</code>, <code>webform</code>, <code>mailchimp</code>, <code>views_bulk_operations</code> <span class="why">— 0 registrations, 0 submissions</span></span></li>
+          <li><span>The <code>sfdug_2025</code> theme</span></li>
+        </ul>
+      </div>
+      <div class="ledger-col keep">
+        <h4>Carried over <span class="count">unchanged</span></h4>
+        <ul>
+          <li><span>The <code>sfdug</code> theme <span class="why">— six templates, eight components, five stylesheets</span></span></li>
+          <li><span>Six view modes <span class="why"><code>card</code>, <code>card_archive</code>, <code>featured</code>, <code>full</code>, <code>infobar</code>, <code>teaser</code> — the templates require them</span></span></li>
+          <li><span>79 sessions, 5 people, 48 media items, 2 pages</span></li>
+          <li><span>Front page at <code>/home</code> <span class="why">— matches both the old site and the Blank template default</span></span></li>
+          <li><span>Menus <span class="why"><code>main</code>, <code>footer-community</code>, <code>footer-meetings</code></span></span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">03</span><h2>The <span class="mono">sfdug</span> site template</h2></div>
+    <div class="measure">
+      <p>Drupal CMS 2 replaced the old per-feature recipes with site templates, and ships <code>drupal_cms_site_template_base</code> — "Blank" — explicitly to be copied. Copy it to <code>recipes/sfdug/</code> and install the site from it once. Every enabled module is then a line someone chose, in a file you can review.</p>
+      <p>Blank already carries what we want: <code>drupal_cms_admin_ui</code>, <code>drupal_cms_media</code>, <code>drupal_cms_seo_basic</code>, <code>drupal_cms_anti_spam</code>, <code>drupal_cms_authentication</code>, <code>drupal_cms_privacy_basic</code>, and the core maintenance and performance recipes. Three edits turn it into ours.</p>
+    </div>
+
+<div class="code"><span class="c"># recipes/sfdug/recipe.yml</span>
+<span class="k">name:</span> <span class="v">SFDUG</span>
+<span class="k">description:</span> <span class="v">'San Francisco Drupal Users Group — monthly meetings, speakers, video archive.'</span>
+<span class="k">type:</span> <span class="v">Site</span>
+
+<span class="k">recipes:</span>
+  <span class="c">// unchanged from Blank — admin_ui, media, seo_basic, anti_spam,</span>
+  <span class="c">// authentication, privacy_basic, easy_email_express, core recipes</span>
+
+<span class="k">install:</span>
+  - drupal_cms_helper
+  - stark
+  <span class="add">- canvas          </span><span class="c"># not in Blank; must be named explicitly</span>
+  <span class="add">- canvas_stark    </span><span class="c"># "MUST be installed or Canvas breaks in strange ways"</span>
+  <span class="add">- sfdug           </span><span class="c"># our theme, replacing the generated `blank`</span>
+  <span class="add">- views</span>
+  <span class="add">- smart_date    </span><span class="c"># field_session_date is a smartdate; not in Drupal CMS 2</span>
+
+<span class="k">config:</span>
+  <span class="k">strict:</span> <span class="v">false</span>
+  <span class="k">actions:</span>
+    <span class="k">system.site:</span>
+      <span class="k">simpleConfigUpdate:</span>
+        <span class="k">page.front:</span> <span class="v">'/home'</span>
+    <span class="k">system.theme:</span>
+      <span class="k">simpleConfigUpdate:</span>
+        <span class="k">default:</span> <span class="add">'sfdug'</span></div>
+
+    <div class="callout">
+      <span class="tag">Corrected after the install</span>
+      <p>An earlier draft of this plan said we would avoid <code>drupal_cms_content_type_base</code> and the <code>bpmn_io</code> / <code>eca_*</code> / <code>modeler_api</code> / <code>scheduler</code> / <code>linkit</code> / <code>autosave_form</code> family with it. <strong>That was wrong.</strong> It is applied transitively, and not naming it in our recipe changes nothing:</p>
+      <p class="mono" style="margin:0.7rem 0; font-size:0.82rem; color:var(--ink)">drupal_cms_media → drupal_cms_privacy_basic → drupal_cms_content_type_base</p>
+      <p>Both <code>media</code> and <code>privacy_basic</code> are in Blank's list, and both earn their place. Keeping ECA out would mean dropping them and wiring core's media type recipes by hand — more divergence from stock Drupal CMS than the modules are worth.</p>
+      <p style="margin-top:0.6rem"><strong>Decision: accept it.</strong> The eight ECA models that arrive are Drupal CMS plumbing, not workflow debt — <code>remote_video_consent</code>, <code>grant_media_type_permissions</code>, <code>unpublished_404</code>, <code>auth_redirects</code>, <code>content_duplicate</code>, <code>privacy_setting_link</code>, <code>define_breakpoints</code>, <code>content_template_disable_preview</code>. Nothing resembling the fifteen session-submission models. The first of those is worth having on a site built around 48 YouTube embeds.</p>
+    </div>
+
+    <div class="callout keep">
+      <span class="tag">Still worth naming explicitly</span>
+      <p><code>canvas</code> and <code>canvas_stark</code>. Blank does not install Canvas, so our recipe names it directly. <code>canvas_stark</code> is easy to miss: it ships inside the module at <code>web/modules/contrib/canvas/themes/canvas_stark</code>, not in <code>web/themes/contrib</code>.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">04</span><h2>Migration</h2></div>
+
+    <div class="callout">
+      <span class="tag">The one thing that must not go wrong</span>
+      <p><strong>Do not migrate from the existing CSVs.</strong> <code>sfdug_nodes_parsed_enriched.csv</code> holds 1,814 scraped rows that became 79 nodes — and three repair passes ran <em>after</em> that import: <code>apply_meetup_dates.php</code> (documented as the "preferred date source"), <code>backfill_session_dates.php</code>, and <code>rematch_session_videos.php</code>. <code>import_2026_content.php</code> then hand-built the 2026 season, the speakers and the Home node. None of that is in the CSVs. Re-running the original migration would silently roll all of it back.</p>
+      <p style="margin-top:0.6rem">The current database is the source of truth.</p>
+    </div>
+
+    <div class="measure">
+      <p>Migrate rather than a one-shot script, because the field mapping will want two or three passes and rollback matters. Three CSVs, exported fresh from the live database and already shaped to the new model, run in dependency order.</p>
+    </div>
+
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Order</th><th>Migration</th><th>Source</th><th class="num">Rows</th></tr></thead>
+        <tbody>
+          <tr><td class="num">1</td><td><code>sfdug_people</code></td><td><code>people.csv</code> — exported from <code>node_field_data</code> + person fields</td><td class="num">5</td></tr>
+          <tr><td class="num">2</td><td><code>sfdug_videos</code></td><td><code>videos.csv</code> — <code>remote_video</code> media, current URLs</td><td class="num">48</td></tr>
+          <tr><td class="num">3</td><td><code>sfdug_meetings</code></td><td><code>meetings.csv</code> — references both of the above</td><td class="num">79</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="measure">
+      <p>The seven undated sessions migrate as they are, dates empty — legacy titles like "SFDUG - Date TBD - Solr in Drupal 8/9" that are still real talks.</p>
+      <p>Files move separately: <code>field_photo</code> and <code>field_social_media_card</code> are file fields, and <code>restore_files.php</code> establishes that assets live under <code>public://sfdug/</code>.</p>
+      <p>When it lands, <strong>uninstall <code>migrate</code>, <code>migrate_plus</code>, <code>migrate_tools</code> and <code>migrate_source_csv</code></strong> so they don't settle into the enabled list the way they did last time.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">05</span><h2>Theme changes</h2></div>
+    <div class="measure">
+      <p>Six edits, all small. The theme itself is untouched otherwise — no template rewrites, no CSS changes, no rebuild of the 2026 design.</p>
+    </div>
+    <div class="table-scroll">
+      <table>
+        <thead><tr><th>Location</th><th>Change</th></tr></thead>
+        <tbody>
+          <tr><td class="mono">sfdug.theme:197</td><td>Drop <code>field_badge</code>, <code>field_venue_note</code>, <code>field_time_note</code> from the <code>foreach</code></td></tr>
+          <tr><td class="mono">sfdug.theme:211</td><td>Feed the <code>venue</code> variable from <code>field_location</code> text instead of a term entity</td></tr>
+          <tr><td class="mono">sfdug.theme:214</td><td>Remove the <code>field_session_category</code> block</td></tr>
+          <tr><td class="mono">sfdug.theme:355</td><td>Replace the online/zoom/virtual string sniff with <code>field_event_mode</code></td></tr>
+          <tr><td class="mono">node--session--full.html.twig:64–69</td><td>Tidy the field-hide list — removing entries here is harmless</td></tr>
+          <tr><td class="mono">sfdug.info.yml</td><td>No change needed; confirm <code>stable9</code> is present on 11.4</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">06</span><h2>Build sequence</h2></div>
+    <div class="phases">
+      <div class="phase">
+        <span class="phase-num">1</span>
+        <div>
+          <h3>Scaffold</h3>
+          <p><code>git init</code> in <code>sfdug-2026-refactor</code> and commit the pristine Drupal CMS 2.1.4 download before anything is applied, so every later change is a reviewable diff.</p>
+          <p>Drop the database first. An install was started there and abandoned — 11 tables, <code>users</code> and <code>key_value</code> present, no <code>node</code> tables, and the site still routes to <code>/core/install.php</code>. The recipe should apply to an empty database, not that.</p>
+          <p>Port the DevPanel scaffolding in the same commit — <code>.devpanel/</code>, <code>.devcontainer/</code>, <code>.envrc</code>, <code>.github/</code>, <code>drush/</code>, <code>logs/</code>, and the <code>post-drupal-scaffold-cmd</code> hook that patches <code>settings.php</code>. The plain download has none of it, and the PR target needs all of it.</p>
+          <span class="out"><span>ddev running · php 8.4 · drupal11</span></span>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="phase-num">2</span>
+        <div>
+          <h3>Site template</h3>
+          <p>Copy Blank to <code>recipes/sfdug/</code>, make the three edits, install the site from it. Canvas comes up here.</p>
+          <span class="out"><span>recipes/sfdug/recipe.yml</span></span>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="phase-num">3</span>
+        <div>
+          <h3>Content model</h3>
+          <p>Three content types, eighteen fields, the six view modes the templates require, and form displays. Built as config so it exports cleanly.</p>
+          <span class="out"><span>card</span><span>card_archive</span><span>featured</span><span>full</span><span>infobar</span><span>teaser</span></span>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="phase-num">4</span>
+        <div>
+          <h3>Theme</h3>
+          <p>Copy <code>web/themes/custom/sfdug</code> across, apply the six edits, set it default. The site should look right before any content arrives.</p>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="phase-num">5</span>
+        <div>
+          <h3>Migrate</h3>
+          <p>Export the three CSVs from the live database, run people → videos → meetings, copy files into <code>public://sfdug/</code>, then uninstall the migrate modules.</p>
+          <span class="out"><span>79 meetings</span><span>5 people</span><span>48 media</span><span>2 pages</span></span>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="phase-num">6</span>
+        <div>
+          <h3>Views, blocks and menus</h3>
+          <p>Rebuild <code>sfdug_meetings</code> with its four block displays, plus <code>sfdug_people</code> and <code>sfdug_videos</code>. Place the fourteen blocks and the three menus.</p>
+          <span class="out"><span>block_archive</span><span>block_featured</span><span>block_infobar</span><span>block_season</span></span>
+        </div>
+      </div>
+      <div class="phase">
+        <span class="phase-num">7</span>
+        <div>
+          <h3>Verify and export</h3>
+          <p>Compare page by page against the current site, export config to <code>config/sync</code>, and check the enabled-module list against the recipe — anything in one and not the other is a question to answer.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="sec-head"><span class="sec-num">07</span><h2>Still open</h2></div>
+    <div class="opens">
+      <div class="open">
+        <h4>The <code>#about</code> and <code>#join</code> sections</h4>
+        <p>Both live on the front page as anchors, and four of the five main-menu links point at them. Where that copy currently comes from — the Home node body, a block, or the template — decides whether it migrates or gets rebuilt.</p>
+      </div>
+      <div class="open">
+        <h4><code>/videos</code> overlaps <code>/meetings</code></h4>
+        <p>Two views over the same archive. Worth deciding whether both survive the rebuild or one path redirects to the other.</p>
+      </div>
+      <div class="open">
+        <h4>Canvas on the front page</h4>
+        <p>Canvas is installed and available. The front page is currently assembled from four view blocks in a custom theme, so there is nothing for it to build yet — but it is there when you want it.</p>
+      </div>
+      <div class="open">
+        <h4>PR target: <code>cellear/sfdug_drupalforge</code></h4>
+        <p>A DevPanel installer repo, default branch <code>main</code>, last touched 7 Aug 2026. It carries scaffolding the fresh Drupal CMS download does not, and has no <code>recipes/</code> directory — so <code>recipes/sfdug/</code> arrives as new, and its <code>composer.json</code> will need the recipe installer path. Worth a look before the PR, not before the build.</p>
+      </div>
+      <div class="open">
+        <h4>What happens to the old site</h4>
+        <p><code>sfdug_df_simplified</code> stays as the source of truth until the rebuild is verified. After that: archive the branch, or keep it running until DNS moves.</p>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <div class="wrap">
+    <span>SFDUG rebuild plan · draft for review</span>
+    <span>3 content types · 18 fields · 0 vocabularies</span>
+  </div>
+</footer>

@@ -1,4 +1,4 @@
-uuid: 54f882c0-ad7b-482e-a6d7-90c5a1b8ea3b
+uuid: 45a18784-05e0-43d2-a992-a37ab2159021
 langcode: en
 status: true
 dependencies:
@@ -8,7 +8,6 @@ dependencies:
     - field.field.node.person.field_linkedin
     - field.field.node.person.field_organization
     - field.field.node.person.field_photo
-    - field.field.node.person.field_roles
     - field.field.node.person.field_website
     - node.type.person
   module:
@@ -66,14 +65,6 @@ content:
       link: true
     third_party_settings: {  }
     weight: 1
-    region: content
-  field_roles:
-    type: entity_reference_label
-    label: above
-    settings:
-      link: true
-    third_party_settings: {  }
-    weight: 4
     region: content
   field_website:
     type: link

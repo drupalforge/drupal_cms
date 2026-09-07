@@ -1,4 +1,4 @@
-uuid: e05082b2-8260-4685-859c-57188b266bcb
+uuid: 7a03de25-257c-4af4-8037-da7a2abb3af5
 langcode: en
 status: true
 dependencies:
@@ -6,8 +6,6 @@ dependencies:
     - system
   theme:
     - sfdug
-_core:
-  default_config_hash: rUKMsaj4XvIHtU3kRiHIA6Rkn4IHzCkhTiUZudMkp14
 id: sfdug_breadcrumbs
 theme: sfdug
 region: breadcrumb

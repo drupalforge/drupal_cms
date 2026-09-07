@@ -1,17 +1,11 @@
-uuid: 90caeb3d-46ba-4111-b348-1e3c661761dc
+uuid: 6df64eca-a97f-4af7-ac1c-228bd8ffb9ab
 langcode: en
 status: true
 dependencies:
   module:
-    - field_permissions
     - file
     - image
     - node
-third_party_settings:
-  field_permissions:
-    permission_type: custom
-_core:
-  default_config_hash: Ce8lxQUdZ1lUy48q6lsfQfHbTjL8ocYqziBwYGfQcK0
 id: node.field_social_media_card
 field_name: field_social_media_card
 entity_type: node
@@ -19,10 +13,10 @@ type: image
 settings:
   target_type: file
   display_field: false
-  display_default: false
+  display_default: true
   uri_scheme: public
   default_image:
-    uuid: ''
+    uuid: null
     alt: ''
     title: ''
     width: null

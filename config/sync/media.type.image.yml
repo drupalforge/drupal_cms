@@ -1,13 +1,16 @@
-uuid: 6fc8a488-09bf-4292-bd47-ce8dfd4c26a0
+uuid: d92eba55-1199-4955-a989-14e5a48333ba
 langcode: en
 status: true
 dependencies: {  }
+_core:
+  default_config_hash: VWUWqwszm5ZaqT3frIPWjyyVmvmWnWMFRphkVXCl8t0
 id: image
 label: Image
-description: 'Images for people photos, sponsor logos, video frames, and venue photos'
+description: 'A locally hosted image file.'
 source: image
 queue_thumbnail_downloads: false
-new_revision: false
+new_revision: true
 source_configuration:
   source_field: field_media_image
-field_map: {  }
+field_map:
+  name: name

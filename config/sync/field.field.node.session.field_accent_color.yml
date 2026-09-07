@@ -1,4 +1,4 @@
-uuid: 4db82e99-d0f1-4108-bacb-a62291fc3bf7
+uuid: b1958086-372b-4aa7-b3e0-66ee11dcacce
 langcode: en
 status: true
 dependencies:
@@ -10,7 +10,7 @@ field_name: field_accent_color
 entity_type: node
 bundle: session
 label: 'Accent colour'
-description: 'Hex colour for this session’s accent, e.g. #F26522. Leave empty to use the site default.'
+description: 'Hex value, e.g. #6c5cc4. Tints the meeting card and hero.'
 required: false
 translatable: true
 default_value: {  }

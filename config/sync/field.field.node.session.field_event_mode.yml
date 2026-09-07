@@ -1,0 +1,23 @@
+uuid: c96c4a60-1ead-48cd-a6dd-0b5e88649832
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_event_mode
+    - node.type.session
+  module:
+    - options
+id: node.session.field_event_mode
+field_name: field_event_mode
+entity_type: node
+bundle: session
+label: 'Attendance mode'
+description: 'Drives schema.org eventAttendanceMode. Replaces the old venue-name string match.'
+required: false
+translatable: true
+default_value:
+  -
+    value: online
+default_value_callback: ''
+settings: {  }
+field_type: list_string

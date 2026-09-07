@@ -1,18 +1,16 @@
-uuid: 9adba5fc-8ac5-4db1-8618-ed22fd7f3e5c
+uuid: 6fdfc7bb-8f37-4fb0-9e9b-7e7ad727796e
 langcode: en
 status: true
 dependencies:
   config:
     - field.storage.node.field_short_description
     - node.type.session
-_core:
-  default_config_hash: SgJY0gabJUQ4i16EjKgXvPhPFcBlqIFL9zSO_T5SY8o
 id: node.session.field_short_description
 field_name: field_short_description
 entity_type: node
 bundle: session
-label: 'Short Description'
-description: 'Please provide a short description for your session, up to 600 characters in length.'
+label: 'Short description'
+description: 'The one-line hook shown on cards and in social previews.'
 required: false
 translatable: true
 default_value: {  }

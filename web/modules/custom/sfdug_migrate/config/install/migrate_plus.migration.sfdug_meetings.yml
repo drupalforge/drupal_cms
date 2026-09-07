@@ -1,0 +1,99 @@
+id: sfdug_meetings
+label: 'SFDUG meetings'
+migration_group: sfdug
+migration_tags:
+  - sfdug
+source:
+  plugin: csv
+  path: /var/www/html/web/modules/custom/sfdug_migrate/data/meetings.csv
+  header_offset: 0
+  ids:
+    - nid
+process:
+  title: title
+  status: status
+  created: created
+  changed: changed
+  uid:
+    plugin: default_value
+    default_value: 1
+  # `body`, not field_description: Drupal CMS owns that name as a string_long
+  # SEO field on `page`, and field storage is shared across bundles.
+  body/value:
+    plugin: skip_on_empty
+    method: process
+    source: description
+  body/format:
+    plugin: static_map
+    source: description_format
+    default_value: full_html
+    map:
+      full_html: full_html
+      basic_html: content_format
+  field_short_description:
+    plugin: skip_on_empty
+    method: process
+    source: short_description
+  # Smart Date keeps a unix timestamp, an end timestamp and a duration in
+  # minutes. Seven meetings have no date at all, so each part skips on empty.
+  field_session_date/value:
+    plugin: skip_on_empty
+    method: process
+    source: date_value
+  field_session_date/end_value:
+    plugin: skip_on_empty
+    method: process
+    source: date_end_value
+  field_session_date/duration:
+    plugin: skip_on_empty
+    method: process
+    source: date_duration
+  field_session_video/target_id:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: video_media_id
+    -
+      plugin: migration_lookup
+      migration: sfdug_videos
+  field_person_speakers:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: speaker_nids
+    -
+      plugin: explode
+      delimiter: '|'
+    -
+      plugin: migration_lookup
+      migration: sfdug_people
+  field_rsvp_url/uri:
+    plugin: skip_on_empty
+    method: process
+    source: rsvp_uri
+  field_rsvp_url/title: rsvp_title
+  field_accent_color:
+    plugin: skip_on_empty
+    method: process
+    source: accent_color
+  field_social_media_card/target_id:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: social_card_uri
+    -
+      plugin: migration_lookup
+      migration: sfdug_files
+  field_event_mode: event_mode
+  field_location:
+    plugin: skip_on_empty
+    method: process
+    source: location
+destination:
+  plugin: 'entity:node'
+  default_bundle: session
+migration_dependencies:
+  required:
+    - sfdug_videos
+    - sfdug_people
+    - sfdug_files

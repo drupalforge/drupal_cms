@@ -1,4 +1,4 @@
-uuid: d3cc2c17-e792-4d3c-9b26-4f0fe46ea75f
+uuid: 50816c9d-5a30-441b-99e0-93992fb9cfdb
 langcode: en
 status: true
 dependencies:
@@ -21,9 +21,18 @@ content:
     third_party_settings: {  }
     weight: 1
     region: content
+  content_moderation_control:
+    settings: {  }
+    third_party_settings: {  }
+    weight: -20
+    region: content
   links:
     settings: {  }
     third_party_settings: {  }
     weight: 100
     region: content
-hidden: {  }
+hidden:
+  field_content: true
+  field_description: true
+  field_featured_image: true
+  field_tags: true

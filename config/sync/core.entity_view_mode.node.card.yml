@@ -1,11 +1,13 @@
-uuid: 27d954d1-fe5a-4717-9d07-a6171ebc549a
+uuid: 29c14c34-24bb-4130-a99a-489ad0cbf618
 langcode: en
 status: true
 dependencies:
   module:
     - node
+_core:
+  default_config_hash: AtN311PK7pVwNFVe7be6DabmiwfNEbWODEYcHCaewdk
 id: node.card
-label: 'Card (video grid)'
-description: null
+label: Card
+description: ''
 targetEntityType: node
 cache: true

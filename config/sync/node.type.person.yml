@@ -1,11 +1,11 @@
-uuid: 93ee6ec5-0059-4043-b802-d738fc928fff
+uuid: cf8dec3f-07d5-4ca9-8f71-8b3396834530
 langcode: en
 status: true
 dependencies: {  }
 name: Person
 type: person
-description: 'Speakers, organizers, and contributors (no Drupal user account required)'
+description: 'Speakers, organizers and contributors. No Drupal user account required.'
 help: null
 new_revision: true
 preview_mode: 1
-display_submitted: true
+display_submitted: false

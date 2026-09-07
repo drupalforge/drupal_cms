@@ -1,5 +1,3 @@
-_core:
-  default_config_hash: 2bwjZB1IjEYbppgZT3g7YW_5h_LDZYNa3DaDEfWX82U
 description:
   type: textfield
   length: 128
@@ -8,7 +6,7 @@ icon:
 make_unused_managed_files_temporary: false
 filename_sanitization:
   transliterate: false
-  replace_whitespace: false
+  replace_whitespace: true
   replace_non_alphanumeric: false
   deduplicate_separators: false
   lowercase: false

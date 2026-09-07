@@ -1,4 +1,4 @@
-uuid: 6d281acc-7df5-4006-b6c0-519ecef03d7d
+uuid: 58815964-6783-402f-be12-d371ec968be1
 langcode: en
 status: true
 dependencies:
@@ -11,8 +11,8 @@ id: node.session.field_session_date
 field_name: field_session_date
 entity_type: node
 bundle: session
-label: 'Session date & time'
-description: 'When the meetup happens. Drives upcoming vs. past everywhere on the site.'
+label: Date
+description: ''
 required: false
 translatable: true
 default_value: {  }

@@ -1,5 +1,3 @@
-_core:
-  default_config_hash: 1_70uxbS5CUxUU4ETLYzLThyBVABCNiYf_T0Py_oIRY
 langcode: en
 attributes:
   container_class:
@@ -15,3 +13,6 @@ attributes:
       _blank: 'New window (_blank)'
       _self: 'Same window (_self)'
     default_value: ''
+  rel:
+    label: Relationship
+    description: 'The "rel" attribute specifies the relationship between the current document and the linked document.'

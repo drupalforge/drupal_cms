@@ -1,16 +1,17 @@
-uuid: abcc157a-666e-49d1-a349-cada0b19c5ff
+uuid: c11b7d7b-eb59-4518-a69d-0eb85ba5372f
 langcode: en
 status: true
 dependencies:
-  config:
-    - filter.format.full_html
-    - filter.format.webform_default
-    - storage.storage_type.sponsorship
   module:
-    - field_permissions
-    - filter
+    - captcha
+    - coffee
+    - contextual
+    - file
+    - honeypot
+    - klaro
     - media
-    - storage
+    - navigation
+    - node
     - system
 _core:
   default_config_hash: dJ0L2DNSj5q6XVZAGsuVDpJTh5UeYkIPwKrUOOpr8YI
@@ -19,11 +20,15 @@ label: 'Authenticated user'
 weight: 1
 is_admin: false
 permissions:
+  - 'access administration pages'
+  - 'access coffee'
   - 'access content'
-  - 'access user profiles'
-  - 'use text format full_html'
-  - 'use text format webform_default'
-  - 'view field_r'
-  - 'view field_time_slot'
+  - 'access contextual links'
+  - 'access navigation'
+  - 'bypass honeypot protection'
+  - 'delete own files'
+  - 'skip CAPTCHA'
+  - 'use klaro'
   - 'view media'
-  - 'view published sponsorship storage entities'
+  - 'view own unpublished content'
+  - 'view the administration theme'

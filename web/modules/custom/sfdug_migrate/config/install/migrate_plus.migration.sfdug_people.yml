@@ -1,0 +1,58 @@
+id: sfdug_people
+label: 'SFDUG people'
+migration_group: sfdug
+migration_tags:
+  - sfdug
+source:
+  plugin: csv
+  path: /var/www/html/web/modules/custom/sfdug_migrate/data/people.csv
+  header_offset: 0
+  ids:
+    - nid
+process:
+  title: title
+  status: status
+  created: created
+  changed: created
+  uid:
+    plugin: default_value
+    default_value: 1
+  field_bio/value:
+    plugin: skip_on_empty
+    method: process
+    source: bio
+  # Drupal CMS 2 has no basic_html; this bio is plain <p> prose.
+  field_bio/format:
+    plugin: static_map
+    source: bio_format
+    default_value: content_format
+    map:
+      basic_html: content_format
+      full_html: full_html
+  field_organization: organization
+  field_linkedin/uri:
+    plugin: skip_on_empty
+    method: process
+    source: linkedin
+  field_drupal_org_profile/uri:
+    plugin: skip_on_empty
+    method: process
+    source: drupal_org_profile
+  field_website/uri:
+    plugin: skip_on_empty
+    method: process
+    source: website
+  field_photo/target_id:
+    -
+      plugin: skip_on_empty
+      method: process
+      source: photo_uri
+    -
+      plugin: migration_lookup
+      migration: sfdug_photos
+destination:
+  plugin: 'entity:node'
+  default_bundle: person
+migration_dependencies:
+  required:
+    - sfdug_photos

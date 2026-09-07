@@ -1,11 +1,9 @@
-uuid: 6930de48-33b1-4bf0-b844-602054da2832
+uuid: 5de17fde-4478-4902-a825-3ecf831692fd
 langcode: en
 status: true
 dependencies:
   module:
     - node
-_core:
-  default_config_hash: lvOjviQdy_iTY_pPh1sINDolGoB12FvBW7VrvpP4eZ8
 id: node.field_short_description
 field_name: field_short_description
 entity_type: node

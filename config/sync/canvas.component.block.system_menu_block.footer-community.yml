@@ -1,0 +1,27 @@
+uuid: 4d01509d-a17a-4548-a811-bce5d5b3fafa
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.footer-community
+  module:
+    - system
+active_version: 65cb9e74413c1f3f
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'system_menu_block:footer-community'
+        label: 'Footer — Community'
+        label_display: '0'
+        provider: system
+        level: 1
+        depth: null
+        expand_all_items: false
+    fallback_metadata:
+      slot_definitions: null
+label: 'Footer — Community'
+id: block.system_menu_block.footer-community
+provider: system
+source: block
+source_local_id: 'system_menu_block:footer-community'

@@ -1,11 +1,11 @@
-uuid: d174c470-0068-477d-b128-242930936a54
+uuid: 562b47b5-31c5-49e8-a652-ec9942b671ab
 langcode: en
 status: true
 dependencies:
   module:
     - node
 id: node.featured
-label: 'Featured (homepage hero)'
+label: Featured
 description: null
 targetEntityType: node
 cache: true

@@ -1,12 +1,9 @@
-name: 'SFDUG Migrate'
+name: SFDUG Migrate
 type: module
-description: 'Migration configuration for SFDUG historical content'
-package: 'SFDUG'
+description: 'One-time migration of SFDUG content from the pre-2026 site. Uninstall once it has run.'
+package: SFDUG
 core_version_requirement: ^11
 dependencies:
-  - migrate
-  - migrate_plus
-  - migrate_tools
-  - node
-  - media
-  - taxonomy
+  - migrate:migrate
+  - migrate_plus:migrate_plus
+  - migrate_source_csv:migrate_source_csv

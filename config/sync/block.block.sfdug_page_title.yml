@@ -1,4 +1,4 @@
-uuid: 82ca29b8-4a9b-48a6-8d1b-f77f3a94ddd8
+uuid: f7955d4a-38e9-4f27-8486-621870b17f43
 langcode: en
 status: true
 dependencies:
@@ -6,8 +6,6 @@ dependencies:
     - system
   theme:
     - sfdug
-_core:
-  default_config_hash: dY7_Wihz9ohfBPKP554_brUfc9nPaecShShmC_VTGRM
 id: sfdug_page_title
 theme: sfdug
 region: highlighted

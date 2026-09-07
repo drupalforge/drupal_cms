@@ -1,15 +1,10 @@
-uuid: fbc94ef5-6641-4bd9-adff-c8b3cc739295
+uuid: 132da171-5580-444d-aa00-ecfcbcdd8d89
 langcode: en
 status: true
 dependencies:
-  config:
-    - filter.format.restricted_html
-    - storage.storage_type.sponsorship
   module:
-    - field_permissions
-    - filter
+    - klaro
     - media
-    - storage
     - system
 _core:
   default_config_hash: j5zLMOdJBqC0bMvSdth5UebkprJB8g_2FXHqhfpJzow
@@ -19,9 +14,5 @@ weight: 0
 is_admin: false
 permissions:
   - 'access content'
-  - 'access user profiles'
-  - 'use text format restricted_html'
-  - 'view field_r'
-  - 'view field_time_slot'
+  - 'use klaro'
   - 'view media'
-  - 'view published sponsorship storage entities'

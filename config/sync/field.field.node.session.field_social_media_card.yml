@@ -1,4 +1,4 @@
-uuid: 5b4b7d9e-e841-4cb2-b81e-aa14a70a7a90
+uuid: f88d2955-41ce-443d-a394-62b727056358
 langcode: en
 status: true
 dependencies:
@@ -7,14 +7,12 @@ dependencies:
     - node.type.session
   module:
     - image
-_core:
-  default_config_hash: UXdCzdcxVouKFj4vsh1tyaGkeFlVKOtaQAcRU31tD0U
 id: node.session.field_social_media_card
 field_name: field_social_media_card
 entity_type: node
 bundle: session
-label: 'Social Media Card'
-description: 'This will be displayed when shared across social media (Twitter, Facebook). Alt text is automatically generated. '
+label: 'Social media card'
+description: ''
 required: false
 translatable: true
 default_value: {  }
@@ -28,11 +26,11 @@ settings:
   max_resolution: ''
   min_resolution: ''
   alt_field: false
-  alt_field_required: true
+  alt_field_required: false
   title_field: false
   title_field_required: false
   default_image:
-    uuid: ''
+    uuid: null
     alt: ''
     title: ''
     width: null

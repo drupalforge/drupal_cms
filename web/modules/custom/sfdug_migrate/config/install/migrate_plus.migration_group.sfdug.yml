@@ -1,4 +1,5 @@
 id: sfdug
-label: 'SFDUG Historical Content'
-description: 'Migrations for SFDUG historical meetings, people, and media'
-source_type: 'CSV'
+label: SFDUG 2026 rebuild
+description: 'One-time import of SFDUG content from the pre-2026 site.'
+source_type: 'CSV exported from the previous database'
+shared_configuration: {  }

@@ -1,0 +1,26 @@
+uuid: e5c9d3ca-868a-4dc2-b702-806a4b2c77b1
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.sfdug_meetings
+  module:
+    - views
+active_version: 24a63daf2d4f0812
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'views_block:sfdug_meetings-block_season'
+        label: 'SFDUG: this season'
+        label_display: '0'
+        provider: views
+        views_label: ''
+        items_per_page: null
+    fallback_metadata:
+      slot_definitions: null
+label: 'SFDUG: this season'
+id: block.views_block.sfdug_meetings-block_season
+provider: views
+source: block
+source_local_id: 'views_block:sfdug_meetings-block_season'

@@ -1,16 +1,15 @@
-uuid: b0744c1e-3117-4246-8512-9ab6c12d6bc8
+uuid: c544c72b-abc0-41fa-866e-190efa3582d5
 langcode: en
 status: true
 dependencies:
   module:
-    - content_moderation
     - node
     - user
   enforced:
     module:
       - content_moderation
 _core:
-  default_config_hash: SeyUoUjWFNY3MNSth2i3GkQJlgDYe0GECc-zchRdQGQ
+  default_config_hash: qvmT-Q_55z9Yq9KZuJM1yNC3mePdx8BO90MfOZLncuk
 id: moderated_content
 label: 'Moderated content'
 module: views
@@ -680,7 +679,7 @@ display:
           plugin_id: moderation_state_filter
           operator: 'not in'
           value:
-            editorial-published: editorial-published
+            basic_editorial-published: basic_editorial-published
           group: 1
           exposed: false
           expose:
@@ -769,7 +768,6 @@ display:
           empty_table: true
           caption: ''
           description: ''
-          class: ''
       row:
         type: fields
       query:

@@ -1,12 +1,10 @@
-_core:
-  default_config_hash: SwvLp8snyPEExF41CaJJYdPUVomofLqtXvwciHc4cPg
 enabled_entity_types:
   - user
 punctuation:
   hyphen: 1
 verbose: false
 separator: '-'
-max_length: 100
+max_length: 150
 max_component_length: 100
 transliterate: true
 reduce_ascii: false

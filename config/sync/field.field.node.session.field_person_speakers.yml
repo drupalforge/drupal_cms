@@ -1,4 +1,4 @@
-uuid: 86306436-f119-4a4f-946f-dd0f904226be
+uuid: bdc01c31-d169-4b68-95b9-ce1a86491895
 langcode: en
 status: true
 dependencies:
@@ -10,8 +10,8 @@ id: node.session.field_person_speakers
 field_name: field_person_speakers
 entity_type: node
 bundle: session
-label: 'Person Speaker(s)'
-description: 'Person nodes for speakers (use instead of user accounts)'
+label: Speakers
+description: ''
 required: false
 translatable: true
 default_value: {  }

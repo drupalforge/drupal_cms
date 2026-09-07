@@ -1,4 +1,4 @@
-uuid: 99c12b63-75b7-41c0-a2e1-67a5e8f690c7
+uuid: 754634c7-fdc2-4f22-ad25-c9dfc5eeba01
 langcode: en
 status: true
 dependencies:
@@ -12,7 +12,7 @@ field_name: field_rsvp_url
 entity_type: node
 bundle: session
 label: 'RSVP link'
-description: 'Meetup.com (or other) registration URL. The link title becomes the button label.'
+description: ''
 required: false
 translatable: true
 default_value: {  }

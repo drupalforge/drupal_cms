@@ -1,0 +1,27 @@
+uuid: bb7d0904-07fa-405c-91ce-f3a185fde93f
+langcode: en
+status: false
+dependencies:
+  config:
+    - system.menu.footer-meetings
+  module:
+    - system
+active_version: 8d324292f7caee29
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'system_menu_block:footer-meetings'
+        label: 'Footer — Meetings'
+        label_display: '0'
+        provider: system
+        level: 1
+        depth: null
+        expand_all_items: false
+    fallback_metadata:
+      slot_definitions: null
+label: 'Footer — Meetings'
+id: block.system_menu_block.footer-meetings
+provider: system
+source: block
+source_local_id: 'system_menu_block:footer-meetings'

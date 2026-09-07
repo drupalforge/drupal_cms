@@ -1,0 +1,19 @@
+uuid: 3a831e00-7153-4bdd-aa9e-af8cc4c3bcbb
+langcode: en
+status: true
+dependencies:
+  config:
+    - field.storage.node.field_location
+    - node.type.session
+id: node.session.field_location
+field_name: field_location
+entity_type: node
+bundle: session
+label: Location
+description: 'Where an in-person meeting happens. Leave empty for online meetings.'
+required: false
+translatable: true
+default_value: {  }
+default_value_callback: ''
+settings: {  }
+field_type: string

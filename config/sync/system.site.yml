@@ -1,12 +1,12 @@
 _core:
   default_config_hash: HlN7eAN2N4JIHsYv56V4E7sqC9bS609KwvGFjyD_mgk
 langcode: en
-uuid: 41c1e027-8adf-4da6-a8cb-b858324ce29a
-name: 'San Francisco Drupal Users Group'
-mail: admin@example.com
-slogan: 'Celebrating 20 Years of Bay Area Drupal'
+uuid: 46fae9a7-d89c-4db4-b1fe-a30ae73b4a53
+name: SFDUG
+mail: noreply@sfdug.org
+slogan: ''
 page:
-  403: ''
+  403: /user/login
   404: ''
   front: /home
 admin_compact_mode: false

@@ -1,19 +1,11 @@
-uuid: aac80723-e999-4663-a2d7-f866567039ea
+uuid: 31a223fe-40ec-49b3-8c52-f8be1e682282
 langcode: en
 status: true
-dependencies:
-  module:
-    - menu_ui
-third_party_settings:
-  menu_ui:
-    available_menus: {  }
-    parent: ''
-_core:
-  default_config_hash: sMDCy-n1-vvyHBZUQt-1vJtF1H6PtOhKLxkrNy1EOc0
-name: Session
+dependencies: {  }
+name: Meeting
 type: session
-description: 'Sessions OR trainings'
-help: ''
+description: 'A monthly SFDUG meeting: the talk, its speakers and the recording. Machine name stays `session` so the 2026 theme templates keep working.'
+help: null
 new_revision: true
 preview_mode: 1
 display_submitted: false

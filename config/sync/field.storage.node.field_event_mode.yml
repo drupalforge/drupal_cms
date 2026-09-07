@@ -1,4 +1,4 @@
-uuid: 0bf45694-0a7e-4f84-b7a7-74b88589a0a6
+uuid: 7222282b-288f-45c8-b3fc-507fdb08503a
 langcode: en
 status: true
 dependencies:
@@ -10,7 +10,16 @@ field_name: field_event_mode
 entity_type: node
 type: list_string
 settings:
-  allowed_values: {  }
+  allowed_values:
+    -
+      value: online
+      label: Online
+    -
+      value: in_person
+      label: 'In person'
+    -
+      value: hybrid
+      label: Hybrid
   allowed_values_function: ''
 module: options
 locked: false

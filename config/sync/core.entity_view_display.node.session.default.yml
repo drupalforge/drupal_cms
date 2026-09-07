@@ -1,81 +1,36 @@
-uuid: 1f2bfaa4-516b-4b20-a1ee-fef6a39953e9
+uuid: 1d822f43-bf51-4f8c-80d1-baaeeb724add
 langcode: en
 status: true
 dependencies:
   config:
+    - field.field.node.session.body
     - field.field.node.session.field_accent_color
-    - field.field.node.session.field_audience
-    - field.field.node.session.field_badge
-    - field.field.node.session.field_description
-    - field.field.node.session.field_event
-    - field.field.node.session.field_is_non_session
-    - field.field.node.session.field_is_training
-    - field.field.node.session.field_organizers
-    - field.field.node.session.field_parent_event
     - field.field.node.session.field_person_speakers
-    - field.field.node.session.field_r
-    - field.field.node.session.field_rsvp_url
-    - field.field.node.session.field_session_category
     - field.field.node.session.field_session_date
-    - field.field.node.session.field_session_frames
-    - field.field.node.session.field_session_sponsors
     - field.field.node.session.field_session_video
     - field.field.node.session.field_short_description
     - field.field.node.session.field_slides
     - field.field.node.session.field_social_media_card
-    - field.field.node.session.field_source_url
-    - field.field.node.session.field_speakers
-    - field.field.node.session.field_time_note
-    - field.field.node.session.field_time_slot
-    - field.field.node.session.field_topics
-    - field.field.node.session.field_venue
-    - field.field.node.session.field_venue_note
     - node.type.session
   module:
     - text
     - user
-_core:
-  default_config_hash: KGQUyTxHJxJtkGtWIsqVnrE-p9GiXxjtE_SjGyC95qI
 id: node.session.default
 targetEntityType: node
 bundle: session
 mode: default
 content:
-  content_moderation_control:
-    settings: {  }
-    third_party_settings: {  }
-    weight: 0
-    region: content
-  field_audience:
-    type: entity_reference_label
-    label: inline
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 5
-    region: content
-  field_description:
+  body:
     type: text_default
     label: hidden
     settings: {  }
     third_party_settings: {  }
     weight: 1
     region: content
-  field_r:
-    type: entity_reference_label
-    label: inline
-    settings:
-      link: false
+  content_moderation_control:
+    settings: {  }
     third_party_settings: {  }
-    weight: 4
-    region: content
-  field_session_category:
-    type: entity_reference_label
-    label: inline
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 6
+    weight: 0
     region: content
   field_session_video:
     type: entity_reference_entity_view
@@ -86,14 +41,6 @@ content:
     third_party_settings: {  }
     weight: 2
     region: content
-  field_time_slot:
-    type: entity_reference_label
-    label: inline
-    settings:
-      link: false
-    third_party_settings: {  }
-    weight: 3
-    region: content
   flippy_pager:
     settings: {  }
     third_party_settings: {  }
@@ -101,24 +48,12 @@ content:
     region: content
 hidden:
   field_accent_color: true
-  field_badge: true
-  field_event: true
-  field_is_non_session: true
-  field_is_training: true
-  field_organizers: true
-  field_parent_event: true
+  field_event_mode: true
+  field_location: true
   field_person_speakers: true
   field_rsvp_url: true
   field_session_date: true
-  field_session_frames: true
-  field_session_sponsors: true
   field_short_description: true
   field_slides: true
   field_social_media_card: true
-  field_source_url: true
-  field_speakers: true
-  field_time_note: true
-  field_topics: true
-  field_venue: true
-  field_venue_note: true
   links: true

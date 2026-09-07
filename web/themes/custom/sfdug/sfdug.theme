@@ -177,9 +177,6 @@ function _sfdug_session_vars(NodeInterface $node): array {
     'when_line' => NULL,
     'badge' => NULL,
     'venue' => NULL,
-    'venue_note' => NULL,
-    'time_note' => NULL,
-    'category' => NULL,
     'rsvp_url' => NULL,
     'promo_url' => NULL,
     'video_url' => NULL,
@@ -194,12 +191,6 @@ function _sfdug_session_vars(NodeInterface $node): array {
   if ($node->hasField('field_short_description')) {
     $vars['hook'] = trim((string) $node->get('field_short_description')->value) ?: NULL;
   }
-  foreach (['badge' => 'field_badge', 'venue_note' => 'field_venue_note', 'time_note' => 'field_time_note'] as $key => $field) {
-    if ($node->hasField($field)) {
-      $vars[$key] = trim((string) $node->get($field)->value) ?: NULL;
-    }
-  }
-
   if ($node->hasField('field_session_date') && !$node->get('field_session_date')->isEmpty()) {
     $start = (int) $node->get('field_session_date')->value;
     $vars['date_long'] = $formatter->format($start, 'custom', 'l, M j, Y');
@@ -208,11 +199,10 @@ function _sfdug_session_vars(NodeInterface $node): array {
     $vars['month_label'] = $formatter->format($start, 'custom', 'F Y');
   }
 
-  if ($node->hasField('field_venue') && ($term = $node->get('field_venue')->entity)) {
-    $vars['venue'] = $term->label();
-  }
-  if ($node->hasField('field_session_category') && ($term = $node->get('field_session_category')->entity)) {
-    $vars['category'] = $term->label();
+  // Venue is a plain text field now, not a taxonomy term. Empty for online
+  // meetings, which is every meeting at the time of writing.
+  if ($node->hasField('field_location')) {
+    $vars['venue'] = trim((string) $node->get('field_location')->value) ?: NULL;
   }
   if ($node->hasField('field_rsvp_url') && !$node->get('field_rsvp_url')->isEmpty()) {
     $vars['rsvp_url'] = $node->get('field_rsvp_url')->first()->getUrl()->toString();
@@ -249,12 +239,12 @@ function _sfdug_session_vars(NodeInterface $node): array {
     $vars['speaker_names'] = $names ? implode(', ', $names) : NULL;
   }
 
-  // The four rows of the details panel, in the design's order.
+  // The rows of the details panel, in the design's order. Venue only appears
+  // once a meeting has a location, which online meetings do not.
   foreach ([
     ['calendar', $vars['date_long'], NULL],
-    ['clock', $vars['time'], $vars['time_note']],
-    ['pin', $vars['venue'], $vars['venue_note']],
-    ['tag', $vars['category'], NULL],
+    ['clock', $vars['time'], NULL],
+    ['pin', $vars['venue'], NULL],
   ] as [$icon, $text, $note]) {
     if ($text) {
       $vars['details_rows'][] = ['icon' => $icon, 'text' => $text, 'note' => $note];
@@ -350,11 +340,15 @@ function sfdug_page_attachments_alter(array &$attachments): void {
     $data['description'] = $summary;
   }
 
-  $venue = $node->get('field_venue')->entity;
-  $venue_name = $venue ? $venue->label() : '';
-  $is_online = $venue_name === '' || stripos($venue_name, 'online') !== FALSE || stripos($venue_name, 'zoom') !== FALSE || stripos($venue_name, 'virtual') !== FALSE;
+  // Attendance mode is declared, not guessed from a venue name.
+  $venue_name = $node->hasField('field_location')
+    ? trim((string) $node->get('field_location')->value)
+    : '';
+  $mode = $node->hasField('field_event_mode') && !$node->get('field_event_mode')->isEmpty()
+    ? $node->get('field_event_mode')->value
+    : 'online';
 
-  if ($is_online) {
+  if ($mode === 'online') {
     $data['eventAttendanceMode'] = 'https://schema.org/OnlineEventAttendanceMode';
     $data['location'] = [
       '@type' => 'VirtualLocation',
@@ -364,7 +358,9 @@ function sfdug_page_attachments_alter(array &$attachments): void {
     ];
   }
   else {
-    $data['eventAttendanceMode'] = 'https://schema.org/OfflineEventAttendanceMode';
+    $data['eventAttendanceMode'] = $mode === 'hybrid'
+      ? 'https://schema.org/MixedEventAttendanceMode'
+      : 'https://schema.org/OfflineEventAttendanceMode';
     $data['location'] = ['@type' => 'Place', 'name' => $venue_name];
   }
 

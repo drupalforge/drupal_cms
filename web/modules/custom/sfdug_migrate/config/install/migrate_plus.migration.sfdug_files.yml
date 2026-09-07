@@ -1,0 +1,28 @@
+id: sfdug_files
+label: 'SFDUG files'
+migration_group: sfdug
+migration_tags:
+  - sfdug
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      uri: 'public://sfdug/jurgen-avatar.jpg'
+      filename: 'jurgen-avatar.jpg'
+    -
+      uri: 'public://sfdug/eca-promo.jpg'
+      filename: 'eca-promo.jpg'
+  ids:
+    uri:
+      type: string
+process:
+  uri: uri
+  filename: filename
+  status:
+    plugin: default_value
+    default_value: 1
+  uid:
+    plugin: default_value
+    default_value: 1
+destination:
+  plugin: 'entity:file'

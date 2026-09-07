@@ -1,4 +1,4 @@
-uuid: c72914b4-7116-41c1-95c9-96faf9e8d60d
+uuid: 81cf8e7d-2e06-482a-bf4c-be148c63d059
 langcode: en
 status: true
 dependencies:
@@ -11,7 +11,7 @@ id: node.person.field_drupal_org_profile
 field_name: field_drupal_org_profile
 entity_type: node
 bundle: person
-label: 'Drupal.org Profile'
+label: 'Drupal.org profile'
 description: ''
 required: false
 translatable: true

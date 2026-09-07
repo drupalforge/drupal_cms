@@ -1,0 +1,19 @@
+uuid: 67c2f056-b9c5-4520-90d2-13c712626ee7
+langcode: en
+status: true
+dependencies:
+  config:
+    - canvas.component.block.views_block.recent_pages-block_recent_pages
+    - canvas.component.block.views_block.sfdug_meetings-block_archive
+    - canvas.component.block.views_block.sfdug_meetings-block_featured
+    - canvas.component.block.views_block.sfdug_meetings-block_infobar
+    - canvas.component.block.views_block.sfdug_meetings-block_season
+name: 'Lists (Views)'
+configEntityTypeId: component
+weight: 0
+items:
+  - block.views_block.recent_pages-block_recent_pages
+  - block.views_block.sfdug_meetings-block_archive
+  - block.views_block.sfdug_meetings-block_featured
+  - block.views_block.sfdug_meetings-block_infobar
+  - block.views_block.sfdug_meetings-block_season

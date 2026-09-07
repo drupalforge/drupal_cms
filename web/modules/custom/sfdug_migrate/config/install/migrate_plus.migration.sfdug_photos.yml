@@ -1,0 +1,34 @@
+id: sfdug_photos
+label: 'SFDUG photo media'
+migration_group: sfdug
+migration_tags:
+  - sfdug
+source:
+  plugin: embedded_data
+  data_rows:
+    -
+      uri: 'public://sfdug/jurgen-avatar.jpg'
+      name: 'Jürgen Haas'
+      alt: 'Jürgen Haas'
+  ids:
+    uri:
+      type: string
+process:
+  name: name
+  field_media_image/target_id:
+    plugin: migration_lookup
+    migration: sfdug_files
+    source: uri
+  field_media_image/alt: alt
+  status:
+    plugin: default_value
+    default_value: 1
+  uid:
+    plugin: default_value
+    default_value: 1
+destination:
+  plugin: 'entity:media'
+  default_bundle: image
+migration_dependencies:
+  required:
+    - sfdug_files

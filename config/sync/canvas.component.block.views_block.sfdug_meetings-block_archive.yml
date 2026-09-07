@@ -1,0 +1,26 @@
+uuid: b4c57d73-cda0-463c-9ac6-fab45392bc0d
+langcode: en
+status: true
+dependencies:
+  config:
+    - views.view.sfdug_meetings
+  module:
+    - views
+active_version: a34bd20b6ad177e4
+versioned_properties:
+  active:
+    settings:
+      default_settings:
+        id: 'views_block:sfdug_meetings-block_archive'
+        label: 'SFDUG: from the archive'
+        label_display: '0'
+        provider: views
+        views_label: ''
+        items_per_page: null
+    fallback_metadata:
+      slot_definitions: null
+label: 'SFDUG: from the archive'
+id: block.views_block.sfdug_meetings-block_archive
+provider: views
+source: block
+source_local_id: 'views_block:sfdug_meetings-block_archive'
