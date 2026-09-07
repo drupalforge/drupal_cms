@@ -1,0 +1,52 @@
+/* ============================================================
+   ECA / Jürgen Haas edition — hero overrides on top of styles.css
+   Comic-promo aesthetic: paper white, black type, orange accent.
+   ============================================================ */
+
+.infobar--eca { background:#1A1A1A; }
+.infobar--eca .tag { color:#F26522; }
+.infobar--eca .dot { background:#F26522; box-shadow:0 0 0 4px rgba(242,101,34,.22); }
+.infobar--eca .rsvp { border-bottom-color:#F26522; }
+.infobar--eca .new-badge { font-weight:800; font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:#1A1A1A; background:#F0C76A; padding:4px 11px; border-radius:999px; }
+
+/* ---------- promo hero ---------- */
+.hero-eca { background:var(--cream-soft); border-bottom:6px solid #1A1A1A; }
+.hero-eca-inner { padding-top:38px; padding-bottom:34px; }
+.promo { display:block; border:3px solid #1A1A1A; border-radius:10px; overflow:hidden; box-shadow:0 22px 50px -18px rgba(26,26,26,.45); background:#fff; }
+.promo img { width:100%; height:auto; }
+
+.eca-datebar { margin-top:26px; display:flex; align-items:center; gap:22px; flex-wrap:wrap; background:#1A1A1A; border-radius:12px; padding:18px 24px; }
+.eca-datebar .d-date { font-size:22px; font-weight:800; color:#fff; letter-spacing:-.01em; }
+.eca-datebar .d-time { font-size:20px; font-weight:800; color:#F26522; }
+.eca-datebar .d-where { font-size:14px; font-weight:700; letter-spacing:.08em; text-transform:uppercase; color:rgba(255,255,255,.66); }
+.eca-datebar .vrule { background:rgba(255,255,255,.28); }
+.btn-orange { background:#F26522; color:#fff; font-weight:800; font-size:15px; padding:13px 28px; border-radius:999px; transition:background .22s; }
+.btn-orange:hover { background:#d8541a; }
+.eca-datebar .btn-orange { margin-left:auto; }
+
+/* ---------- talk section tweaks ---------- */
+.eyebrow--eca { color:#F26522; }
+.rule--eca { background:#F26522; }
+.talk-hook { margin:0 0 26px; font-size:21px; line-height:1.5; font-weight:600; color:var(--body); font-style:italic; max-width:640px; }
+.speaker-chip--line img { object-fit:contain; object-position:center; background:var(--cream-soft); border:1px solid rgba(26,26,26,.1); }
+
+@media (max-width:760px) {
+  .eca-datebar { padding:16px 18px; gap:14px; }
+  .eca-datebar .d-date { font-size:19px; }
+  .eca-datebar .btn-orange { margin-left:0; }
+}
+
+/* ---------- homework block ---------- */
+.homework { margin:30px 0; padding:26px 28px 24px; background:var(--cream-soft, #FCF2E2); border:1px solid rgba(26,26,26,.1); border-left:5px solid #F26522; border-radius:18px; }
+.homework p { margin:0 0 12px; font-size:17px; line-height:1.62; }
+.hw-title { margin:0 0 10px; font-size:22px; font-weight:800; letter-spacing:-.01em; color:#1A1A1A; }
+.hw-lede { font-weight:600; }
+.hw-step-label { margin:18px 0 8px !important; font-size:14px; font-weight:800; letter-spacing:.07em; text-transform:uppercase; color:#D26A3F; }
+.hw-code { margin:0 0 4px; padding:16px 18px; background:#1A1A1A; border-radius:12px; overflow-x:auto; }
+.hw-code code { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:14.5px; line-height:1.75; color:#FCF2E2; white-space:pre; }
+.hw-inline { font-family:ui-monospace, SFMono-Regular, Menlo, Consolas, monospace; font-size:.9em; background:rgba(26,26,26,.07); padding:2px 6px; border-radius:5px; }
+.hw-list { margin:0 0 16px; padding-left:24px; }
+.hw-list li { font-size:17px; line-height:1.55; margin-bottom:7px; }
+.hw-note { opacity:.62; font-size:.92em; }
+.hw-close { margin-bottom:0 !important; font-weight:600; }
+@media (max-width:760px) { .homework { padding:20px 18px; } }

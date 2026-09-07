@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ECA: Drupal’s Automation Platform — Jürgen Haas | San Francisco Drupal Users Group</title>
+<meta name="description" content="The San Francisco Drupal Users Group — meeting monthly since 2006. Part of the Bay Area Drupal community.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/eca.css">
+</head>
+<body>
+
+  <!-- ============ TOP NAV ============ -->
+  <header class="site-header">
+    <div class="wrap nav-inner">
+      <a class="brand" href="#top">
+        <img src="img/sfdug-logo.jpg" alt="SFDUG logo" width="50" height="50">
+        <span class="brand-name">
+          <b>SFDUG</b>
+          <small>San Francisco Drupal Users Group</small>
+        </span>
+      </a>
+      <nav class="nav">
+        <a href="#talk">Upcoming</a>
+        <a href="#recordings">Videos</a>
+        <a href="#about">About</a>
+        <a href="#join">Join</a>
+        <a class="btn-purple" href="#join">Join the list</a>
+      </nav>
+    </div>
+  </header>
+
+  <!-- ============ INFO BAR ============ -->
+  <div class="infobar infobar--eca" id="top">
+    <div class="wrap infobar-inner">
+      <span class="tag"><span class="dot"></span> NEXT MEETUP</span>
+      <span class="sep">|</span>
+      <span>Thursday, Aug 20 &middot; 12:00&nbsp;PM&nbsp;PDT &middot; Online</span>
+      <span class="new-badge">New afternoon meeting!</span>
+      <a class="rsvp" href="https://www.meetup.com/sfdug-san-francisco-drupal-users-group/events/316123460/?utm_medium=referral&amp;utm_campaign=share-btn_savedevents_share_modal&amp;utm_source=link&amp;utm_version=v2&amp;member_id=10134746" target="_blank" rel="noopener">RSVP &rarr;</a>
+    </div>
+  </div>
+
+  <!-- ============ HERO PROMO ============ -->
+  <section class="hero-eca">
+    <div class="wrap hero-eca-inner">
+      <div class="promo">
+        <img src="img/eca-promo.jpg" alt="ECA: Drupal&rsquo;s Automation Platform with Jürgen Haas — Thursday, Aug 20, 12:00 PM PDT, online">
+      </div>
+      <div class="eca-datebar">
+        <div class="d-date">Thursday, Aug 20</div>
+        <div class="vrule"></div>
+        <div class="d-time">12:00&nbsp;PM&nbsp;PDT</div>
+        <div class="d-where">Online &middot; sfdug.org</div>
+        <a class="btn-orange" href="https://www.meetup.com/sfdug-san-francisco-drupal-users-group/events/316123460/?utm_medium=referral&amp;utm_campaign=share-btn_savedevents_share_modal&amp;utm_source=link&amp;utm_version=v2&amp;member_id=10134746" target="_blank" rel="noopener">RSVP for free &rarr;</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ ABOUT THIS TALK ============ -->
+  <section class="talk" id="talk">
+    <div class="wrap talk-inner">
+      <div>
+        <div class="eyebrow eyebrow--eca">About this talk</div>
+        <span class="rule rule--eca"></span>
+        <h2>ECA: Drupal&rsquo;s Automation Platform</h2>
+        <p class="talk-hook">Automate Drupal without writing code &mdash; visually on the canvas, or right inside the form you&rsquo;re editing.</p>
+        <div class="prose">
+          <p>ECA lets you automate a Drupal site without writing code: pick an event, add a condition, choose an action. Around 16,000 sites run it today, and its visual modeler &mdash; the drag-and-drop flowchart &mdash; is the part most people picture when they hear the name. It got a significant upgrade this year: a new modeler with color, dark mode, and full keyboard accessibility.</p>
+          <p>But the more consequential change is what happens when you never open the modeler. ECA now offers automation in place: click a field on a form, choose a template, and the model is built for you in the background &mdash; no canvas, no tokens, no need to know ECA is involved. For everyone else, there&rsquo;s a debugger that replays what your site actually did, step by step, with every variable visible along the way.</p>
+          <div class="homework">
+            <h3 class="hw-title">New! Homework! Everybody likes homework, right?</h3>
+            <p class="hw-lede">If you want to get the most out of this session, take five minutes and run through these steps:</p>
+            <p class="hw-step-label">From a terminal:</p>
+            <pre class="hw-code"><code>composer require drupal/eca_starterkit
+drush recipe ../recipes/eca_starterkit</code></pre>
+            <p class="hw-step-label">Then, as an administrator:</p>
+            <ol class="hw-list">
+              <li>Go to your site&rsquo;s user list and click <b>Add user</b></li>
+              <li>Focus any text field &mdash; a light blue bolt appears beside it</li>
+              <li>Click it, choose <b>Change label</b>, set a new label, and save</li>
+              <li>Refresh the page</li>
+            </ol>
+            <p>Your form is now altered. No custom module, no <code class="hw-inline">hook_form_alter</code>, and nothing that required you to know ECA was involved. <span class="hw-note">(Recipe path may vary with your project layout.)</span></p>
+            <p class="hw-close">Come without doing it and you&rsquo;ll follow along fine &mdash; but if you do it, you&rsquo;ll have your own questions ready. Won&rsquo;t that be fun?</p>
+          </div>
+          <p>J&uuml;rgen Haas created ECA and maintains it, and is a Drupal core subsystem maintainer for the new admin theme. He last spoke to SFDUG in January 2022, when ECA was six months old and had about thirty installs.</p>
+        </div>
+        <div class="speaker-chips">
+          <div class="speaker-chip speaker-chip--line">
+            <img src="img/jurgen-avatar.jpg" alt="J&uuml;rgen Haas" width="56" height="56">
+            <div>
+              <b>J&uuml;rgen Haas</b>
+              <small>Creator and maintainer of ECA &middot; Drupal core subsystem maintainer</small>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <aside class="details">
+        <h3>Meeting Details</h3>
+        <div class="details-list">
+          <div class="detail">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D26A3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"></rect><path d="M16 2v4M8 2v4M3 10h18"></path></svg>
+            <div><b>Thursday, Aug 20, 2026</b></div>
+          </div>
+          <div class="detail">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D26A3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"></circle><path d="M12 7v5l3 2"></path></svg>
+            <div><b>12:00 PM PDT</b><small>New afternoon meeting time</small></div>
+          </div>
+          <div class="detail">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D26A3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s7-6.3 7-11a7 7 0 1 0-14 0c0 4.7 7 11 7 11z"></path><circle cx="12" cy="10" r="2.5"></circle></svg>
+            <div><b>Online &mdash; Zoom</b><small>Link emailed after you RSVP</small></div>
+          </div>
+          <div class="detail">
+            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="#D26A3F" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12V5a2 2 0 0 1 2-2h7l9 9-9 9-9-9z"></path><circle cx="8" cy="8" r="1.5"></circle></svg>
+            <div><b>Automation &amp; Site Building</b></div>
+          </div>
+        </div>
+        <a class="btn-purple" href="https://www.meetup.com/sfdug-san-francisco-drupal-users-group/events/316123460/?utm_medium=referral&amp;utm_campaign=share-btn_savedevents_share_modal&amp;utm_source=link&amp;utm_version=v2&amp;member_id=10134746" target="_blank" rel="noopener">RSVP for free</a>
+        <a class="addcal" href="#">+ Add to calendar</a>
+      </aside>
+    </div>
+  </section>
+
+  <!-- ============ PAST RECORDINGS ============ -->
+  <section class="recordings" id="recordings">
+    <div class="wrap recordings-inner">
+      <div class="rec-head">
+        <div>
+          <div class="eyebrow">On YouTube</div>
+          <span class="rule"></span>
+          <h2>Catch up on past meetings</h2>
+          <p>Missed one? Every SFDUG meetup is recorded. Twenty years of talks &mdash; from Views deep-dives to accessibility, migrations, and the new AI tooling.</p>
+        </div>
+        <a class="btn-yt" href="https://www.youtube.com/@sfdug">
+          <svg width="22" height="16" viewBox="0 0 24 17" fill="#fff" aria-hidden="true"><rect width="24" height="17" rx="5"></rect><path d="M9.6 4.6l6 3.9-6 3.9z" fill="#E33A2E"></path></svg>
+          Watch all on YouTube
+        </a>
+      </div>
+
+      <div class="divider">
+        <span class="lbl">The 2026 Season</span>
+        <span class="line"></span>
+        <span class="note">New this year, since the relaunch</span>
+      </div>
+      <div class="grid-2" id="featured-grid"></div>
+
+      <div class="divider">
+        <span class="lbl">From the Archive</span>
+        <span class="line"></span>
+        <span class="note">Favorites from earlier seasons</span>
+      </div>
+      <div class="grid-3" id="archive-grid"></div>
+    </div>
+  </section>
+
+  <!-- ============ TWENTY YEARS ============ -->
+  <section class="history" id="about">
+    <div class="wrap history-inner">
+      <div class="eyebrow">Est. April 2006</div>
+      <h2>Twenty Years of Bay Area Drupal</h2>
+      <p>In April 2006, Zack Rosen and Gregory Heller organized the first Drupal Camp SF &mdash; a two-day training at CivicSpace&rsquo;s offices with Jeff Robbins from Lullabot. It sold out in five days; half the attendees flew in from out of state.</p>
+      <p class="closer">That was the beginning. We&rsquo;re still here, still meeting every month.</p>
+    </div>
+  </section>
+
+  <!-- ============ PART OF BADCAMP + JOIN ============ -->
+  <section class="join" id="join">
+    <div class="wrap join-inner">
+      <div class="card-flat badcamp">
+        <div class="pill-tag">Part of the community</div>
+        <h3>SFDUG is part of <span>BADCamp</span></h3>
+        <p>We&rsquo;re part of the wider Bay Area Drupal community behind the Bay Area Drupal Camp. Our monthly meetups may soon be hosted right alongside BADCamp &mdash; same friendly crowd, more ways to connect year-round.</p>
+        <a class="more" href="https://www.badcamp.org">Visit Bay Area Drupal Camp &rarr;</a>
+      </div>
+
+      <div class="card-flat newsletter">
+        <h3>Never miss a meetup</h3>
+        <p>Join the mailing list and we&rsquo;ll send you the topic, speaker, and Zoom link before each month&rsquo;s meeting. No spam &mdash; just Drupal.</p>
+        <form class="news-form" id="news-form">
+          <input type="email" name="email" placeholder="you@example.com" required aria-label="Email address">
+          <button type="submit">Sign me up</button>
+        </form>
+        <div class="news-fine">Free &middot; online every month &middot; everyone welcome</div>
+        <div class="news-msg" id="news-msg" role="status" aria-live="polite"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FOOTER ============ -->
+  <footer class="site-footer">
+    <div class="wrap footer-top">
+      <div>
+        <div class="footer-brand">
+          <img src="img/sfdug-logo.jpg" alt="SFDUG" width="46" height="46">
+          <span>SFDUG</span>
+        </div>
+        <p class="about-blurb">The San Francisco Drupal Users Group &mdash; meeting monthly since 2006. Part of the Bay Area Drupal community.</p>
+      </div>
+      <div class="footer-col">
+        <h4>Meetings</h4>
+        <div class="links">
+          <a href="#talk">Upcoming</a>
+          <a href="#recordings">Video archive</a>
+          <a href="#">Schedule</a>
+          <a href="#">Past speakers</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Community</h4>
+        <div class="links">
+          <a href="#about">About SFDUG</a>
+          <a href="https://www.badcamp.org">BADCamp</a>
+          <a href="#">Code of Conduct</a>
+          <a href="#join">Join the list</a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Connect</h4>
+        <div class="social">
+          <a href="https://www.youtube.com/@sfdug" aria-label="YouTube"><svg width="20" height="20" viewBox="0 0 24 24" fill="#FCF2E2" aria-hidden="true"><path d="M23 7.5a3 3 0 0 0-2.1-2.1C19 5 12 5 12 5s-7 0-8.9.4A3 3 0 0 0 1 7.5 31 31 0 0 0 .6 12 31 31 0 0 0 1 16.5a3 3 0 0 0 2.1 2.1C5 19 12 19 12 19s7 0 8.9-.4a3 3 0 0 0 2.1-2.1A31 31 0 0 0 23.4 12 31 31 0 0 0 23 7.5zM9.8 15.3V8.7l5.7 3.3z"></path></svg></a>
+          <a href="#" aria-label="Mastodon"><svg width="20" height="20" viewBox="0 0 24 24" fill="#FCF2E2" aria-hidden="true"><path d="M21.6 8.3c0-3.7-2.4-4.8-2.4-4.8C17.9 2.9 15.9 2.6 13.8 2.6h-.1c-2.1 0-4.1.3-5.4.9 0 0-2.4 1.1-2.4 4.8 0 .9 0 1.9.1 2.9.2 3.4.8 6.7 4 7.6 1.5.4 2.8.5 3.8.4 1.8-.1 2.8-.6 2.8-.6l-.1-1.3s-1.3.4-2.8.4c-1.5 0-3-.1-3.3-1.9 0-.2 0-.3-.1-.5 0 0 1.4.4 3.3.4 1.1 0 2.1-.1 3.2-.2 2.1-.3 3.9-1.6 4.2-2.8.4-1.9.3-4.8.3-4.8zm-3.3 5.5h-2v-5c0-1-.5-1.6-1.4-1.6-1 0-1.5.7-1.5 1.9v2.8h-2V9.1c0-1.2-.5-1.9-1.5-1.9-.9 0-1.4.6-1.4 1.6v5h-2V8.7c0-1 .3-1.9.8-2.5.5-.6 1.3-.9 2.2-.9 1 0 1.8.4 2.3 1.2l.5.9.5-.9c.5-.8 1.3-1.2 2.3-1.2.9 0 1.6.3 2.2.9.5.6.8 1.4.8 2.5z"></path></svg></a>
+          <a href="#join" aria-label="Email"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#FCF2E2" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"></rect><path d="M3 7l9 6 9-6"></path></svg></a>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="wrap footer-bottom-inner">
+        <span>&copy; 2026 San Francisco Drupal Users Group.</span>
+        <span>Built by the community with Drupal &middot; hosted on Pantheon.</span>
+      </div>
+    </div>
+  </footer>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

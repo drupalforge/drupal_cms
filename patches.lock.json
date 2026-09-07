@@ -1,0 +1,54 @@
+{
+    "_hash": "cf8372c0ac8c3f0858a784947361b3b52468238af88c0d4786e30ecc9f4b04a0",
+    "patches": {
+        "drupal/core": [
+            {
+                "package": "drupal/core",
+                "description": "#3495988: Add redirect for incomplete install",
+                "url": "https://git.drupalcode.org/issue/drupal-3495988/-/compare/11.4.4...f6eae5955a1ec42e5c15fb7c5f2eadebbae63ee6?format=diff",
+                "sha256": "cf765139249bb7825a28bd640394612052701fb248a1831d44c5c26e25d7f751",
+                "depth": 2,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            },
+            {
+                "package": "drupal/core",
+                "description": "#3499225: Fix recipe command ignoring dependencies",
+                "url": "https://git.drupalcode.org/project/drupal/-/commit/12031d11461bd2fddcb9052659af947be0a9defe.patch",
+                "sha256": "9f9afc554e83d7d1ad55f602b897fdc13a5c0aca0ca9c566f764dc4f2ddddb1d",
+                "depth": 2,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            },
+            {
+                "package": "drupal/core",
+                "description": "#3531174: Add configuration for additional known files in project root",
+                "url": "https://git.drupalcode.org/issue/drupal-3531174/-/compare/eccc454363a947d3eb71a1ca7fa0e134dce002c0...96208fc1e12b4548c115d02dd80b9cfbd4e5bed7?format=diff",
+                "sha256": "f932d41f6ec4397fc1c4ce3f09c3baf15d4846c6a825b39132e40a5bfbf26da0",
+                "depth": 2,
+                "extra": {
+                    "provenance": "patches-file:patches.json"
+                }
+            }
+        ],
+        "drupal/drupal_cms_installer": [
+            {
+                "package": "drupal/drupal_cms_installer",
+                "description": "#3590051: Avoid repeating installer batch operations",
+                "url": "https://git.drupalcode.org/issue/drupal_cms-3590051/-/commit/d3e868802dab04fb87e348b50305dee59729c996.patch",
+                "sha256": "cc3dc6f039775f1fade8ba9fc5f1e01c606633e23d1519df7ef1af39535ab8cb",
+                "depth": 2,
+                "extra": {
+                    "freeform": {
+                        "executable": "sh",
+                        "dry_run_args": "-c \"git -C %3$s init >/dev/null 2>&1 && git -C %3$s apply --check --verbose -p%2$s --exclude=tests/* %4$s; rc=$?; rm -rf %3$s/.git; exit $rc\"",
+                        "args": "-c \"git -C %3$s init >/dev/null 2>&1 && git -C %3$s apply --verbose -p%2$s --exclude=tests/* %4$s; rc=$?; rm -rf %3$s/.git; exit $rc\""
+                    },
+                    "provenance": "patches-file:patches.json"
+                }
+            }
+        ]
+    }
+}

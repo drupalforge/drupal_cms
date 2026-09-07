@@ -46,3 +46,12 @@ $RECYCLE.BIN/
 # Per https://getcomposer.org/doc/articles/authentication-for-private-packages.md#authentication-in-auth-json-per-project,
 # this should never be under version control.
 /auth.json
+
+# Local database dumps.
+/DB/
+
+# Local private files directory (top-level; the per-site one is excluded above).
+/private/
+
+# Backups left behind by the Drupal Forge rebuild.
+*.forge.bak
