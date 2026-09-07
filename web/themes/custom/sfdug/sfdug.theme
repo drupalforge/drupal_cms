@@ -128,6 +128,25 @@ function sfdug_preprocess_block(array &$variables): void {
 }
 
 /**
+ * Implements hook_theme_suggestions_HOOK_alter() for views_view_unformatted.
+ *
+ * The hero and info bar fall back to their *_recent displays when no meeting
+ * is scheduled. Those render in exactly the same place, so they need the same
+ * full-bleed template rather than the generic one, which wraps rows in a
+ * three-column grid.
+ */
+function sfdug_theme_suggestions_views_view_unformatted_alter(array &$suggestions, array $variables): void {
+  $fallbacks = [
+    'block_featured_recent' => 'block_featured',
+    'block_infobar_recent' => 'block_infobar',
+  ];
+  $view = $variables['view'] ?? NULL;
+  if ($view && $view->id() === 'sfdug_meetings' && isset($fallbacks[$view->current_display])) {
+    $suggestions[] = 'views_view_unformatted__sfdug_meetings__' . $fallbacks[$view->current_display];
+  }
+}
+
+/**
  * Implements hook_theme_suggestions_HOOK_alter() for menu.
  *
  * Gives every menu its own template name, so the footer menus and the primary
