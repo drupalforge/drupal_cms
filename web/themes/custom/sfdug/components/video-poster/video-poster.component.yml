@@ -1,0 +1,25 @@
+$schema: https://git.drupalcode.org/project/drupal/-/raw/HEAD/core/assets/schemas/v1/metadata.schema.json
+name: Video poster
+status: stable
+description: >
+  The recording on a meeting page, as a poster that links out to YouTube rather
+  than an embedded player. Nothing loads from Google until the visitor clicks,
+  so there is no external content to consent to.
+props:
+  type: object
+  required:
+    - url
+  properties:
+    url:
+      type: string
+      title: Watch URL
+    thumbnail:
+      type:
+      - string
+      - 'null'
+      title: Locally stored poster image
+    title:
+      type:
+      - string
+      - 'null'
+      title: Meeting title, for the link's accessible name

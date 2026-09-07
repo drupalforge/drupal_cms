@@ -1,0 +1,13 @@
+<a class="video-poster" href="{{ url }}" target="_blank" rel="noopener">
+  <span class="card-thumb">
+    {% if thumbnail %}
+      <img src="{{ thumbnail }}" alt="">
+    {% endif %}
+    <span class="fade"></span>
+    <span class="watch-pill">
+      {{ include('sfdug:icon', { name: 'play', size: 16 }, with_context = false) }}
+      {{ 'Watch recording'|t }}
+      {% if title %}<span class="visually-hidden">{{ ' — ' ~ title }}</span>{% endif %}
+    </span>
+  </span>
+</a>

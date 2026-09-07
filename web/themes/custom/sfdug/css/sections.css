@@ -868,6 +868,34 @@
   border: 0;
 }
 
+/* The recording is a poster linking out to YouTube, not an embedded player:
+   nothing reaches Google until the visitor asks for it. Shares .card-thumb
+   and .watch-pill with the archive cards. */
+.video-poster {
+  display: block;
+  text-decoration: none;
+}
+
+.video-poster .card-thumb {
+  display: block;
+}
+
+.video-poster .watch-pill {
+  left: 20px;
+  bottom: 18px;
+  font-size: 0.9375rem;
+  padding: 11px 18px 11px 15px;
+}
+
+.video-poster:hover .watch-pill {
+  background: var(--yt-hover);
+}
+
+.video-poster:focus-visible {
+  outline: 3px solid var(--purple-mid);
+  outline-offset: 3px;
+}
+
 .session-full__section {
   margin-top: 34px;
 }

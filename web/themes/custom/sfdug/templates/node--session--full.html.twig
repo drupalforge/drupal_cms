@@ -11,8 +11,12 @@
         <div class="promo">
           <img src="{{ promo_url }}" alt="{{ node.label }}">
         </div>
-      {% elseif content.field_session_video|render %}
-        <div class="session-full__video">{{ content.field_session_video }}</div>
+      {% elseif video_url %}
+        <div class="session-full__video">
+          {{ include('sfdug:video-poster', {
+            url: video_url, thumbnail: thumbnail, title: node.label,
+          }, with_context = false) }}
+        </div>
       {% endif %}
 
       <div class="eyebrow">{{ month_label ?: 'Session'|t }}</div>
@@ -26,8 +30,12 @@
         <p class="talk-hook">{{ hook }}</p>
       {% endif %}
 
-      {% if promo_url and content.field_session_video|render %}
-        <div class="session-full__video">{{ content.field_session_video }}</div>
+      {% if promo_url and video_url %}
+        <div class="session-full__video">
+          {{ include('sfdug:video-poster', {
+            url: video_url, thumbnail: thumbnail, title: node.label,
+          }, with_context = false) }}
+        </div>
       {% endif %}
 
       {% if content.body|render %}
