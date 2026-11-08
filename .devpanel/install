@@ -10,7 +10,7 @@
  */
 
 use Drupal\Core\Installer\Form\SiteConfigureForm;
-use Drupal\RecipeKit\Installer\Hooks;
+use Drupal\drupal_cms_installer\OperationTracker;
 
 $_GET['rewrite'] = 'ok';
 $_GET['name'] = '1';
@@ -35,11 +35,27 @@ function _install_drupal_cms_profile_modules() {
     $install_state['interactive'] = FALSE;
     install_get_form(SiteConfigureForm::class, $install_state);
     $batch = install_profile_modules($install_state);
-    $batch['operations'] = _drupal_cms_installer_prepare_tracked_operations($batch['operations']);
+    $batch['operations'] = array_values(\Drupal::service(OperationTracker::class)->prepare($batch['operations']));
     batch_set($batch);
     $batch = &batch_get();
     $batch['progressive'] = FALSE;
     batch_process();
+
+    // The profile locks configuration to the pre-run's language, and the
+    // installer theme hides the language switcher while a lock is set. Clear
+    // the lock so the user can choose a language. The site template form
+    // overwrites it regardless, so leaving it empty has no other effect.
+    // @see drupal_cms_installer_install_profile()
+    // @see drupal_cms_installer_theme_preprocess_install_page()
+    // @see \Drupal\drupal_cms_installer\Form\SiteTemplateForm::submitForm()
+    \Drupal::configFactory()
+      ->getEditable('config_language_lock.settings')
+      ->clear('locked_langcode')
+      ->save();
+
+    // Resume after the configure form while allowing earlier tasks marked
+    // INSTALL_TASK_RUN_IF_REACHED to run again.
+    // @see install_tasks_to_perform()
     \Drupal::state()->set('install_task', 'install_configure_form');
   }
 }
