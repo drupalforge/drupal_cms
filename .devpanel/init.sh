@@ -62,26 +62,19 @@ if [ -z "$(drush status --field=db-status)" ]; then
   until [ "$(drush sget install_task 2> /dev/null)" = 'install_configure_form' ]; do
     time .devpanel/install
   done
-  drush -n cset system.site name 'Drupal CMS'
 
   echo
-  echo 'Apply base recipes.'
-  RECIPES_PATH=$(drush --include=.devpanel/drush crp)
-  i=0
-  while RECIPE=$(drush y:get:value recipes/drupal_cms_site_template_base/recipe.yml "recipes.$i"); do
-    ((++i))
-    echo "$RECIPE"
-    if [[ ! $RECIPE =~ ^core/ ]]; then
-      RECIPE="$RECIPES_PATH/$RECIPE"
+  echo 'Apply base recipe.'
+  recipe_max_attempts=2
+  recipe_attempt=1
+  until time drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_site_template_base; do
+    status=$?
+    if (( recipe_attempt >= recipe_max_attempts )); then
+      echo "Failed to apply base recipe after $recipe_attempt attempts." >&2
+      exit "$status"
     fi
-    until time drush --include=.devpanel/drush -q drupalforge:recipe "$RECIPE"; do
-      time drush cr
-    done
+    ((recipe_attempt += 1))
   done
-
-  echo
-  echo 'Pre-seed completed operation hashes for applied recipes.'
-  time drush --include=.devpanel/drush rrh
 
   echo
   echo 'Enable Automatic Updates.'

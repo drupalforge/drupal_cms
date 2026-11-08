@@ -63,7 +63,7 @@ services:
         "$$APP_ROOT"/.devpanel/init-container.sh
         git reset --hard --quiet
         git clean -df --quiet
-        git stash list -1 | grep -i "pre-image-sync-" && git stash pop || :
+        git stash list -1 | grep -i "pre-image-sync-" && git stash pop --index || :
     depends_on:
       db:
         condition: service_healthy
