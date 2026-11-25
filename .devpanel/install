@@ -57,6 +57,9 @@ function _install_drupal_cms_profile_modules() {
     // INSTALL_TASK_RUN_IF_REACHED to run again.
     // @see install_tasks_to_perform()
     \Drupal::state()->set('install_task', 'install_configure_form');
+
+    // Allow installation to be resumed in a different session.
+    \Drupal::state()->delete('install_session_token');
   }
 }
 
