@@ -69,7 +69,9 @@ if [ -z "$(drush status --field=db-status)" ]; then
     fi
   }
 
-  if [[ "${DP_APP_ID:-}" == drupalforge/* && "${DP_APP_ID##*/}" != "drupal_cms" ]]; then
+  if [ -n "${DRUPAL_CMS_SITE_TEMPLATE:-}" ]; then
+    install_site_template "$DRUPAL_CMS_SITE_TEMPLATE"
+  elif [[ "${DP_APP_ID:-}" == drupalforge/* && "${DP_APP_ID##*/}" != "drupal_cms" ]]; then
     install_site_template "${DP_APP_ID##*/}"
   else
     echo 'Install Drupal base system.'

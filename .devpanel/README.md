@@ -84,9 +84,10 @@ repository. For `drupalforge/<template-name>`, `init.sh` uses the final path
 segment as the template name. The generic `drupal_cms` image continues to use
 the recipe-based base installation.
 
-Paid templates are not published by this workflow. The publish action makes
-GHCR packages public for this public source repository, so paid images must
-remain disabled until the action can reliably keep those packages private.
+Paid templates are published to GHCR, where new packages are private by
+default. The paid-template job passes `COMPOSER_AUTH` for private Composer
+dependencies and supplies the selected template through the reusable workflow's
+generic `init_env` secret.
 
 ### Deprecating per-template repository workflows
 
