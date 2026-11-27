@@ -21,8 +21,8 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
   - [`install`](install): Runs the interactive installer so unnecessary steps
     can be skipped when installation resumes.
 - [`warm`](warm): Warms caches for installed sites using request policies from
-  [`warm.services.yml`](warm.services.yml), enabled for CLI requests with the
-  `Drupal Forge` user agent.
+  [`warm.services.yml`](warm.services.yml), enabled when this script is the CLI
+  entry point.
 - [`Dockerfile`](Dockerfile): Provides the `COMPOSER_HOME` variable required by
   the Drupal Automatic Updates web UI.
 
