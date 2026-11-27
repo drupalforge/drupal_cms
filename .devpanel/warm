@@ -30,7 +30,6 @@ $request = Request::create($_SERVER['REQUEST_URI'], 'GET', [], [], [], array_int
   'REQUEST_TIME', 'REQUEST_TIME_FLOAT',
 ])));
 $request->overrideGlobals();
-define('DRUPALFORGE_CACHE_WARM', TRUE);
 $kernel = DrupalKernel::createFromRequest($request, $autoloader, 'prod');
 $response = $kernel->handle($request);
 $kernel->terminate($request, $response);

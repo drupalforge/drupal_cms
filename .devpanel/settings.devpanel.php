@@ -27,7 +27,7 @@ $settings['trusted_host_patterns'][] = '.*';
 $settings['enable_html5_validation'] = FALSE;
 $settings['testing_package_manager'] = TRUE;
 
-if (PHP_SAPI === 'cli' && defined('DRUPALFORGE_CACHE_WARM')) {
+if (PHP_SAPI === 'cli' && ($_SERVER['HTTP_USER_AGENT'] ?? '') === 'Drupal Forge') {
   $settings['container_yamls'][] = __DIR__ . '/warm.services.yml';
 }
 
