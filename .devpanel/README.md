@@ -9,6 +9,11 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
 - [`init-container.sh`](init-container.sh): Startup for registry mode (a
   DevPanel template setting). Imports a database dump and copies files from the
   image’s app directory to an external volume.
+  - [`warm`](warm): Loads any path to build caches. If no path is provided,
+    defaults to /.
+  - [`warm.serices.yml`](warm.serices.yml): Allows command line cache warming
+    to populate user and page caches, which Drupal normally prevents. Enabled
+    in `settings.devpanel.php` when `warm` is the CLI entry point.
 - [`init.sh`](init.sh): Startup for non-registry mode and image build.
   Supporting files:
   - [`composer_setup.sh`](composer_setup.sh): Generates composer.json and
@@ -20,9 +25,6 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
     script. Make sure this works with your Composer project.
   - [`install`](install): Runs the interactive installer so unnecessary steps
     can be skipped when installation resumes.
-- [`warm`](warm): Warms caches for installed sites using request policies from
-  [`warm.services.yml`](warm.services.yml), enabled when this script is the CLI
-  entry point.
 - [`Dockerfile`](Dockerfile): Provides the `COMPOSER_HOME` variable required by
   the Drupal Automatic Updates web UI.
 
