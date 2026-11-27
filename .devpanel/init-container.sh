@@ -57,6 +57,8 @@ drush cron
 echo
 echo 'Populate caches.'
 drush cache:warm &> /dev/null || :
+.devpanel/warm
+.devpanel/warm /user/login
 
 #== Fix ownership for strict permissions.
 echo
