@@ -79,10 +79,10 @@ truth** for Docker Hub image generation across all Drupal CMS site templates.
 
 ### Selecting the site template
 
-During image builds, the publish action sets `DP_APP_ID` to the image
-repository. For `drupalforge/<template-name>`, `init.sh` uses the final path
-segment as the template name. The generic `drupal_cms` image continues to use
-the recipe-based base installation.
+The free- and paid-template jobs pass `DRUPAL_CMS_SITE_TEMPLATE` per matrix
+entry through the reusable workflow's generic `init_env` secret. `init.sh`
+uses that value to install the selected template. The generic `drupal_cms`
+image continues to use the recipe-based base installation.
 
 Paid templates are published to GHCR, where new packages are private by
 default. The paid-template job passes `COMPOSER_AUTH` for private Composer

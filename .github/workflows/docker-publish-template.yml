@@ -17,7 +17,7 @@ jobs:
       base_image: devpanel/php:8.5-base
     secrets:
       dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
-      dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}
+      init_env: ${{ format('{{"DP_AI_VIRTUAL_KEY":{0}}}', toJSON(secrets.DP_AI_VIRTUAL_KEY)) }}
 
   get-templates:
     runs-on: ubuntu-latest
@@ -58,8 +58,7 @@ jobs:
         template: ${{ fromJson(needs.get-templates.outputs.free_templates) }}
       fail-fast: false
     # Each free template is published as drupalforge/<template-name>:main on Docker Hub.
-    # init.sh derives the site template from DP_APP_ID, which the action sets
-    # from image_repo while running its build-time initialization.
+    # Pass the selected template through init_env, matching the paid-template job.
     uses: drupalforge/docker_publish_action/.github/workflows/docker-publish.yml@main
     with:
       dockerhub_username: ${{ vars.DOCKERHUB_USERNAME }}
@@ -67,7 +66,7 @@ jobs:
       image_repo: "drupalforge/${{ matrix.template }}"
     secrets:
       dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
-      dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}
+      init_env: ${{ format('{{"DP_AI_VIRTUAL_KEY":{0},"DRUPAL_CMS_SITE_TEMPLATE":{1}}}', toJSON(secrets.DP_AI_VIRTUAL_KEY), toJSON(matrix.template)) }}
 
   build-paid-template-images:
     needs: get-templates
@@ -82,6 +81,4 @@ jobs:
       base_image: devpanel/php:8.5-base
       image_repo: "drupalforge/${{ matrix.template }}"
     secrets:
-      dp_ai_virtual_key: ${{ secrets.DP_AI_VIRTUAL_KEY }}
-      composer_auth: ${{ secrets.COMPOSER_AUTH }}
-      init_env: ${{ format('{{"DRUPAL_CMS_SITE_TEMPLATE":"{0}"}}', matrix.template) }}
+      init_env: ${{ format('{{"DP_AI_VIRTUAL_KEY":{0},"COMPOSER_AUTH":{1},"DRUPAL_CMS_SITE_TEMPLATE":{2}}}', toJSON(secrets.DP_AI_VIRTUAL_KEY), toJSON(secrets.COMPOSER_AUTH), toJSON(matrix.template)) }}
