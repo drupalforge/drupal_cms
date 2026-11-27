@@ -1,5 +1,14 @@
 {
     "patches": {
+        "drupal/archimedes": {
+            "Use Canvas component input mappings compatible with Canvas 1.2 and later": "https://git.drupalcode.org/project/archimedes/-/commit/b47db53d11e701af0de7d0c1c86f9436a7636ea9.patch"
+        },
+        "drupal/caresphere": {
+            "#3633493: JSON string inputs are no longer compatible with Canvas": "https://git.drupalcode.org/project/caresphere/-/commit/b461a713ef4f5d7ce91626cc44ce0598e574e4d2.patch"
+        },
+        "drupal/convene": {
+            "#3633590: Canvas module no longer accepts JSON strings as input": "https://git.drupalcode.org/project/convene/-/commit/7303f6cd4b61c16cf486c1f4e6c781d5c145c01c.patch"
+        },
         "drupal/core": {
             "#3495988: Add redirect for incomplete install": "https://git.drupalcode.org/issue/drupal-3495988/-/compare/11.4.x...a3e44a244f9cfb47bb92614f364f48d7ff5b5aa6?format=diff",
             "#3531174: Add configuration for additional known files in project root": "https://git.drupalcode.org/issue/drupal-3531174/-/compare/eccc454363a947d3eb71a1ca7fa0e134dce002c0...96208fc1e12b4548c115d02dd80b9cfbd4e5bed7?format=diff"
@@ -17,6 +26,12 @@
                     }
                 }
             }
-        ]
+        ],
+        "drupal/healthcare": {
+            "#3611916: Canvas no longer accepts JSON strings as inputs": "https://git.drupalcode.org/project/healthcare/-/commit/afda9757201007993987cab4f11872ba7191b551.patch"
+        },
+        "drupal/pulse": {
+            "#3633693: Canvas no longer accepts JSON strings as component inputs": "https://git.drupalcode.org/project/pulse/-/commit/40fec88765e21ee684a5007b3de87510feea06b0.patch"
+        }
     }
 }
