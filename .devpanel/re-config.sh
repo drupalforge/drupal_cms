@@ -92,11 +92,16 @@ if [ -z "$(drush status --field=db-status)" ]; then
   # We apply the AI recipe here to give every container its own key.
   echo
   echo 'Apply drupal_cms_ai recipe.'
+  if [ "$(drush sget install_task 2> /dev/null)" = 'done' ]; then
+    recipe_command=(-q recipe)
+  else
+    recipe_command=(--include=.devpanel/drush -q drupalforge:recipe)
+  fi
   # Outside DDEV/dev container, fail immediately on the first recipe error.
   if [ -z "${DRUPALFORGE_DEVCONTAINER:-}" ] && [ "${IS_DDEV_PROJECT:-}" != "true" ]; then
-    time drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai || exit $?
+    time drush "${recipe_command[@]}" ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai || exit $?
   else
-    until time drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai; do
+    until time drush "${recipe_command[@]}" ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai; do
       :
     done
   fi
