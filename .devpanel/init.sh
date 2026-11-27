@@ -58,21 +58,15 @@ fi
 #== Install Drupal.
 echo
 if [ -z "$(drush status --field=db-status)" ]; then
-  install_site_template() {
-    echo "Install Drupal with site template: $1."
+  if [ -n "${DRUPAL_CMS_SITE_TEMPLATE:-}" ]; then
+    echo "Install Drupal with site template: $DRUPAL_CMS_SITE_TEMPLATE."
     if [ -z "${DRUPALFORGE_DEVCONTAINER:-}" ] && [ "${IS_DDEV_PROJECT:-}" != "true" ]; then
-      time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$1"
+      time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$DRUPAL_CMS_SITE_TEMPLATE"
     else
-      until time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$1"; do
+      until time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$DRUPAL_CMS_SITE_TEMPLATE"; do
         :
       done
     fi
-  }
-
-  if [ -n "${DRUPAL_CMS_SITE_TEMPLATE:-}" ]; then
-    install_site_template "$DRUPAL_CMS_SITE_TEMPLATE"
-  elif [[ "${DP_APP_ID:-}" == drupalforge/* && "${DP_APP_ID##*/}" != "drupal_cms" ]]; then
-    install_site_template "${DP_APP_ID##*/}"
   else
     echo 'Install Drupal base system.'
     until [ "$(drush sget install_task 2> /dev/null)" = 'install_configure_form' ]; do
