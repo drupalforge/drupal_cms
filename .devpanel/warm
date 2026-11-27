@@ -7,7 +7,6 @@
  */
 
 use Drupal\Core\DrupalKernel;
-use Drupal\Core\PageCache\RequestPolicyInterface;
 use Symfony\Component\HttpFoundation\Request;
 
 chdir(dirname(__DIR__) . '/web');
@@ -31,19 +30,8 @@ $request = Request::create($_SERVER['REQUEST_URI'], 'GET', [], [], [], array_int
   'REQUEST_TIME', 'REQUEST_TIME_FLOAT',
 ])));
 $request->overrideGlobals();
+define('DRUPALFORGE_CACHE_WARM', TRUE);
 $kernel = DrupalKernel::createFromRequest($request, $autoloader, 'prod');
-$kernel->boot();
-$container = $kernel->getContainer();
-$policy = new class implements RequestPolicyInterface {
-  public function check(Request $request) {
-    return self::ALLOW;
-  }
-};
-foreach (['page_cache_request_policy', 'dynamic_page_cache_request_policy'] as $id) {
-  if ($container->has($id)) {
-    $container->set($id, $policy);
-  }
-}
 $response = $kernel->handle($request);
 $kernel->terminate($request, $response);
 echo "Warmed cache for " . $_SERVER['REQUEST_URI'] . "\n";

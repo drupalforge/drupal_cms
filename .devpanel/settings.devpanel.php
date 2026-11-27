@@ -27,6 +27,10 @@ $settings['trusted_host_patterns'][] = '.*';
 $settings['enable_html5_validation'] = FALSE;
 $settings['testing_package_manager'] = TRUE;
 
+if (PHP_SAPI === 'cli' && defined('DRUPALFORGE_CACHE_WARM')) {
+  $settings['container_yamls'][] = __DIR__ . '/warm.services.yml';
+}
+
 // When running in a development container, trust reverse proxy headers.
 if (getenv('DRUPALFORGE_DEVCONTAINER') && isset($_SERVER['HTTP_X_FORWARDED_HOST'], $_SERVER['REMOTE_ADDR'])) {
   $settings['reverse_proxy'] = TRUE;
