@@ -9,6 +9,11 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
 - [`init-container.sh`](init-container.sh): Startup for registry mode (a
   DevPanel template setting). Imports a database dump and copies files from the
   image’s app directory to an external volume.
+  - [`warm`](warm): Loads any path to build caches. If no path is provided,
+    defaults to /.
+  - [`warm.serices.yml`](warm.serices.yml): Allows command line cache warming
+    to populate user and page caches, which Drupal normally prevents. Enabled
+    in `settings.devpanel.php` when `warm` is the CLI entry point.
 - [`init.sh`](init.sh): Startup for non-registry mode and image build.
   Supporting files:
   - [`composer_setup.sh`](composer_setup.sh): Generates composer.json and
@@ -41,3 +46,59 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
 - [`create_quickstart.sh`](create_quickstart.sh): Archives the database and
   files for the _Drupal Forge Docker Publish Workflow_ which can be added in
   [GitHub Actions](../../actions).
+
+
+## Centralized Docker Hub image publishing
+
+The GitHub Actions workflow
+[`docker-publish-template`](../.github/workflows/docker-publish-template.yml)
+in **this repository** (`drupalforge/drupal_cms`) is the **single source of
+truth** for Docker Hub image generation across all Drupal CMS site templates.
+
+### How it works
+
+1. A `get-templates` job fetches the canonical template list from the
+   Drupal CMS project:
+
+   ```
+   https://git.drupalcode.org/api/v4/projects/204857/repository/files/site-templates.yml/raw?ref=HEAD
+   ```
+
+   The job fails if the remote file is unreachable. Templates with a set
+   `purchase` value in their metadata are excluded from the free-image build.
+
+2. The `build-free-template-images` matrix job builds **one Docker image per
+   free template**, publishing to Docker Hub as
+   `drupalforge/<template-name>:main`.
+
+   It uses
+   [`drupalforge/docker_publish_action`](https://github.com/drupalforge/docker_publish_action).
+
+3. Each image is published with the tag pattern:
+
+   ```
+   drupalforge/<template-name>:main
+   ```
+
+   where `<template-name>` exactly matches the name in `site-templates.yml`
+   (e.g. `drupalforge/haven:main`, `drupalforge/convene:main`).
+
+### Selecting the site template
+
+The free- and paid-template jobs pass `DRUPAL_CMS_SITE_TEMPLATE` per matrix
+entry through the reusable workflow's generic `init_env` secret. `init.sh`
+uses that value to install the selected template. The generic `drupal_cms`
+image continues to use the recipe-based base installation.
+
+Paid templates are published to GHCR, where new packages are private by
+default. The paid-template job passes `COMPOSER_AUTH` for private Composer
+dependencies and supplies the selected template through the reusable workflow's
+generic `init_env` secret.
+
+### Deprecating per-template repository workflows
+
+Image generation in separate site-template repositories
+(e.g. `drupalforge/haven`, `drupalforge/convene`) should be **disabled** so
+that `drupalforge/drupal_cms` remains the single publishing source. Set the
+`docker-publish-template.yml` workflow in each template repository to disabled
+or remove it once the centralized workflow is validated.

@@ -58,23 +58,34 @@ fi
 #== Install Drupal.
 echo
 if [ -z "$(drush status --field=db-status)" ]; then
-  echo 'Install Drupal base system.'
-  until [ "$(drush sget install_task 2> /dev/null)" = 'install_configure_form' ]; do
-    time .devpanel/install
-  done
-
-  echo
-  echo 'Apply base recipe.'
-  recipe_max_attempts=2
-  recipe_attempt=1
-  until time drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_site_template_base; do
-    status=$?
-    if (( recipe_attempt >= recipe_max_attempts )); then
-      echo "Failed to apply base recipe after $recipe_attempt attempts." >&2
-      exit "$status"
+  if [ -n "${DRUPAL_CMS_SITE_TEMPLATE:-}" ]; then
+    echo "Install Drupal with site template: $DRUPAL_CMS_SITE_TEMPLATE."
+    if [ -z "${DRUPALFORGE_DEVCONTAINER:-}" ] && [ "${IS_DDEV_PROJECT:-}" != "true" ]; then
+      time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$DRUPAL_CMS_SITE_TEMPLATE"
+    else
+      until time drush -n si drupal_cms_installer "installer_site_template_form.add_ons=$DRUPAL_CMS_SITE_TEMPLATE"; do
+        :
+      done
     fi
-    ((recipe_attempt += 1))
-  done
+  else
+    echo 'Install Drupal base system.'
+    until [ "$(drush sget install_task 2> /dev/null)" = 'install_configure_form' ]; do
+      time .devpanel/install
+    done
+
+    echo
+    echo 'Apply base recipe.'
+    recipe_max_attempts=2
+    recipe_attempt=1
+    until time drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_site_template_base; do
+      status=$?
+      if (( recipe_attempt >= recipe_max_attempts )); then
+        echo "Failed to apply base recipe after $recipe_attempt attempts." >&2
+        exit "$status"
+      fi
+      ((recipe_attempt += 1))
+    done
+  fi
 
   echo
   echo 'Enable Automatic Updates.'

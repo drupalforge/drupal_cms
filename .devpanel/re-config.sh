@@ -88,19 +88,6 @@ if [ -z "$(drush status --field=db-status)" ]; then
     echo 'Update database.'
     drush -n updb
   fi
-
-  # We apply the AI recipe here to give every container its own key.
-  echo
-  echo 'Apply drupal_cms_ai recipe.'
-  # Outside DDEV/dev container, fail immediately on the first recipe error.
-  if [ -z "${DRUPALFORGE_DEVCONTAINER:-}" ] && [ "${IS_DDEV_PROJECT:-}" != "true" ]; then
-    time drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai || exit $?
-  else
-    until time drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai; do
-      :
-    done
-  fi
-  drush -n cset klaro.klaro_app.deepchat status 0
 fi
 
 php web/modules/contrib/automatic_updates/auto-update

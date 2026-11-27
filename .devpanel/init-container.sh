@@ -29,11 +29,16 @@ if [ -z "$(drush status --field=db-status)" ]; then
   # We apply the AI recipe here to give every container its own key.
   echo
   echo 'Apply drupal_cms_ai recipe.'
+  if [ "$(drush sget install_task 2> /dev/null)" = 'done' ]; then
+    recipe_command=(-q recipe)
+  else
+    recipe_command=(--include=.devpanel/drush -q drupalforge:recipe)
+  fi
   # Outside DDEV/dev container, fail immediately on the first recipe error.
   if [ -z "${DRUPALFORGE_DEVCONTAINER:-}" ] && [ "${IS_DDEV_PROJECT:-}" != "true" ]; then
-    drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai || exit $?
+    drush "${recipe_command[@]}" ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai || exit $?
   else
-    until drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai; do
+    until drush "${recipe_command[@]}" ../recipes/drupal_cms_ai -i drupal_cms_ai.provider=amazeeai; do
       :
     done
   fi
@@ -59,6 +64,10 @@ drush cron
 echo
 echo 'Populate caches.'
 drush cache:warm &> /dev/null || :
+if [ "$(drush sget install_task 2> /dev/null)" = 'done' ]; then
+  .devpanel/warm
+  .devpanel/warm /user/login
+fi
 
 #== Fix ownership for strict permissions.
 echo
