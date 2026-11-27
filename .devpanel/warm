@@ -6,31 +6,14 @@
  * Warms the Drupal page cache.
  */
 
-use Drupal\Core\DrupalKernel;
-use Symfony\Component\HttpFoundation\Request;
-
 chdir(dirname(__DIR__) . '/web');
 $_SERVER['HTTP_USER_AGENT'] = 'Drupal Forge';
 $_SERVER['REQUEST_URI'] = $argv[1] ?? '/';
-$_SERVER['REQUEST_METHOD'] = 'GET';
 $_SERVER['SCRIPT_NAME'] = '/index.php';
 $_SERVER['SCRIPT_FILENAME'] = getcwd() . '/index.php';
 $_SERVER['SERVER_NAME'] = getenv('DP_HOSTNAME') ?: 'localhost';
-$_SERVER['HTTP_HOST'] = $_SERVER['SERVER_NAME'];
 $_SERVER['SERVER_PORT'] = '80';
-$_SERVER['HTTPS'] = 'on';
-
-if (!str_starts_with($_SERVER['REQUEST_URI'], '/') || str_starts_with($_SERVER['REQUEST_URI'], '//')) {
-  throw new InvalidArgumentException('The URI must be a local path.');
-}
-$autoloader = require 'autoload.php';
-$request = Request::create($_SERVER['REQUEST_URI'], 'GET', [], [], [], array_intersect_key($_SERVER, array_flip([
-  'HTTP_USER_AGENT', 'REQUEST_URI', 'REQUEST_METHOD', 'SCRIPT_NAME',
-  'SCRIPT_FILENAME', 'SERVER_NAME', 'HTTP_HOST', 'SERVER_PORT', 'HTTPS',
-  'REQUEST_TIME', 'REQUEST_TIME_FLOAT',
-])));
-$request->overrideGlobals();
-$kernel = DrupalKernel::createFromRequest($request, $autoloader, 'prod');
-$response = $kernel->handle($request);
-$kernel->terminate($request, $response);
+ob_start(fn($buffer, $phase) => TRUE, 1);
+require 'index.php';
+ob_end_clean();
 echo "Warmed cache for " . $_SERVER['REQUEST_URI'] . "\n";
