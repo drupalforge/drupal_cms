@@ -108,10 +108,6 @@ time drush cron
 echo
 echo 'Populate caches.'
 time drush cache:warm &> /dev/null || :
-if [ -n "${DRUPAL_CMS_SITE_TEMPLATE:-}" ]; then
-  time .devpanel/warm
-  time .devpanel/warm /user/login
-fi
 
 #== Fix ownership for strict permissions.
 echo
