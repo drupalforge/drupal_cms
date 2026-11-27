@@ -115,8 +115,10 @@ time drush cron
 echo
 echo 'Populate caches.'
 time drush cache:warm &> /dev/null || :
-time .devpanel/warm
-time .devpanel/warm /user/login
+if [ -n "$(drush status --field=db-status)" ]; then
+  time .devpanel/warm
+  time .devpanel/warm /user/login
+fi
 
 #== Fix ownership for strict permissions.
 echo
