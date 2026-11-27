@@ -115,7 +115,7 @@ time drush cron
 echo
 echo 'Populate caches.'
 time drush cache:warm &> /dev/null || :
-if [ -n "$(drush status --field=db-status)" ]; then
+if [ -n "${DRUPAL_CMS_SITE_TEMPLATE:-}" ]; then
   time .devpanel/warm
   time .devpanel/warm /user/login
 fi
