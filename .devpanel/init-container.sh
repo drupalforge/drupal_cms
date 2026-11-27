@@ -57,7 +57,7 @@ drush cron
 echo
 echo 'Populate caches.'
 drush cache:warm &> /dev/null || :
-if [ -n "$(drush status --field=db-status)" ]; then
+if [ "$(drush sget install_task 2> /dev/null)" = 'done' ]; then
   .devpanel/warm
   .devpanel/warm /user/login
 fi
