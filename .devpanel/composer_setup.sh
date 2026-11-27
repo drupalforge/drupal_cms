@@ -249,6 +249,8 @@ composer config repositories.codemirror '{
 composer require -n --no-update \
     codemirror/codemirror \
     cweagans/composer-patches \
+    drupal/drupal_cms_ai \
+    drupal/drupal_cms_site_template_base \
     jquery/image-picker \
     jquery/inputmask \
     jquery/intl-tel-input \

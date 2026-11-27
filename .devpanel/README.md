@@ -18,7 +18,8 @@ Files in the `.devpanel` directory control DevPanel deployment for this app.
   - [`drupal-settings.patch`](drupal-settings.patch): Patch for settings.php
     to include settings.devpanel.php. Installed by the post-drupal-scaffold-cmd
     script. Make sure this works with your Composer project.
-  - [`install`](install): Runs interactive installer.
+  - [`install`](install): Runs the interactive installer so unnecessary steps
+    can be skipped when installation resumes.
 - [`Dockerfile`](Dockerfile): Provides the `COMPOSER_HOME` variable required by
   the Drupal Automatic Updates web UI.
 
