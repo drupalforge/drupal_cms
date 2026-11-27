@@ -3,4 +3,4 @@ command:
     install:
       options:
         account-pass: admin
-        site-name: Drupal CMS
+        site-name: '${env.SITE_NAME}'

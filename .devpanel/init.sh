@@ -6,6 +6,8 @@ fi
 set -eu -o pipefail
 cd $APP_ROOT
 
+export SITE_NAME="${SITE_NAME:-Drupal CMS}"
+
 LOG_FILE="logs/init-$(date +%F-%T).log"
 exec > >(tee $LOG_FILE) 2>&1
 
@@ -71,19 +73,6 @@ if [ -z "$(drush status --field=db-status)" ]; then
     echo 'Install Drupal base system.'
     until [ "$(drush sget install_task 2> /dev/null)" = 'install_configure_form' ]; do
       time .devpanel/install
-    done
-
-    echo
-    echo 'Apply base recipe.'
-    recipe_max_attempts=2
-    recipe_attempt=1
-    until time drush --include=.devpanel/drush -q drupalforge:recipe ../recipes/drupal_cms_site_template_base; do
-      status=$?
-      if (( recipe_attempt >= recipe_max_attempts )); then
-        echo "Failed to apply base recipe after $recipe_attempt attempts." >&2
-        exit "$status"
-      fi
-      ((recipe_attempt += 1))
     done
   fi
 

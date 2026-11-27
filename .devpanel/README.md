@@ -77,18 +77,19 @@ truth** for Docker Hub image generation across all Drupal CMS site templates.
 3. Each image is published with the tag pattern:
 
    ```
-   drupalforge/<template-name>:main
+   drupalforge/<template-id>:main
    ```
 
-   where `<template-name>` exactly matches the name in `site-templates.yml`
+   where `<template-id>` exactly matches a top-level key in `site-templates.yml`
    (e.g. `drupalforge/haven:main`, `drupalforge/convene:main`).
 
 ### Selecting the site template
 
 The free- and paid-template jobs pass `DRUPAL_CMS_SITE_TEMPLATE` per matrix
-entry through the reusable workflow's generic `init_env` secret. `init.sh`
-uses that value to install the selected template. The generic `drupal_cms`
-image continues to use the recipe-based base installation.
+entry through the reusable workflow's generic `init_env` secret. `SITE_NAME`
+is set from the template's `name` metadata and used as the installed site's
+name. If it is unset, `init.sh` defaults it to `Drupal CMS`. The generic
+`drupal_cms` image continues to use the recipe-based base installation.
 
 Paid templates are published to GHCR, where new packages are private by
 default. The paid-template job passes `COMPOSER_AUTH` for private Composer

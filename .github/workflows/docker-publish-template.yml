@@ -37,10 +37,19 @@ jobs:
           import sys, json, yaml
           d = yaml.safe_load(sys.stdin.read())
           if isinstance(d, dict):
-              free = [k for k, v in d.items() if not (isinstance(v, dict) and v.get('purchase'))]
-              paid = [k for k, v in d.items() if isinstance(v, dict) and v.get('purchase')]
+              free = []
+              paid = []
+              for template_id, metadata in d.items():
+                  item = {
+                      'id': template_id,
+                      'name': (metadata.get('name') or '') if isinstance(metadata, dict) else '',
+                  }
+                  if isinstance(metadata, dict) and metadata.get('purchase'):
+                      paid.append(item)
+                  else:
+                      free.append(item)
           elif isinstance(d, list):
-              free = [str(x) for x in d]
+              free = [{'id': str(x), 'name': ''} for x in d]
               paid = []
           else:
               sys.exit('Unexpected YAML structure')
@@ -57,16 +66,16 @@ jobs:
       matrix:
         template: ${{ fromJson(needs.get-templates.outputs.free_templates) }}
       fail-fast: false
-    # Each free template is published as drupalforge/<template-name>:main on Docker Hub.
+    # Each free template is published as drupalforge/<template-id>:main on Docker Hub.
     # Pass the selected template through init_env, matching the paid-template job.
     uses: drupalforge/docker_publish_action/.github/workflows/docker-publish.yml@main
     with:
       dockerhub_username: ${{ vars.DOCKERHUB_USERNAME }}
       base_image: devpanel/php:8.5-base
-      image_repo: "drupalforge/${{ matrix.template }}"
+      image_repo: "drupalforge/${{ matrix.template.id }}"
     secrets:
       dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
-      init_env: ${{ format('{{"DP_AI_VIRTUAL_KEY":{0},"DRUPAL_CMS_SITE_TEMPLATE":{1}}}', toJSON(secrets.DP_AI_VIRTUAL_KEY), toJSON(matrix.template)) }}
+      init_env: ${{ format('{{"DP_AI_VIRTUAL_KEY":{0},"DRUPAL_CMS_SITE_TEMPLATE":{1},"SITE_NAME":{2}}}', toJSON(secrets.DP_AI_VIRTUAL_KEY), toJSON(matrix.template.id), toJSON(matrix.template.name)) }}
 
   build-paid-template-images:
     needs: get-templates
@@ -79,6 +88,6 @@ jobs:
     uses: drupalforge/docker_publish_action/.github/workflows/docker-publish.yml@main
     with:
       base_image: devpanel/php:8.5-base
-      image_repo: "drupalforge/${{ matrix.template }}"
+      image_repo: "drupalforge/${{ matrix.template.id }}"
     secrets:
-      init_env: ${{ format('{{"DP_AI_VIRTUAL_KEY":{0},"COMPOSER_AUTH":{1},"DRUPAL_CMS_SITE_TEMPLATE":{2}}}', toJSON(secrets.DP_AI_VIRTUAL_KEY), toJSON(secrets.COMPOSER_AUTH), toJSON(matrix.template)) }}
+      init_env: ${{ format('{{"DP_AI_VIRTUAL_KEY":{0},"COMPOSER_AUTH":{1},"DRUPAL_CMS_SITE_TEMPLATE":{2},"SITE_NAME":{3}}}', toJSON(secrets.DP_AI_VIRTUAL_KEY), toJSON(secrets.COMPOSER_AUTH), toJSON(matrix.template.id), toJSON(matrix.template.name)) }}

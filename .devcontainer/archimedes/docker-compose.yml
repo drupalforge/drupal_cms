@@ -1,0 +1,12 @@
+include:
+  - ../base/docker-compose.db.yml
+
+services:
+  app:
+    extends:
+      file: ../base/docker-compose.app.yml
+      service: app
+    image: devpanel/php:8.5-base
+    environment:
+      DRUPAL_CMS_SITE_TEMPLATE: archimedes
+      SITE_NAME: Archimedes
